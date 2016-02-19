@@ -1,0 +1,464 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\Shaders">
+      <UniqueIdentifier>{54d974e2-c4bd-4943-b8c8-f80d4e54c62d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Common">
+      <UniqueIdentifier>{f081e43d-f764-455e-a703-2867cf13ef33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Deferred">
+      <UniqueIdentifier>{e91325e3-6dbb-4da7-aa6f-b531877420d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Forward">
+      <UniqueIdentifier>{b7d283ca-9170-42a9-8d97-e7484783cea8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Tile Deferred">
+      <UniqueIdentifier>{6f0b21a2-6989-460a-baf6-683d79cd50c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Deferred\Geometry Pass">
+      <UniqueIdentifier>{8ebceb85-df42-463f-a843-67d32ae0b1f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Deferred\Lighting Pass">
+      <UniqueIdentifier>{ce5c2c48-3150-4b24-b50b-3ca10e5eb199}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Deferred\Lighting Pass\Common">
+      <UniqueIdentifier>{6d9ed37e-967f-4c43-878a-9f7963dbdc46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Deferred\Lighting Pass\Direction Pass">
+      <UniqueIdentifier>{77aa8f9f-4df6-4e4a-b7c5-c2143850cd56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Deferred\Lighting Pass\Point Pass">
+      <UniqueIdentifier>{8adece9a-ae7a-438e-b5db-e155cf6e7586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Deferred\Lighting Pass\Spot Pass">
+      <UniqueIdentifier>{14638d75-085d-4056-9dc5-8bd5daa7f491}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Textures">
+      <UniqueIdentifier>{7fb1fd4a-4e6e-4acb-9934-f1dc25878d62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Models">
+      <UniqueIdentifier>{e2ad1707-5b53-44a2-ba1e-7f26ea7d110a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS">
+      <UniqueIdentifier>{ffb98324-ba98-48b0-b9c7-9e3f888ce152}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS">
+      <UniqueIdentifier>{858b47e8-da6e-4d08-89bc-efda64a2c13d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World">
+      <UniqueIdentifier>{19537f15-4c7f-4ea4-9f2b-175d545ca674}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World">
+      <UniqueIdentifier>{3218de9b-70e0-4e63-9ce2-5bd23e82e08c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scratch Pad">
+      <UniqueIdentifier>{ef8325ff-cca7-4374-a696-df77c068e095}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scratch Pad">
+      <UniqueIdentifier>{c5871a8d-f223-48c6-8f1f-ce516dad3806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Geometry">
+      <UniqueIdentifier>{1ef37dcf-c95e-45b9-b4f0-161ed802e162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Geometry">
+      <UniqueIdentifier>{1032a718-8f91-4219-be4d-4eb57c95c2a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Profile Engine">
+      <UniqueIdentifier>{e579a289-4e0f-4d46-a37a-8378edc73bc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ProfileEngine">
+      <UniqueIdentifier>{0b38ce57-0746-4219-a17b-6a32b3246fc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Systems">
+      <UniqueIdentifier>{fbf15d96-f4dd-40a7-9b25-b30312d255ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Components">
+      <UniqueIdentifier>{dd651daf-2141-44f7-a1f1-74a2ed10b676}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Systems">
+      <UniqueIdentifier>{d71acc0e-2943-4d3f-bdb8-79dbe428fff7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Common\SpotLight.glsl">
+      <Filter>Resource Files\Shaders\Common</Filter>
+    </None>
+    <None Include="Shaders\Common\CalcDirectionLight.glsl">
+      <Filter>Resource Files\Shaders\Common</Filter>
+    </None>
+    <None Include="Shaders\Common\CalcLightInternal.glsl">
+      <Filter>Resource Files\Shaders\Common</Filter>
+    </None>
+    <None Include="Shaders\Common\CalcPointLight.glsl">
+      <Filter>Resource Files\Shaders\Common</Filter>
+    </None>
+    <None Include="Shaders\Common\CalcSpotLight.glsl">
+      <Filter>Resource Files\Shaders\Common</Filter>
+    </None>
+    <None Include="Shaders\Common\DirectionalLight.glsl">
+      <Filter>Resource Files\Shaders\Common</Filter>
+    </None>
+    <None Include="Shaders\Common\DirectionalLightDeferred.glsl">
+      <Filter>Resource Files\Shaders\Common</Filter>
+    </None>
+    <None Include="Shaders\Common\light_functions.glsl">
+      <Filter>Resource Files\Shaders\Common</Filter>
+    </None>
+    <None Include="Shaders\Common\light_structs.glsl">
+      <Filter>Resource Files\Shaders\Common</Filter>
+    </None>
+    <None Include="Shaders\Common\Material.glsl">
+      <Filter>Resource Files\Shaders\Common</Filter>
+    </None>
+    <None Include="Shaders\Common\PointLight.glsl">
+      <Filter>Resource Files\Shaders\Common</Filter>
+    </None>
+    <None Include="Shaders\Common\PointLightDeferred.glsl">
+      <Filter>Resource Files\Shaders\Common</Filter>
+    </None>
+    <None Include="Shaders\Deferred\GeometryPass\deferred_geometry_pass.fs">
+      <Filter>Resource Files\Shaders\Deferred\Geometry Pass</Filter>
+    </None>
+    <None Include="Shaders\Deferred\GeometryPass\deferred_geometry_pass.vs">
+      <Filter>Resource Files\Shaders\Deferred\Geometry Pass</Filter>
+    </None>
+    <None Include="Shaders\Deferred\LightingPass\DirectionalLightPass\deferred_directional_light_pass.fs">
+      <Filter>Resource Files\Shaders\Deferred\Lighting Pass\Direction Pass</Filter>
+    </None>
+    <None Include="Shaders\Forward\forward_render.fs">
+      <Filter>Resource Files\Shaders\Forward</Filter>
+    </None>
+    <None Include="Shaders\Forward\forward_render.vs">
+      <Filter>Resource Files\Shaders\Forward</Filter>
+    </None>
+    <None Include="Shaders\Deferred\LightingPass\Common\deferred_lighting_pass.fs">
+      <Filter>Resource Files\Shaders\Deferred\Lighting Pass\Common</Filter>
+    </None>
+    <None Include="Shaders\Deferred\LightingPass\Common\deferred_lighting_pass.gs">
+      <Filter>Resource Files\Shaders\Deferred\Lighting Pass\Common</Filter>
+    </None>
+    <None Include="Shaders\Deferred\LightingPass\Common\deferred_lighting_pass.vs">
+      <Filter>Resource Files\Shaders\Deferred\Lighting Pass\Common</Filter>
+    </None>
+    <None Include="Shaders\Deferred\LightingPass\Common\GBuffer.glsl">
+      <Filter>Resource Files\Shaders\Deferred\Lighting Pass\Common</Filter>
+    </None>
+    <None Include="Shaders\Common\SpotLightDeferred.glsl">
+      <Filter>Resource Files\Shaders\Common</Filter>
+    </None>
+    <None Include="Shaders\Deferred\LightingPass\SpotLightPass\deferred_spot_light_pass.fs">
+      <Filter>Resource Files\Shaders\Deferred\Lighting Pass\Spot Pass</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\CacheTemplate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DeferredPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DirectionalLightPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GeometryPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GLTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Icosphere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImageLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InputManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IOManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LightPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Lights.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MaterialCache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MathUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshCache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Nova.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PointLightPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ResourceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShaderBinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShaderError.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShaderOBJ.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShaderOBJCache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShaderOBJSource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShaderOBJType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShaderParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShaderProgram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShaderProgramCache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SkyBoxPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SpotLightPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StencilPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TextureCache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\varTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SpaceScene.h">
+      <Filter>Header Files\Scratch Pad</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MaterialTestScene.h">
+      <Filter>Header Files\Scratch Pad</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sphere.h">
+      <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Box.h">
+      <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ProfileTimer.h">
+      <Filter>Header Files\ProfileEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ProfileManager.h">
+      <Filter>Header Files\ProfileEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CTransform.h">
+      <Filter>Header Files\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StaticPool.h">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System.h">
+      <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EntityManager.h">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SystemManager.h">
+      <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DeferredPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DirectionalLightPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GeometryPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Icosphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImageLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\InputManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IOManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LightPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MaterialCache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeshCache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeshLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Nova.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PointLightPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ShaderBinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ShaderOBJ.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ShaderOBJCache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ShaderParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ShaderProgram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ShaderProgramCache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SkyBoxPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SpotLightPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StencilPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TextureCache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SpaceScene.cpp">
+      <Filter>Source Files\Scratch Pad</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MaterialTestScene.cpp">
+      <Filter>Source Files\Scratch Pad</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sphere.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Box.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ProfileTimer.cpp">
+      <Filter>Source Files\Profile Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ProfileManager.cpp">
+      <Filter>Source Files\Profile Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SystemManager.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Source\README.txt" />
+  </ItemGroup>
+</Project>

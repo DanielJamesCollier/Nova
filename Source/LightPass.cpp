@@ -1,0 +1,80 @@
+#include "LightPass.h"
+
+
+namespace Nova
+{
+	LightPass::LightPass()
+	{
+	}
+
+
+	LightPass::~LightPass()
+	{
+	}
+
+	bool LightPass::Init()
+	{
+		// get g buffer texture unit locations
+		m_positionTextureUnit = m_program->GetUniformLocation("gBufferPosition");
+		m_diffuseTextureUnit = m_program->GetUniformLocation("gBufferDiffuse");
+		m_normalTextureUnit = m_program->GetUniformLocation("gBufferNormal");
+
+		// get uniform locations
+		m_MVP = m_program->GetUniformLocation("MVP");
+		m_screenSize = m_program->GetUniformLocation("screenSize");
+		m_specularPower = m_program->GetUniformLocation("material.matSpecularPower");
+		m_eyeWorlPos = m_program->GetUniformLocation("eyeWorldPos");
+
+		// check if uniform are found in the shader;
+		if (m_positionTextureUnit == UNIFORM_NOT_FOUND ||
+			m_diffuseTextureUnit == UNIFORM_NOT_FOUND ||
+			m_normalTextureUnit == UNIFORM_NOT_FOUND ||
+			m_MVP == UNIFORM_NOT_FOUND ||
+			m_screenSize == UNIFORM_NOT_FOUND ||
+			m_specularPower == UNIFORM_NOT_FOUND ||
+			m_eyeWorlPos == UNIFORM_NOT_FOUND)
+		{
+			return false;
+		}
+
+
+		DeferredPass::Init();
+	}
+
+	void LightPass::SetMVP(const glm::mat4& MVP)
+	{
+		m_program->SetUniform4m(m_MVP, MVP);
+	}
+
+	void LightPass::SetPositionTextureUnit(unsigned int TextureUnit)
+	{
+		m_program->SetUniform1i(m_positionTextureUnit, TextureUnit);
+	}
+
+	void LightPass::SetDiffuseTextureUnit(unsigned int TextureUnit)
+	{
+		m_program->SetUniform1i(m_diffuseTextureUnit, TextureUnit);
+	}
+
+	void LightPass::SetNormalTextureUnit(unsigned int TextureUnit)
+	{
+		m_program->SetUniform1i(m_normalTextureUnit, TextureUnit);
+	}
+
+	void LightPass::SetEyeWorldPos(const glm::vec3& EyeWorldPos)
+	{
+		m_program->SetUniform3f(m_eyeWorlPos, EyeWorldPos);
+	}
+
+	void LightPass::SetMatSpecularPower(float Power)
+	{
+		m_program->SetUniform1f(m_specularPower, Power);
+	}
+
+	void LightPass::SetScreenSize(unsigned int Width, unsigned int Height)
+	{
+		m_program->SetUniform2f(m_screenSize, static_cast<float>(Width), static_cast<float>(Height));
+	}
+
+}
+
