@@ -30,7 +30,6 @@ namespace Nova
 		static unsigned int GetHeight();
 		static float GetAspectRatio();
 		static void         SetMousePosition(int x, int y);
-		static void         SetMousePosition(const glm::vec2& pos);
 		static void			SetVSync(bool value);
 		
 		bool Init();

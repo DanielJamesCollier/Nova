@@ -1,8 +1,10 @@
 #pragma once
 
 #include "Scene.h"
-#include "Transform.h"
+#include "CTransform.h"
 #include "EntityManager.h"
+#include "StaticPool.h"
+#include "Transform.h"
 #define shipCount   200
 
 namespace Nova
@@ -12,7 +14,7 @@ namespace Nova
 		class SpaceScene : public Scene
 		{
 		public:
-			SpaceScene();
+			 SpaceScene();
 			~SpaceScene();
 
 			void Initialise() override;
@@ -25,8 +27,7 @@ namespace Nova
 			float	  m_rot;
 
 			ECS::EntityManager m_entityManager;
+			StaticPool<ECS::CTransform> m_pool;
 		};
-
-
 	}
 }

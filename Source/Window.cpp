@@ -133,11 +133,6 @@ namespace Nova
 		SDL_WarpMouseInWindow(m_window, x, y);
 	}
 
-	void Window::SetMousePosition(const glm::vec2& pos)
-	{
-		SDL_WarpMouseInWindow(m_window, static_cast<float>(pos.x), static_cast<float>(pos.y));
-	}
-
 	bool Window::CheckSystemCompatability()
 	{
 		const char* version			   = (char*)glGetString(GL_VERSION);

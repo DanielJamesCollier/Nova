@@ -16,15 +16,12 @@ namespace Nova
 
 		void SystemManager::AddSystem(System& system)
 		{
-			m_systems.push_back(system);
+			//m_systems.push_back(system);
 		}
 
 		void SystemManager::Update()
 		{
-			for (System& s : m_systems)
-			{
-				s.Update();
-			}
+			//
 		}
 
 	}

@@ -49,8 +49,8 @@ namespace Nova
 
 	void Sphere::GenSphere(std::vector<glm::vec3>& vertices, std::vector<unsigned int>& indices)
 	{
-		float const R = 1. / static_cast<float>(m_rings - 1);
-		float const S = 1. / static_cast<float>(m_sectors - 1);
+		float const R = 1.0f / static_cast<float>(m_rings   - 1);
+		float const S = 1.0f / static_cast<float>(m_sectors - 1);
 
 		for (unsigned int r = 0; r < m_rings; ++r) {
 			for (unsigned int s = 0; s < m_sectors; ++s) {

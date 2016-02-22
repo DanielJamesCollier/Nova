@@ -10,6 +10,8 @@ namespace Nova
 	namespace ScratchPad
 	{
 		SpaceScene::SpaceScene()
+			:
+			m_pool(100)
 		{
 					
 		}
@@ -46,7 +48,7 @@ namespace Nova
 
 			SetSkyboxCubeMap(ResourceManager::GetCubeMap("spacebox"));
 
-			m_entityManager.
+			m_pool.AddObject(0,ECS::CTransform());
 		}
 
 		SpaceScene::~SpaceScene()

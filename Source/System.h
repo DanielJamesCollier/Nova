@@ -8,13 +8,11 @@ namespace Nova
 		class System
 		{
 		public:
-			System(EntityManager& em)
-				:
-				m_entityManager(em)
+			System()
 			{
 			}
 
-			~System()
+			virtual ~System()
 			{
 			}
 
@@ -22,7 +20,7 @@ namespace Nova
 			
 
 		private:
-			EntityManager& m_entityManager;
+		
 		};
 
 

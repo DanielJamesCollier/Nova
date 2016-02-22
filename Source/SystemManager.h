@@ -16,7 +16,7 @@ namespace Nova
 			void Update();
 
 		private:
-			std::vector<System> m_systems;
+			//std::vector<System> m_systems;
 		};
 	}
 }

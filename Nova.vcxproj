@@ -178,9 +178,11 @@
     <ClInclude Include="Source\Box.h" />
     <ClInclude Include="Source\CacheTemplate.h" />
     <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\CRenderable.h" />
     <ClInclude Include="Source\CTransform.h" />
     <ClInclude Include="Source\DeferredPass.h" />
     <ClInclude Include="Source\DirectionalLightPass.h" />
+    <ClInclude Include="Source\ECSTestScene.h" />
     <ClInclude Include="Source\EntityManager.h" />
     <ClInclude Include="Source\GBuffer.h" />
     <ClInclude Include="Source\GeometryPass.h" />
@@ -203,6 +205,7 @@
     <ClInclude Include="Source\PointLightPass.h" />
     <ClInclude Include="Source\ProfileManager.h" />
     <ClInclude Include="Source\ProfileTimer.h" />
+    <ClInclude Include="Source\RenderSystem.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
@@ -236,6 +239,7 @@
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\DeferredPass.cpp" />
     <ClCompile Include="Source\DirectionalLightPass.cpp" />
+    <ClCompile Include="Source\ECSTestScene.cpp" />
     <ClCompile Include="Source\GBuffer.cpp" />
     <ClCompile Include="Source\GeometryPass.cpp" />
     <ClCompile Include="Source\Icosphere.cpp" />

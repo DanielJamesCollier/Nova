@@ -32,7 +32,7 @@ namespace Nova
 			m_cams.push_back(cam);
 		}
 
-		const Camera& GetActiveCamera()
+		Camera& GetActiveCamera()
 		{
 			return m_cams[m_activeCam];
 		}

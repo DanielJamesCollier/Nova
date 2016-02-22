@@ -1,5 +1,6 @@
 #pragma once
 #include <algorithm>
+#include <iostream>	
 // the forward reverse map is two maps stored into one array to avoid memory fragmentation
 // the reverse map can be accesed with an index + poolSize
 
@@ -43,8 +44,6 @@ public:
 
 
 		if (m_forwardMap[id] != -1) return -1; // check if an object is allready at id location
-
-		std::cout << "passed " << std::endl;
 
 		m_forwardMap[id] = m_partition;
 		m_reverseMap[m_partition] = id;

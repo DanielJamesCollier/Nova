@@ -9,6 +9,7 @@
 #include "Logger.h"
 #include "MathUtil.h"
 #include "SpaceScene.h"
+#include "ECSTestScene.h"
 #include "MaterialTestScene.h"
 #include "ProfileManager.h"
 #include <SDL2\SDL.h>
@@ -146,6 +147,7 @@ namespace Nova
 
 		m_sceneManager.AddScene(new ScratchPad::SpaceScene());
 		m_sceneManager.AddScene(new ScratchPad::MaterialTestScene());
+		m_sceneManager.AddScene(new ScratchPad::ECSTestScene(m_geometryPass));
 
 		Profiler::ProfileManager::End("Initialisation");
 		Profiler::ProfileManager::m_FPS = 60;
@@ -542,7 +544,8 @@ namespace Nova
 		m_skyboxPass.Enable();
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, m_sceneManager.GetActiveScene()->GetSkyTexture()->id);
+		const GLuint id = m_sceneManager.GetActiveScene()->GetSkyTexture()->id;
+		glBindTexture(GL_TEXTURE_CUBE_MAP, id);
 
 		m_skyboxPass.SetMVP(m_sceneManager.GetActiveScene()->GetActiveCamera().GetViewProject() * t.GetModel());
 
