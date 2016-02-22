@@ -2,7 +2,7 @@
 
 namespace Nova
 {
-	#define MAX_ENTITES 1000
+	#define MAX_ENTITES 2500
 	namespace ScratchPad
 	{
 		ECSTestScene::ECSTestScene(GeometryPass& gPass)
@@ -25,22 +25,34 @@ namespace Nova
 
 			ECS::CRenderableTest model;
 			ECS::CTransform      trans;
+
+			int starwarsModelLocation;
 		
-			if (model.mesh = m_renderSystem.AddMesh("Models/starwars/ARC170.3DS") == -1)
+			if (starwarsModelLocation = model.mesh = m_renderSystem.AddMesh("Models/starwars/ARC170.3DS") == -1)
 			{
 				std::cout << "the model was not loaded" << std::endl;
 			}
 
-			model.material = ResourceManager::GetMaterial("starwars");
-			trans.scale = glm::vec3(0.001, 0.001, 0.001);
+			std::cout << "model location: " << starwarsModelLocation << std::endl;
 
-			for (unsigned int i = 0; i < 500; ++i)
+			Material mat("Models/starwars/Arc170_blinn1.png", "Models/starwars/Arc170_blinn1_NRM.png", "Models/starwars/Arc170_blinn1_SPEC.png", 10);
+
+			model.material = m_renderSystem.AddMaterial(mat);
+			trans.scale = glm::vec3(0.0001, 0.0001, 0.0001);
+
+			unsigned int width = 50;
+			for (unsigned int i = 0; i < width; ++i)
 			{
-				
-					m_renderComps.AddObject(i , model);
+				for (unsigned int j = 0; j < width; ++j)
+				{
 
-					trans.position = glm::vec3(0,0, i);
-					m_transformComps.AddObject(i , trans);
+			
+					m_renderComps.AddObject(i * width + j, model);
+
+					trans.position = glm::vec3(j , 0, i);
+					m_transformComps.AddObject(i * width + j, trans);
+				}
+					
 			}
 		
 			m_renderSystem.SetCamera(&GetActiveCamera());

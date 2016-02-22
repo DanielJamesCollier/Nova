@@ -8,8 +8,11 @@ namespace Nova
 	{
 
 	public:
+		Material() {}
 		Material(const std::string& diffuse, const std::string& normal, const std::string& specular, float specularPower);
 		~Material();
+
+		void DisposeGLResources();
 
 		void Bind(GLuint unit);
 
@@ -19,8 +22,11 @@ namespace Nova
 		}
 
 	private:
+	
 		GLTexture*   m_material;
 		float       m_specularPower;
+
+		friend class RenderSystem;
 	};
 
 }

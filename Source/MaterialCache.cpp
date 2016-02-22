@@ -21,6 +21,7 @@ namespace Nova
 	{
 		for (auto i = m_cache.begin(); i != m_cache.end(); i++)
 		{
+			i->second->DisposeGLResources();
 			delete i->second;
 		}
 

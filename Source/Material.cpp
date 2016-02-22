@@ -18,6 +18,11 @@ namespace Nova
 
 	Material::~Material()
 	{
+		
+	}
+
+	void Material::DisposeGLResources()
+	{
 		glDeleteTextures(1, &m_material->id);
 		if (m_material != nullptr) delete m_material;
 		m_material = nullptr;

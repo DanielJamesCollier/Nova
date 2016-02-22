@@ -67,6 +67,7 @@ namespace Nova
 
 		if (search != m_indexedMeshCache.end())
 		{
+			search->second->DisposeGLResources();
 			delete search->second;
 			m_indexedMeshCache.erase(search);
 		}

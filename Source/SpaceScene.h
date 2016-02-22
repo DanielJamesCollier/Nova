@@ -5,7 +5,7 @@
 #include "EntityManager.h"
 #include "StaticPool.h"
 #include "Transform.h"
-#define shipCount   200
+#define shipCount   100
 
 namespace Nova
 {

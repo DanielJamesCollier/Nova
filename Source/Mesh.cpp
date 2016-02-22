@@ -54,10 +54,23 @@ namespace Nova
 		glEnableVertexArrayAttrib(m_vao, normLocation);
 	}
 
+	Mesh::Mesh(const Mesh& mesh)
+	{
+		m_vao = mesh.m_vao;
+		m_vbo = mesh.m_vbo;
+		m_drawCount = mesh.m_drawCount;
+	}
+
+	Mesh::Mesh(const Mesh&& mesh)
+	{
+
+	}
+
 	Mesh::~Mesh()
 	{
 		glDeleteVertexArrays(1, &m_vao);
 		glDeleteBuffers(1, &m_vbo);
+		
 	}
 
 	void Mesh::Draw()
@@ -146,6 +159,8 @@ namespace Nova
 		GLuint normLocation = 3;
 		GLuint tangLocation = 4;
 
+		// binding index is used because multiple vbos can be used in a vao
+
 
 		// Setup the formats
 		glVertexArrayAttribFormat(m_vao, posLocation, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, pos)); // 0
@@ -174,7 +189,13 @@ namespace Nova
 		glEnableVertexArrayAttrib(m_vao, tangLocation);
 	}
 
+
 	IndexedMesh::~IndexedMesh()
+	{
+		std::cout << "mesh destructed" << std::endl;
+	}
+
+	void IndexedMesh::DisposeGLResources()
 	{
 		glDeleteVertexArrays(1, &m_vao);
 		glDeleteBuffers(2, m_buffers);

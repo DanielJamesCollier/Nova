@@ -22,7 +22,7 @@ namespace Nova
 		struct CRenderableTest
 		{
 			unsigned int mesh;
-			Material* material;
+			unsigned int material;
 		};
 	}
 }
