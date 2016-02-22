@@ -104,7 +104,7 @@ namespace Nova
 			!IOManager::DoesFileExist(posZFile) ||
 			!IOManager::DoesFileExist(negZFile))
 		{
-			Logger::ErrorBlock("Image Loader Error", "Error: the cubemap you are trying to load contains an invalid file location", true);
+			Logger::GetInstance().ErrorBlock("Image Loader Error", "Error: the cubemap you are trying to load contains an invalid file location", true);
 			return nullptr;
 		}
 
@@ -161,7 +161,7 @@ namespace Nova
 		imgData.push_back(SOIL_load_image(imagePaths[0].c_str(), &width, &height, NULL, 0));
 		if (imgData[0] == nullptr)
 		{
-			Logger::ErrorBlock("Image Loader Error", "File: " + imagePaths[0] + "\nError: the file was not loaded.", true);
+			Logger::GetInstance().ErrorBlock("Image Loader Error", "File: " + imagePaths[0] + "\nError: the file was not loaded.", true);
 			return nullptr;
 		}
 

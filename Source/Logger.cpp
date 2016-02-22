@@ -12,9 +12,12 @@
 namespace Nova
 {
 
-	std::string Logger::m_log = "";
-	std::string Logger::m_errorLog = "";
-	bool        Logger::m_blockBegun = false;
+	Logger::Logger()
+	{
+		m_log = "";
+		m_errorLog = "";
+		m_blockBegun = false;
+	}
 
 	void Logger::InfoBlock(const std::string& blockHeader, const std::string& blockInfo, bool print_to_console)
 	{

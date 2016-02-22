@@ -37,13 +37,13 @@ namespace Nova
 	{
 		if (obj == nullptr)
 		{
-			Logger::ErrorBlock("Shader Program Error", "Program: " + m_name + "\nError: The shader object that is being added to this program equals null", true);
+			Logger::GetInstance().ErrorBlock("Shader Program Error", "Program: " + m_name + "\nError: The shader object that is being added to this program equals null", true);
 			return;
 		}
 
 		if (m_linked)
 		{
-			Logger::ErrorBlock("Shader Program Error", "Program: " + m_name + "\nObject : " + obj->GetName() + "\nError: It is not possible to add another shader object to this shader\n it is allready linked", true);
+			Logger::GetInstance().ErrorBlock("Shader Program Error", "Program: " + m_name + "\nObject : " + obj->GetName() + "\nError: It is not possible to add another shader object to this shader\n it is allready linked", true);
 			return;
 		}
 
@@ -55,7 +55,7 @@ namespace Nova
 		}
 		else
 		{
-			Logger::ErrorBlock("Shader Compile Error", "Program: " + m_name + "\nObject : " + obj->GetName() + "\nError: The shader object being added to the program is not compiled", true);
+			Logger::GetInstance().ErrorBlock("Shader Compile Error", "Program: " + m_name + "\nObject : " + obj->GetName() + "\nError: The shader object being added to the program is not compiled", true);
 		}
 		
 	}
@@ -84,7 +84,7 @@ namespace Nova
 				return location;
 			}
 
-			Logger::ErrorBlock("GLSL Uniform not found", "Uniform Name: " + uniform_name + "\nLocation: " + std::to_string(location) + "\nProgram: "+ m_name + "\nError: uniform not found in the shader or uniform cache", true);
+			Logger::GetInstance().ErrorBlock("GLSL Uniform not found", "Uniform Name: " + uniform_name + "\nLocation: " + std::to_string(location) + "\nProgram: "+ m_name + "\nError: uniform not found in the shader or uniform cache", true);
 			return location; // returns -1
 		}
 
@@ -107,7 +107,7 @@ namespace Nova
 				return location;
 			}
 
-			Logger::ErrorBlock("GLSL Attribute not found", "Attribute Name: " + attribute_name + "\nLocation: " + std::to_string(location) + "Error: attribute not found in the shader or attribute cache", false);
+			Logger::GetInstance().ErrorBlock("GLSL Attribute not found", "Attribute Name: " + attribute_name + "\nLocation: " + std::to_string(location) + "Error: attribute not found in the shader or attribute cache", false);
 			return location; // returns -1
 		}
 
@@ -284,7 +284,7 @@ namespace Nova
 			else
 				glGetShaderInfoLog(shader, sizeof(error), NULL, error);
 
-			Logger::ErrorBlock(errorMessage, error, true);
+			Logger::GetInstance().ErrorBlock(errorMessage, error, true);
 			return false;
 		}
 		return true;

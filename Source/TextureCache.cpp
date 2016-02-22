@@ -34,7 +34,7 @@ namespace Nova
 		}
 		else
 		{
-			Logger::ErrorBlock("TextureCache Error", "Error: the texture \"" + texturePath + "\" could not be disposed as\n it was not found in the cache", true);
+			Logger::GetInstance().ErrorBlock("TextureCache Error", "Error: the texture \"" + texturePath + "\" could not be disposed as\n it was not found in the cache", true);
 		}
 	}
 
@@ -49,7 +49,7 @@ namespace Nova
 		}
 		else
 		{
-			Logger::ErrorBlock("Texture Cache Error", "Error: the cubemap \"" + name + "\" could not be disposed as\n it was not found in the cache", true);
+			Logger::GetInstance().ErrorBlock("Texture Cache Error", "Error: the cubemap \"" + name + "\" could not be disposed as\n it was not found in the cache", true);
 		}
 	}
 
@@ -91,12 +91,12 @@ namespace Nova
 			// if texture was not found in the filesystem then return the texture not found texture
 			if (texture == nullptr)
 			{
-				Logger::ErrorBlock("TextureCache Error", "Error: the texture \"" + path + "\" was not found in the filesystem\nsolution: used default texture.", true);
+				Logger::GetInstance().ErrorBlock("TextureCache Error", "Error: the texture \"" + path + "\" was not found in the filesystem\nsolution: used default texture.", true);
 				return GetTexture("TextureNotFound.png");
 			}
 			else
 			{
-				Logger::ErrorBlock("TextureCache Error", "Error: the texture \"" + path + "\" was not found in the cache\nsolution: loaded texture from the file system and added to the cache.", true);
+				Logger::GetInstance().ErrorBlock("TextureCache Error", "Error: the texture \"" + path + "\" was not found in the cache\nsolution: loaded texture from the file system and added to the cache.", true);
 				m_cache.emplace(path, texture);
 				return texture;
 			}
@@ -120,7 +120,7 @@ namespace Nova
 			// if texture was not found in the filesystem then do nothing
 			if (texture == nullptr)
 			{
-				Logger::ErrorBlock("TextureCache Error", "Error: the texture \"" + path + "\" was not found in the filesystem\nsolution: no texture was added to the cache, please choose a different texture.", true);
+				Logger::GetInstance().ErrorBlock("TextureCache Error", "Error: the texture \"" + path + "\" was not found in the filesystem\nsolution: no texture was added to the cache, please choose a different texture.", true);
 				return;
 			}
 			else
@@ -130,7 +130,7 @@ namespace Nova
 		}
 		else
 		{
-			Logger::InfoBlock("TextureCache Info", "INFO: the texture you are trying to add \"" + path + "is allready cached", true);
+			Logger::GetInstance().InfoBlock("TextureCache Info", "INFO: the texture you are trying to add \"" + path + "is allready cached", true);
 		}
 	}
 
@@ -146,7 +146,7 @@ namespace Nova
 			// if texture was not found in the filesystem then do nothing
 			if (texture == nullptr)
 			{
-				Logger::ErrorBlock("TextureCache Error", "Error: the texture \"" + path + "\" was not found in the filesystem\nsolution: no texture was added to the cache, please choose a different texture.", true);
+				Logger::GetInstance().ErrorBlock("TextureCache Error", "Error: the texture \"" + path + "\" was not found in the filesystem\nsolution: no texture was added to the cache, please choose a different texture.", true);
 				return;
 			}
 			else
@@ -156,7 +156,7 @@ namespace Nova
 		}
 		else
 		{
-			Logger::InfoBlock("TextureCache Info", "INFO: the texture you are trying to add \"" + path + "is allready cached", true);
+			Logger::GetInstance().InfoBlock("TextureCache Info", "INFO: the texture you are trying to add \"" + path + "is allready cached", true);
 		}
 	}
 
@@ -184,11 +184,11 @@ namespace Nova
 
 		if (cubemap == nullptr)
 		{
-			Logger::ErrorBlock("Texture Cache Error", "Name: " + name + "\nError: the cube map could not be cached as it was not loaded", true);
+			Logger::GetInstance().ErrorBlock("Texture Cache Error", "Name: " + name + "\nError: the cube map could not be cached as it was not loaded", true);
 			return;
 		}
 
-		Logger::InfoBlock("Texture Cache", "Name: " + name + "\nInfo: the cube map was added to the cache", true);
+		Logger::GetInstance().InfoBlock("Texture Cache", "Name: " + name + "\nInfo: the cube map was added to the cache", true);
 		m_cubemapCache.emplace(name, cubemap);
 	}
 
@@ -196,11 +196,11 @@ namespace Nova
 	{
 		if (texture == nullptr || texture->id == -1 || texture->type != GL_TEXTURE_CUBE_MAP) 
 		{
-			Logger::ErrorBlock("Texture Cache Error", "Name: " + name + "\nError: the cubemap could not be added to the cache", true);
+			Logger::GetInstance().ErrorBlock("Texture Cache Error", "Name: " + name + "\nError: the cubemap could not be added to the cache", true);
 			return;
 		}
 
-		Logger::InfoBlock("Texture Cache", "Name: " + name + "\nInfo: the cube map was added to the cache", true);
+		Logger::GetInstance().InfoBlock("Texture Cache", "Name: " + name + "\nInfo: the cube map was added to the cache", true);
 		m_cubemapCache.emplace(name, texture);
 	}
 
@@ -210,7 +210,7 @@ namespace Nova
 
 		if (search == m_cubemapCache.end())
 		{
-			Logger::ErrorBlock("Texture Cache Error", "Name: " + name + "\nError: the cubemap could not be retrieved from the cache", true);
+			Logger::GetInstance().ErrorBlock("Texture Cache Error", "Name: " + name + "\nError: the cubemap could not be retrieved from the cache", true);
 			return nullptr;
 		}
 
@@ -219,7 +219,7 @@ namespace Nova
 
 	void TextureCache::PrintCacheInfo()
 	{
-		Logger::InfoBlock("TextureCache Info", "Cached Textures: " + std::to_string(m_cache.size()), true);
+		Logger::GetInstance().InfoBlock("TextureCache Info", "Cached Textures: " + std::to_string(m_cache.size()), true);
 	}
 
 	

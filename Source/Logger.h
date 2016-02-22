@@ -14,27 +14,36 @@ namespace Nova
 
 		/*Constructors & Destructor*/
 		/*--------------------------*/
-		Logger() = delete;
-		~Logger()  = delete;
+	
 		/*--------------------------*/
+
+		static Logger& GetInstance()
+		{
+			static Logger instance;
+
+			return instance;
+		}
+
+		Logger(Logger const&)   = delete;
+		void operator=(Logger&) = delete;
 
 
 		/*Debug Info Block Printers*/
 		/*--------------------------*/
-		static void InfoBlock(const std::string& block_header, const std::string& block_info, bool print_to_console);
-		static void InfoBlock(const std::string& block_header, const std::vector<char>& block_info, bool print_to_console);
-		static void InfoBlock(const std::string& block_header, const std::string& block_info_s, const std::vector<char>& block_info, bool print_to_console);
-		static void InfoBlockBegin(const std::string& blockHeader);
-		static void InfoBlockMessage(const std::string& infoBlock);
-		static void InfoBlockEnd();
+		void InfoBlock(const std::string& block_header, const std::string& block_info, bool print_to_console);
+		void InfoBlock(const std::string& block_header, const std::vector<char>& block_info, bool print_to_console);
+		void InfoBlock(const std::string& block_header, const std::string& block_info_s, const std::vector<char>& block_info, bool print_to_console);
+		void InfoBlockBegin(const std::string& blockHeader);
+		void InfoBlockMessage(const std::string& infoBlock);
+		void InfoBlockEnd();
 		/*--------------------------*/
 
 
 		/*Debug Error Block Printers*/
 		/*--------------------------*/
-		static void ErrorBlock(const std::string& block_header, const std::string& block_error, bool print_to_console);
-		static void ErrorBlock(const std::string& block_header, const std::vector<char>& block_error, bool print_to_console);
-		static void ErrorBlock(const std::string& block_header, const std::string& block_error_s, const std::vector<char>& block_error, bool print_to_console);
+		void ErrorBlock(const std::string& block_header, const std::string& block_error, bool print_to_console);
+		void ErrorBlock(const std::string& block_header, const std::vector<char>& block_error, bool print_to_console);
+		void ErrorBlock(const std::string& block_header, const std::string& block_error_s, const std::vector<char>& block_error, bool print_to_console);
 		/*static void ErrorBlockBegin();
 		static void ErrorBlockMessage();
 		static void ErrorBlockEnd();*/
@@ -43,23 +52,23 @@ namespace Nova
 
 		/*Dump to file*/
 		/*--------------------------*/
-		static void DumpLogsToFile();
+		void DumpLogsToFile();
 		/*--------------------------*/
 
 	private:
-
+		Logger();
 
 		/*private functions*/
 		/*--------------------------*/
-		static void				 DumpInfoLogToFile();
-		static void			     DumpErrorLogToFile();
-		static const std::string GetCurrentDateAndTime();
+		void				 DumpInfoLogToFile();
+		void			     DumpErrorLogToFile();
+		const std::string GetCurrentDateAndTime();
 		/*--------------------------*/
 
 
-		static std::string m_log;
-		static std::string m_errorLog;
-		static bool        m_blockBegun;
+		std::string m_log;
+		std::string m_errorLog;
+		bool        m_blockBegun;
 
 	};
 }

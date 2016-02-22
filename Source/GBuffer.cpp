@@ -70,7 +70,7 @@ namespace Nova
 
 		if (status == GL_FRAMEBUFFER_COMPLETE)
 		{
-			Logger::InfoBlock("Frame Buffer Created", "the GBuffer was created for the new deferred renderer", true);
+			Logger::GetInstance().InfoBlock("Frame Buffer Created", "the GBuffer was created for the new deferred renderer", true);
 		}
 
 		// restore default fbo

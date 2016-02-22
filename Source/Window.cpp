@@ -83,7 +83,7 @@ namespace Nova
 
 		if (err != GLEW_OK)
 		{
-			Logger::ErrorBlock("GLEW init failed", "Error: get glew error string", true);
+			Logger::GetInstance().ErrorBlock("GLEW init failed", "Error: get glew error string", true);
 			std::getchar();
 			return false;
 		}
@@ -156,14 +156,14 @@ namespace Nova
 								"\nRequired:        4.5.0\n"+
 								"Solutions:       check if the Opengl drivers are up to date\n                 or get a new graphics card\n\nPress any key to exit";
 
-			Logger::ErrorBlock("System Requirments Error", error, true);
+			Logger::GetInstance().ErrorBlock("System Requirments Error", error, true);
 
 			std::getchar();
 
 			return false;
 		}
 		
-			Logger::InfoBlock("System Info",
+		Logger::GetInstance().InfoBlock("System Info",
 				"Opengl Version:           " + std::string(version) + "\n" +
 				"Shading Language Version: " + std::string(shadinglangVersion) + "\n" +
 				"Renderer:                 " + std::string(renderer) + "\n" +

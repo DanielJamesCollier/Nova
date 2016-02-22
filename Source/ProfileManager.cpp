@@ -61,11 +61,14 @@ namespace Nova
 		void ProfileManager::Display()
 		{
 			double frameTime = static_cast<double>(1.0) / static_cast<double>(m_FPS);
-			Logger::InfoBlockBegin("Profiler Info");
+
+			Logger& log = Logger::GetInstance();
+
+			log.InfoBlockBegin("Profiler Info");
 
 			std::ostringstream fps; fps << "FPS: " << m_FPS << std::endl;
 
-			Logger::InfoBlockMessage(fps.str());
+			log.InfoBlockMessage(fps.str());
 
 			for (ProfileTimer p : m_pTimers)
 			{
@@ -77,9 +80,9 @@ namespace Nova
 
 				buffer << p.m_name << ": " << p.m_timeSpan.count() << "(" << percent << "%)" << std::endl;
 
-				Logger::InfoBlockMessage(buffer.str());
+				log.InfoBlockMessage(buffer.str());
 			}
-			Logger::InfoBlockEnd();
+			log.InfoBlockEnd();
 
 			m_pTimers.clear();
 		}

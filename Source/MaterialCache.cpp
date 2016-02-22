@@ -38,7 +38,7 @@ namespace Nova
 			return;
 		}
 
-		Logger::ErrorBlock("Material Cache Error", "Name: " + name + "\nError: the material you where trying to dispose was not found", true);
+		Logger::GetInstance().ErrorBlock("Material Cache Error", "Name: " + name + "\nError: the material you where trying to dispose was not found", true);
 	}
 
 	void MaterialCache::AddMaterial(const std::string& name, Material* material)
@@ -49,7 +49,7 @@ namespace Nova
 			return;
 		}
 		
-		Logger::ErrorBlock("Material Cache Error", "Name: " + name + "\nError: the material equals nullptr",true);
+		Logger::GetInstance().ErrorBlock("Material Cache Error", "Name: " + name + "\nError: the material equals nullptr",true);
 	}
 
 	Material* MaterialCache::GetMaterial(const std::string& name)
@@ -61,7 +61,7 @@ namespace Nova
 			return search->second;
 		}
 
-		Logger::ErrorBlock("Material cache Error", "Name: " + name + "\nError: the material was not found in the cache", true);
+		Logger::GetInstance().ErrorBlock("Material cache Error", "Name: " + name + "\nError: the material was not found in the cache", true);
 		return nullptr;
 	}
 }

@@ -35,7 +35,7 @@ namespace Nova
 
 		if (search == m_cache.end())
 		{
-			Logger::ErrorBlock("ShaderOBJ Cache Error", "Error: you are trying to dispose an item that is not in the cache.\nItem: " + filePath, true);
+			Logger::GetInstance().ErrorBlock("ShaderOBJ Cache Error", "Error: you are trying to dispose an item that is not in the cache.\nItem: " + filePath, true);
 			return;
 		}
 
@@ -87,7 +87,7 @@ namespace Nova
 		if (search != m_cache.end())
 		{
 			// item allready found in the cache
-			Logger::ErrorBlock("ShaderOBJCache Error", "Name: " + filePath + "\nError: the shader object you are trying to add to the cache is allready added", true);
+			Logger::GetInstance().ErrorBlock("ShaderOBJCache Error", "Name: " + filePath + "\nError: the shader object you are trying to add to the cache is allready added", true);
 			return;
 		}
 		else
@@ -106,13 +106,13 @@ namespace Nova
 				else
 				{
 					// shaderOBJ didnt compile correctly
-					Logger::ErrorBlock("ShaderOBJCache Error", "Error: the shader didnt compile correctly", true);
+					Logger::GetInstance().ErrorBlock("ShaderOBJCache Error", "Error: the shader didnt compile correctly", true);
 				}
 			}
 			else
 			{
 				// shaderOBJ had loading errors
-				Logger::ErrorBlock("ShaderOBJCache Error", "Error: the shader didnt have the correct file type", true);
+				Logger::GetInstance().ErrorBlock("ShaderOBJCache Error", "Error: the shader didnt have the correct file type", true);
 				
 			}
 		}
@@ -125,7 +125,7 @@ namespace Nova
 		if (search != m_cache.end())
 		{
 			// item allready found in the cache
-			Logger::ErrorBlock("ShaderOBJCache Error", "Name: " + name + "\nError: the shader object you are trying to add to the cache is allready added", true);
+			Logger::GetInstance().ErrorBlock("ShaderOBJCache Error", "Name: " + name + "\nError: the shader object you are trying to add to the cache is allready added", true);
 			return;
 		}
 		else
@@ -143,13 +143,13 @@ namespace Nova
 				else
 				{
 					// shaderOBJ didnt compile correctly
-					Logger::ErrorBlock("ShaderOBJCache Error", "Error: the shader didnt compile correctly", true);
+					Logger::GetInstance().ErrorBlock("ShaderOBJCache Error", "Error: the shader didnt compile correctly", true);
 				}
 			}
 			else
 			{
 				// shaderOBJ had loading errors
-				Logger::ErrorBlock("ShaderOBJCache Error", "Error: the shader didnt have the correct file type", true);
+				Logger::GetInstance().ErrorBlock("ShaderOBJCache Error", "Error: the shader didnt have the correct file type", true);
 
 			}
 		}
@@ -162,13 +162,13 @@ namespace Nova
 		if (search != m_cache.end())
 		{
 			// item allready found in the cache
-			Logger::ErrorBlock("ShaderOBJCache Error", "Name: " + name + "\nError: the shader object you are trying to add to the cache is allready added", true);
+			Logger::GetInstance().ErrorBlock("ShaderOBJCache Error", "Name: " + name + "\nError: the shader object you are trying to add to the cache is allready added", true);
 			return;
 		}
 
 		if (obj == nullptr)
 		{
-			Logger::ErrorBlock("ShaderOBJCache Error", "Name: " + name + "\nError: the shader object you are trying to add to the cache is null",true);
+			Logger::GetInstance().ErrorBlock("ShaderOBJCache Error", "Name: " + name + "\nError: the shader object you are trying to add to the cache is null",true);
 			return;
 		}
 
@@ -178,7 +178,7 @@ namespace Nova
 			return;
 		}
 		
-		Logger::ErrorBlock("ShaderOBJCache Error", "Name: " + name + "\nError: the shader was either the wrong type or failed compilation", true);
+		Logger::GetInstance().ErrorBlock("ShaderOBJCache Error", "Name: " + name + "\nError: the shader was either the wrong type or failed compilation", true);
 	}
 
 	void ShaderOBJCache::PrintCacheContent()

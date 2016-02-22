@@ -18,7 +18,7 @@ namespace Nova
 			if (isProgram) glGetProgramInfoLog(shader, sizeof(error), NULL, error);
 			else           glGetShaderInfoLog(shader, sizeof(error), NULL, error);
 
-			Logger::ErrorBlock(errorMessage, error, true);
+			Logger::GetInstance().ErrorBlock(errorMessage, error, true);
 			return false;
 		}
 

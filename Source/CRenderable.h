@@ -21,7 +21,7 @@ namespace Nova
 		// CRenderable with indirection
 		struct CRenderableTest
 		{
-			IndexedMesh* mesh;
+			unsigned int mesh;
 			Material* material;
 		};
 	}

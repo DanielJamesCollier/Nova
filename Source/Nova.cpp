@@ -62,21 +62,21 @@ namespace Nova
 				m_geometryPass.SetDiffuseTextureUnit(0);
 				m_geometryPass.SetNormalTextureUnit(1);
 
-				Logger::InfoBlock("Deferred Renderer", "Info: geometry pass initialised", true);
+				Logger::GetInstance().InfoBlock("Deferred Renderer", "Info: geometry pass initialised", true);
 			}
 			else
 			{
-				Logger::ErrorBlock("Geometry Pass Error", "Error: the geometry pass could not be intitialised", true);
+				Logger::GetInstance().ErrorBlock("Geometry Pass Error", "Error: the geometry pass could not be intitialised", true);
 			}
 
 			/*Stencil pass*/
 			if (m_stencilPass.Init())
 			{
-				Logger::InfoBlock("Deferred Renderer", "Info: stencil pass initialised", true);
+				Logger::GetInstance().InfoBlock("Deferred Renderer", "Info: stencil pass initialised", true);
 			}
 			else
 			{
-				Logger::ErrorBlock("Stencil Pass Error", "Error: the stencil pass could not be intitialised", true);
+				Logger::GetInstance().ErrorBlock("Stencil Pass Error", "Error: the stencil pass could not be intitialised", true);
 			}
 
 			/*point light pass*/
@@ -87,11 +87,11 @@ namespace Nova
 				m_pointLightPass.SetNormalTextureUnit(m_gBuffer.GB_NORMAL);
 				m_pointLightPass.SetScreenSize(m_window->GetWidth(), m_window->GetHeight());
 
-				Logger::InfoBlock("Deferred Renderer", "Info: point light pass initialised", true);
+				Logger::GetInstance().InfoBlock("Deferred Renderer", "Info: point light pass initialised", true);
 			}
 			else
 			{
-				Logger::ErrorBlock("Point Light Pass Error", "Error: point light pass could not be initialised", true);
+				Logger::GetInstance().ErrorBlock("Point Light Pass Error", "Error: point light pass could not be initialised", true);
 			}
 
 			/*directional light pass*/
@@ -102,11 +102,11 @@ namespace Nova
 				m_dirLightPass.SetNormalTextureUnit(m_gBuffer.GB_NORMAL);
 				m_dirLightPass.SetScreenSize(m_window->GetWidth(), m_window->GetHeight());
 
-				Logger::InfoBlock("Deferred Renderer", "Info: directional light pass initialised", true);
+				Logger::GetInstance().InfoBlock("Deferred Renderer", "Info: directional light pass initialised", true);
 			}
 			else
 			{
-				Logger::ErrorBlock("Directional Light Pass Error", "Error: directional light pass could not be initialised", true);
+				Logger::GetInstance().ErrorBlock("Directional Light Pass Error", "Error: directional light pass could not be initialised", true);
 			}
 
 			/* spot light pass*/
@@ -117,22 +117,22 @@ namespace Nova
 				m_spotLightPass.SetNormalTextureUnit(m_gBuffer.GB_NORMAL);
 				m_spotLightPass.SetScreenSize(m_window->GetWidth(), m_window->GetHeight());
 
-				Logger::InfoBlock("Deferred Renderer", "Info: spot light pass initialised", true);
+				Logger::GetInstance().InfoBlock("Deferred Renderer", "Info: spot light pass initialised", true);
 			}
 			else
 			{
-				Logger::ErrorBlock("Spot Light Pass Error", "Error: spot light pass could not be initialised", true);
+				Logger::GetInstance().ErrorBlock("Spot Light Pass Error", "Error: spot light pass could not be initialised", true);
 			}
 
 			/* skybox pass */
 			if (m_skyboxPass.Init())
 			{
 				m_skyboxPass.SetCubeMapTextureUnit(0);
-				Logger::InfoBlock("Deferred Renderer", "Info: skybox pass initialised", true);
+				Logger::GetInstance().InfoBlock("Deferred Renderer", "Info: skybox pass initialised", true);
 			}
 			else
 			{
-				Logger::ErrorBlock("Spot Light Pass Error", "Error: skybox pass could not be initialised", true);
+				Logger::GetInstance().ErrorBlock("Spot Light Pass Error", "Error: skybox pass could not be initialised", true);
 			}
 
 		}

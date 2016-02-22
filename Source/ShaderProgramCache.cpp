@@ -36,7 +36,7 @@ namespace Nova
 		}
 		else
 		{
-			Logger::ErrorBlock("Shader Program Could Not Be Deleted", "Error: the program could not be found in the program cache\nPRogram: " + programName, true);
+			Logger::GetInstance().ErrorBlock("Shader Program Could Not Be Deleted", "Error: the program could not be found in the program cache\nPRogram: " + programName, true);
 		}
 	}
 
@@ -44,12 +44,12 @@ namespace Nova
 	{
 		if (program == nullptr)
 		{
-			Logger::ErrorBlock("ShaderProgramCache", "Name: " + program->GetName() + "\nError: the program you are trying to add to the cache is null", true);
+			Logger::GetInstance().ErrorBlock("ShaderProgramCache", "Name: " + program->GetName() + "\nError: the program you are trying to add to the cache is null", true);
 			return;
 		}
 		else if (!program->IsLinked())
 		{
-			Logger::ErrorBlock("ShaderProgramCache", "Name: " + program->GetName() + "\nError: the program you are trying to add to the cache is not linked", true);
+			Logger::GetInstance().ErrorBlock("ShaderProgramCache", "Name: " + program->GetName() + "\nError: the program you are trying to add to the cache is not linked", true);
 			return;
 		}
 
@@ -70,7 +70,7 @@ namespace Nova
 			return search->second;
 		}
 
-		Logger::ErrorBlock("Shader Program Could Not Be Found", "Error: program not found in shader cache\nProgram: " + program_name, true);
+		Logger::GetInstance().ErrorBlock("Shader Program Could Not Be Found", "Error: program not found in shader cache\nProgram: " + program_name, true);
 
 		return nullptr;
 	}

@@ -13,7 +13,7 @@ namespace Nova
 			return true;
 		}
 		else {
-			Logger::ErrorBlock("IOManager Error", "File: " + file_name + "\nError: this file does not exist", true);
+			Logger::GetInstance().ErrorBlock("IOManager Error", "File: " + file_name + "\nError: this file does not exist", true);
 			return false;
 		}
 	}

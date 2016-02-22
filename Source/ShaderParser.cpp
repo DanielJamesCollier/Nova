@@ -160,12 +160,12 @@ namespace Nova
 			}
 			else
 			{
-				Logger::ErrorBlock("Shader Parser Error", "Error: file not found\nFile: " + filePath,true);
+				Logger::GetInstance().ErrorBlock("Shader Parser Error", "Error: file not found\nFile: " + filePath,true);
 			}
 		}
 		else
 		{
-			Logger::ErrorBlock("Shader Parser Error", "Error: the included file must be of type .glsl\nFile: " + filePath,true);
+			Logger::GetInstance().ErrorBlock("Shader Parser Error", "Error: the included file must be of type .glsl\nFile: " + filePath,true);
 		}
 	}
 }

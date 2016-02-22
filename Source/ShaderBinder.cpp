@@ -43,7 +43,7 @@ namespace Nova
 		ShaderProgram* program = ResourceManager::GetShaderProgram(shaderProgram);
 		if (program == nullptr)
 		{
-			Logger::ErrorBlock("ShaderBinder Error", "Error: the shader program trying to be bound equals null", true);
+			Logger::GetInstance().ErrorBlock("ShaderBinder Error", "Error: the shader program trying to be bound equals null", true);
 			return;
 		}
 

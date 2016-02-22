@@ -1,5 +1,4 @@
 #include "MeshCache.h"
-#include "MeshLoader.h"
 #include "IOManager.h"
 #include "Logger.h"
 #include "Mesh.h"
@@ -7,7 +6,10 @@
 namespace Nova
 {
 	MeshCache::MeshCache()
+		:
+		m_meshLoader(MeshLoader::GetInstance())
 	{
+	
 	}
 
 
@@ -17,7 +19,7 @@ namespace Nova
 
 	void MeshCache::Init()
 	{
-
+	
 	}
 
 	void MeshCache::Dispose()
@@ -55,7 +57,7 @@ namespace Nova
 		}
 		else
 		{
-			Logger::ErrorBlock("Mesh Cache Error", "Cache: MeshCache\nError: the mesh you are trying to remove is not in the cache\nMesh: " + name, true);
+			Logger::GetInstance().ErrorBlock("Mesh Cache Error", "Cache: MeshCache\nError: the mesh you are trying to remove is not in the cache\nMesh: " + name, true);
 		}
 	}
 
@@ -70,7 +72,7 @@ namespace Nova
 		}
 		else
 		{
-			Logger::ErrorBlock("Mesh Cache Error", "Cache: IndexMeshCache\nError: the mesh you are trying to remove is not in the cache\nMesh: " + name, true);
+			Logger::Logger::GetInstance().ErrorBlock("Mesh Cache Error", "Cache: IndexMeshCache\nError: the mesh you are trying to remove is not in the cache\nMesh: " + name, true);
 		}
 	}
 
@@ -85,7 +87,7 @@ namespace Nova
 
 		if (search != m_meshCache.end())
 		{
-			Logger::ErrorBlock("Mesh Cache Error", "Error: a mesh already exists in the cache with that name\nName: " + filepath, true);
+			Logger::GetInstance().ErrorBlock("Mesh Cache Error", "Error: a mesh already exists in the cache with that name\nName: " + filepath, true);
 		}
 		else
 		{
@@ -104,7 +106,7 @@ namespace Nova
 		{
 			if (IOManager::DoesFileExist(filePath))
 			{
-				IndexedMesh* mesh = MeshLoader::LoadIndexedMesh(filePath);
+				IndexedMesh* mesh = m_meshLoader.LoadIndexedMesh_heap(filePath);
 
 				if (mesh)
 				{
@@ -131,20 +133,20 @@ namespace Nova
 
 		if (search != m_indexedMeshCache.end())
 		{
-			Logger::ErrorBlock("Mesh Cache Error", "Error: a mesh already exists in the cache with that name\nName: " + filePath, true);
+			Logger::GetInstance().ErrorBlock("Mesh Cache Error", "Error: a mesh already exists in the cache with that name\nName: " + filePath, true);
 		}
 		else
 		{
 			if (IOManager::DoesFileExist(filePath))
 			{
-				IndexedMesh* mesh = MeshLoader::LoadIndexedMesh(filePath);
+				IndexedMesh* mesh = m_meshLoader.LoadIndexedMesh_heap(filePath);
 				if (mesh)
 				{
 					m_indexedMeshCache.emplace(name, mesh);
 				}
 				else
 				{
-					Logger::ErrorBlock("Mesh Cache Error", "Error: the mesh could not be added to the cache because it didnt load properly", true);
+					Logger::GetInstance().ErrorBlock("Mesh Cache Error", "Error: the mesh could not be added to the cache because it didnt load properly", true);
 				}
 			}
 		}
@@ -156,20 +158,20 @@ namespace Nova
 
 		if (search != m_indexedMeshCache.end())
 		{
-			Logger::ErrorBlock("Mesh Cache Error", "Error: a mesh already exists in the cache with that name\nName: " + filepath, true);
+			Logger::GetInstance().ErrorBlock("Mesh Cache Error", "Error: a mesh already exists in the cache with that name\nName: " + filepath, true);
 		}
 		else
 		{
 			if (IOManager::DoesFileExist(filepath))
 			{
-				IndexedMesh* mesh = MeshLoader::LoadIndexedMesh(filepath);
+				IndexedMesh* mesh = m_meshLoader.LoadIndexedMesh_heap(filepath);
 				if (mesh) 
 				{
 					m_indexedMeshCache.emplace(filepath, mesh);
 				}
 				else
 				{
-					Logger::ErrorBlock("Mesh Cache Error", "Error: the mesh could not be added to the cache because it didnt load properly",true);
+					Logger::GetInstance().ErrorBlock("Mesh Cache Error", "Error: the mesh could not be added to the cache because it didnt load properly",true);
 				}
 			}
 		}

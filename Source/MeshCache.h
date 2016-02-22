@@ -2,6 +2,7 @@
 #include "CacheTemplate.h"
 #include <unordered_map>
 #include <string>
+#include "MeshLoader.h"
 
 namespace Nova
 {
@@ -32,6 +33,7 @@ namespace Nova
 	private:
 		std::unordered_map<std::string, Mesh*>		  m_meshCache;
 		std::unordered_map<std::string, IndexedMesh*> m_indexedMeshCache;
+		MeshLoader&								  m_meshLoader;
 	};
 
 

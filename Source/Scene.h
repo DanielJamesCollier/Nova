@@ -79,7 +79,7 @@ namespace Nova
 		{
 			if (skybox->type != GL_TEXTURE_CUBE_MAP)
 			{
-				Logger::ErrorBlock("Scene Error", "the skybox could not be set at the texture was not a cubemap", true);
+				Logger::GetInstance().ErrorBlock("Scene Error", "the skybox could not be set at the texture was not a cubemap", true);
 				return;
 			}
 			m_skytexture = skybox;
