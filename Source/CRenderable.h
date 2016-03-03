@@ -5,21 +5,8 @@ namespace Nova
 {
 	namespace ECS
 	{
-		// final cRenderable that will use batching - TODO
-		struct CRenderable
-		{
-			CRenderable(int mesh, int material)
-			{
-				meshIndex = mesh;
-				materialIndex = material;
-			}
-
-			int meshIndex;
-			int materialIndex;
-		};
-
 		// CRenderable with indirection
-		struct CRenderableTest
+		struct CRenderable
 		{
 			unsigned int mesh;
 			unsigned int material;

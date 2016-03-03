@@ -145,15 +145,15 @@ namespace Nova
 
 		InitFullScreenQuad();
 
-		m_sceneManager.AddScene(new ScratchPad::SpaceScene());
-		m_sceneManager.AddScene(new ScratchPad::MaterialTestScene());
+		//m_sceneManager.AddScene(new ScratchPad::SpaceScene());
+		//m_sceneManager.AddScene(new ScratchPad::MaterialTestScene());
 		m_sceneManager.AddScene(new ScratchPad::ECSTestScene(m_geometryPass));
 
 		Profiler::ProfileManager::End("Initialisation");
 		Profiler::ProfileManager::m_FPS = 60;
 		Profiler::ProfileManager::Display();
 
-//		m_entityManager.AddSystem(ECS::System(m_entityManager));
+//	m_entityManager.AddSystem(ECS::System(m_entityManager));	
 
 		Run();
 	}

@@ -5,7 +5,7 @@
 int main(int argc, char* argv[])
 {
 
-	Nova::Window* window = new Nova::Window("opengl window", 1920, 1080);
+	Nova::Window* window = new Nova::Window("opengl window", 720, 720);
 
 	//window->SetVSync(false);
 

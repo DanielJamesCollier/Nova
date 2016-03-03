@@ -1,5 +1,17 @@
 #include "ECSTestScene.h"
 
+/*
+BUGS
+
+- program crashes when initialise does not call the SetSkyboxCube() func
+- the add material function of Render System does not account for failed material loading
+- materials and meshes should abstract the opengl resource creation into a GLCore class
+- look at a better way of handeling the camera for the render system
+- add instancing 
+- look at a better way to partition the active / dead entities - currently the render system loops over all
+
+*/
+
 namespace Nova
 {
 	#define MAX_ENTITES 2500
@@ -21,9 +33,24 @@ namespace Nova
 
 		void ECSTestScene::Initialise()
 		{
-			SetSkyboxCubeMap(ResourceManager::GetCubeMap("spacebox")); // if this line isnt here the program crasshes, add a default cube map
+			if (GetInitialised()) return;
+			SetInitialised(true);
 
-			ECS::CRenderableTest model;
+			////// cubemap //////
+			std::string redsky = "Textures/Skyboxes/redsky/";
+
+			ResourceManager::CacheCubeMap("redsky",
+				redsky + "r.png",
+				redsky + "l.png",
+				redsky + "up.png", // top of sphere
+				redsky + "bot.png", // bottom of sphere
+				redsky + "front.png",
+				redsky + "back.png");
+			////////////////
+
+			SetSkyboxCubeMap(ResourceManager::GetCubeMap("redsky"));
+
+			ECS::CRenderable model;
 			ECS::CTransform      trans;
 
 			int starwarsModelLocation;
@@ -40,7 +67,7 @@ namespace Nova
 			model.material = m_renderSystem.AddMaterial(mat);
 			trans.scale = glm::vec3(0.0001, 0.0001, 0.0001);
 
-			unsigned int width = 50;
+			unsigned int width = 20;
 			for (unsigned int i = 0; i < width; ++i)
 			{
 				for (unsigned int j = 0; j < width; ++j)
@@ -56,6 +83,31 @@ namespace Nova
 			}
 		
 			m_renderSystem.SetCamera(&GetActiveCamera());
+
+			
+			// moon
+			{
+				unsigned int moonID = 402;
+				Material moon_mat("Models/planets/moon/MoonMap2_2500x1250.png", "Models/planets/moon/MoonMap2_2500x1250_NRM.png", "Models/planets/moon/MoonMap2_2500x1250_NRM.png", 10);
+
+				// set transform component vars
+				trans.Reset();
+				trans.position = glm::vec3(0, 0, -5);
+				trans.scale = glm::vec3(0.1, 0.1, 0.1);
+
+				// set model component vars
+				model.mesh = m_renderSystem.AddMesh("Models/planets/moon/moon.obj");
+				model.material = m_renderSystem.AddMaterial(moon_mat);
+
+				std::cout << "mesh index id: " << model.mesh << std::endl;
+
+				// add components
+				m_transformComps.AddObject(moonID, trans);
+				m_renderComps.AddObject(moonID, model);
+
+
+			}
+			
 			
 		}
 

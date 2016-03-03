@@ -22,7 +22,7 @@ namespace Nova
 
 		private:
 			StaticPool<ECS::CTransform>  m_transformComps;
-			StaticPool<ECS::CRenderableTest> m_renderComps;
+			StaticPool<ECS::CRenderable> m_renderComps;
 			ECS::RenderSystem m_renderSystem;
 		};
 	}

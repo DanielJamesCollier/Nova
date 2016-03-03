@@ -1,6 +1,7 @@
 #pragma once
 #include "GLTexture.h"
 #include <string>	
+#include <assert.h>
 
 namespace Nova
 {
@@ -18,12 +19,13 @@ namespace Nova
 
 		GLuint GetID()
 		{
+			//assert(m_material == nullptr);
 			return m_material->id;
 		}
 
 	private:
 	
-		GLTexture*   m_material;
+		GLTexture*   m_material = nullptr;
 		float       m_specularPower;
 
 		friend class RenderSystem;

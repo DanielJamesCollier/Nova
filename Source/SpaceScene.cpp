@@ -76,9 +76,9 @@ namespace Nova
 
 			starwars->DrawBegin();
 			m_transform.GetScale() = glm::vec3(0.001f);
-			for (int i = 0; i < 50; i++)
+			for (int i = 0; i < 20; i++)
 			{
-				for (int j = 0; j < 50; j++)
+				for (int j = 0; j < 20; j++)
 				{
 					m_transform.GetPos() = glm::vec3(i * 5, 0, j * 5);
 					gPass->SetMVP(m_transform.GetMVP(GetActiveCamera().GetViewProject()));

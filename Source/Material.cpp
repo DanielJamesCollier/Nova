@@ -2,6 +2,7 @@
 #include "ImageLoader.h"
 #include <iostream>
 
+
 namespace Nova
 {
 	Material::Material(const std::string& diffuse, const std::string& normal, const std::string& specular, float specularPower)
