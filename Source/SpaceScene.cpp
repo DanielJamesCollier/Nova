@@ -48,7 +48,7 @@ namespace Nova
 
 			SetSkyboxCubeMap(ResourceManager::GetCubeMap("spacebox"));
 
-			m_pool.AddObject(0,ECS::CTransform());
+			m_pool.AddObject(0,ECS::Component::CTransform());
 		}
 
 		SpaceScene::~SpaceScene()
@@ -75,12 +75,12 @@ namespace Nova
 			ResourceManager::GetMaterial("starwars")->Bind(0);
 
 			starwars->DrawBegin();
-			m_transform.GetScale() = glm::vec3(0.001f);
+			m_transform.SetScale(glm::vec3(0.001f));
 			for (int i = 0; i < 20; i++)
 			{
 				for (int j = 0; j < 20; j++)
 				{
-					m_transform.GetPos() = glm::vec3(i * 5, 0, j * 5);
+					m_transform.SetPosition(glm::vec3(i * 5, 0, j * 5));
 					gPass->SetMVP(m_transform.GetMVP(GetActiveCamera().GetViewProject()));
 					gPass->SetModel(m_transform.GetModel());
 					starwars->DrawGroup();
@@ -97,8 +97,8 @@ namespace Nova
 
 			static const IndexedMesh* ship = ResourceManager::GetIndexedMesh("spaceship");
 
-			m_transform.GetRot() = glm::vec3(-90, -90, 0);
-			m_transform.GetScale() = glm::vec3(10, 10, 10);
+			m_transform.SetRotation(glm::vec3(-90, -90, 0));
+			m_transform.SetScale(glm::vec3(10, 10, 10));
 
 			gPass->SetMVP(m_transform.GetMVP(GetActiveCamera().GetViewProject()));
 			gPass->SetModel(m_transform.GetModel());
@@ -114,9 +114,9 @@ namespace Nova
 
 			m_transform.Reset();
 
-			m_transform.GetScale() = glm::vec3(0.1, 0.1, 0.1);
-			m_transform.GetPos() = glm::vec3(25, 10, 25);
-			m_transform.GetRot() = glm::vec3(0, m_rot * 5, 10);
+			m_transform.SetScale(glm::vec3(0.1, 0.1, 0.1));
+			m_transform.SetPosition(glm::vec3(25, 10, 25));
+			m_transform.SetRotation(glm::vec3(0, m_rot * 5, 10));
 
 			gPass->SetMVP(m_transform.GetMVP(GetActiveCamera().GetViewProject()));
 			gPass->SetModel(m_transform.GetModel());
@@ -125,8 +125,8 @@ namespace Nova
 
 			m_transform.Reset();
 
-			m_transform.GetPos() = glm::vec3(200, 0, 25);
-			m_transform.GetRot() = glm::vec3(0, m_rot * 5, 0);
+			m_transform.SetPosition(glm::vec3(200, 0, 25));
+			m_transform.SetRotation(glm::vec3(0, m_rot * 5, 0));
 
 			gPass->SetMVP(m_transform.GetMVP(GetActiveCamera().GetViewProject()));
 			gPass->SetModel(m_transform.GetModel());

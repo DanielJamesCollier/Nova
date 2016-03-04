@@ -5,12 +5,11 @@
 
 #include "Vertex.h"
 #include "Mesh.h"
-#include "Transform.h"
 #include "Camera.h"
 #include "Lights.h"
 #include "SceneManager.h"
 #include "ProfileTimer.h"
-
+#include "CTransform.h"
 #include "Material.h"
 #include <vector>
 
@@ -69,7 +68,7 @@ namespace Nova
 		Window*			m_window;
 		InputManager	m_inputManager;
 
-		Transform transform;
+		ECS::Component::CTransform m_transform;
 
 		SceneManager m_sceneManager;
 

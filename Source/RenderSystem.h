@@ -26,7 +26,7 @@ namespace Nova
 		struct RenderBatch
 		{
 		public:
-			std::vector<CTransform> transform;
+			std::vector<Component::CTransform> transform;
 			unsigned int            material;
 			unsigned int			mesh;
 		};
@@ -35,7 +35,7 @@ namespace Nova
 		{
 		public:
 			RenderSystem() = delete;
-			RenderSystem(GeometryPass& gPass, StaticPool<CTransform>& transformComps, StaticPool<CRenderable>& renderComps)
+			RenderSystem(GeometryPass& gPass, StaticPool<Component::CTransform>& transformComps, StaticPool<Component::CRenderable>& renderComps)
 				:
 				m_mesh(MAX_MESHES),
 				m_material(MAX_MATERIALS),
@@ -112,8 +112,8 @@ namespace Nova
 
 				for (unsigned int i = 0; i < r_poolSize; ++i)
 				{
-					const CTransform& tComp = m_cTransforms.GetObject(i, valid);
-					const CRenderable& rComp = m_cRenderable.GetObject(i, valid);
+					const Component::CTransform& tComp = m_cTransforms.GetObject(i, valid);
+					const Component::CRenderable& rComp = m_cRenderable.GetObject(i, valid);
 
 					if (valid) // if entity has a transform and a renderable comp process it
 					{
@@ -177,7 +177,7 @@ namespace Nova
 						for (unsigned int j = 0; j < r_numBatchItems; ++j)
 						{
 							//
-							CTransform& trans = m_batches[i].transform[j];
+							Component::CTransform& trans = m_batches[i].transform[j];
 							glm::mat4 model = trans.GetModel();
 							glm::mat4 mvp = trans.GetMVP(m_camera->GetViewProject());
 
@@ -201,12 +201,10 @@ namespace Nova
 
 				for (unsigned int i = 0; i < r_poolSize; ++i)
 				{
-					
+					Component::CTransform& tComp = m_cTransforms.GetObject(i, valid);
+					Component::CRenderable& rComp = m_cRenderable.GetObject(i, valid);
 
-					//CRenderable& rComp = m_cRenderable.GetObject(i, valid);
-					const CTransform& tComp = m_cTransforms.GetObject(i, valid);
-					const CRenderable& rComp = m_cRenderable.GetObject(i, valid);
-					if (valid) // remove this when all entities with a cRenderable have to have a transform
+					if (valid)
 					{
 						Material&     mat = m_material.GetObject(rComp.material, valid);
 						IndexedMesh& mesh = m_mesh.GetObject(rComp.mesh, valid);
@@ -216,22 +214,19 @@ namespace Nova
 
 						if (valid)
 						{
-
 							if (rComp.material != m_currentMat)
 							{
 								mat.Bind(0);
 								m_currentMat = rComp.material;
 							}
-
 							mesh.Draw();
-
 						}
 					}
 				}
 			}
 			
-			StaticPool<CTransform>&       m_cTransforms;
-			StaticPool<CRenderable>&      m_cRenderable;
+			StaticPool<Component::CTransform>&       m_cTransforms;
+			StaticPool<Component::CRenderable>&      m_cRenderable;
 			StaticPool<IndexedMesh>       m_mesh;
 			StaticPool<Material>          m_material;
 			std::vector<RenderBatch>      m_batches;

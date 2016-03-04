@@ -21,8 +21,8 @@ namespace Nova
 			void Render(GeometryPass* gPass) override;
 
 		private:
-			StaticPool<ECS::CTransform>  m_transformComps;
-			StaticPool<ECS::CRenderable> m_renderComps;
+			StaticPool<ECS::Component::CTransform>  m_transformComps;
+			StaticPool<ECS::Component::CRenderable> m_renderComps;
 			ECS::RenderSystem m_renderSystem;
 		};
 	}

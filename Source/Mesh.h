@@ -41,10 +41,9 @@ namespace Nova
 	public:
 		 IndexedMesh(){}
 		 IndexedMesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
-		 IndexedMesh(Vertex* vertices, GLuint vCount, const std::vector<unsigned int> indices);
 		~IndexedMesh();
 
-		void DisposeGLResources();
+		void DisposeGLResources() const;
 
 		void Draw(DrawMode drawMode = DrawMode::NOVA_TRIANGLES) const;
 
@@ -54,16 +53,11 @@ namespace Nova
 		void DrawGroup() const;
 		void DrawEnd() const;
 
-		static unsigned int GetDrawCallCount();
-		static void ResetDrawCalls();
 
 	protected:
 
 		GLuint m_vao;
 		GLuint m_buffers[2]; // vbo and index buffer
-		GLuint m_drawCount = 0;
-
-	private:
-		static unsigned int m_drawCallCount;
+		GLuint m_indicesCount = 0;
 	};
 }

@@ -4,7 +4,7 @@
 #include "CTransform.h"
 #include "EntityManager.h"
 #include "StaticPool.h"
-#include "Transform.h"
+#include "CTransform.h"
 #define shipCount   100
 
 namespace Nova
@@ -23,11 +23,11 @@ namespace Nova
 			void Render(GeometryPass* gPass) override;
 
 		private:
-			Transform m_transform;
+			ECS::Component::CTransform m_transform;
 			float	  m_rot;
 
 			ECS::EntityManager m_entityManager;
-			StaticPool<ECS::CTransform> m_pool;
+			StaticPool<ECS::Component::CTransform> m_pool;
 		};
 	}
 }

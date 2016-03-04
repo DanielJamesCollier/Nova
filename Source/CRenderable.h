@@ -5,11 +5,13 @@ namespace Nova
 {
 	namespace ECS
 	{
-		// CRenderable with indirection
-		struct CRenderable
+		namespace Component
 		{
-			unsigned int mesh;
-			unsigned int material;
-		};
+			struct CRenderable
+			{
+				unsigned int mesh;
+				unsigned int material;
+			};
+		}	
 	}
 }

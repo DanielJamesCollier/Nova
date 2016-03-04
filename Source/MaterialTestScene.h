@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-#include "Transform.h"
+#include "CTransform.h"
 
 namespace Nova
 {
@@ -18,7 +18,7 @@ namespace Nova
 			void Render(GeometryPass* gPass) override;
 
 		private:
-			Transform m_transform;
+			ECS::Component::CTransform m_transform;
 		};
 
 	}

@@ -12,10 +12,8 @@
 #include "ECSTestScene.h"
 #include "MaterialTestScene.h"
 #include "ProfileManager.h"
-#include <SDL2\SDL.h>
-
 #include "Shader.h"
-
+#include <SDL2\SDL.h>
 #include <math.h>
 #include <vector>
 
@@ -366,15 +364,15 @@ namespace Nova
 
 		 if (m_displayVolumes)
 		 {
-			transform.Reset();
+			m_transform.Reset();
 
 			m_sphere->DrawBegin(DrawMode::NOVA_WIREFRAME);
 			for (int i = 0; i < pLightCount; i++)
 			{
-				transform.GetPos() = pLights[i].position;
-				transform.GetScale() = glm::vec3(Lights::CalcPointLightBSphere(pLights[i]));
-				m_geometryPass.SetMVP(transform.GetMVP(m_sceneManager.GetActiveScene()->GetActiveCamera().GetViewProject()));
-				m_geometryPass.SetModel(transform.GetModel());
+				m_transform.SetPosition(pLights[i].position);
+				m_transform.SetScale(glm::vec3(Lights::CalcPointLightBSphere(pLights[i])));
+				m_geometryPass.SetMVP(m_transform.GetMVP(m_sceneManager.GetActiveScene()->GetActiveCamera().GetViewProject()));
+				m_geometryPass.SetModel(m_transform.GetModel());
 
 				m_sphere->DrawGroup();
 			}
@@ -405,12 +403,12 @@ namespace Nova
 		glStencilOpSeparate(GL_BACK, GL_KEEP, GL_INCR_WRAP, GL_KEEP);
 		glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_DECR_WRAP, GL_KEEP);
 
-		Transform t;
+		m_transform.Reset();
 		
-		t.GetPos()    = pLights[i].position;
-		t.GetScale()  = glm::vec3(Lights::CalcPointLightBSphere(pLights[i]));
+		m_transform.SetPosition(pLights[i].position);
+		m_transform.SetScale(glm::vec3(Lights::CalcPointLightBSphere(pLights[i])));
 
-		glm::mat4 mvp = m_sceneManager.GetActiveScene()->GetActiveCamera().GetViewProject() * t.GetModel();
+		glm::mat4 mvp = m_sceneManager.GetActiveScene()->GetActiveCamera().GetViewProject() * m_transform.GetModel();
 		m_stencilPass.SetMVP(mvp);
 	
 		m_sphere->Draw();
@@ -457,7 +455,7 @@ namespace Nova
 		glBlendEquation(GL_FUNC_ADD);
 		glBlendFunc(GL_ONE, GL_ONE);
 
-		Transform t;
+		m_transform.Reset();
 
 		glBindVertexArray(m_vaoQuad);
 		for (unsigned int i = 0; i < dLightCount; i++)
@@ -481,8 +479,8 @@ namespace Nova
 	{
 		m_gBuffer.BindForFinalPass();
 
-		GLuint width = Window::GetWidth();
-		GLuint height = Window::GetHeight();
+		static const GLuint width = Window::GetWidth();
+		static const GLuint height = Window::GetHeight();
 		
 		glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 	
@@ -537,9 +535,9 @@ namespace Nova
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-		Transform t;
+		m_transform.Reset();
 
-		t.GetScale() = glm::vec3(500, 500, 500);
+		m_transform.SetScale(glm::vec3(500, 500, 500));
 
 		m_skyboxPass.Enable();
 
@@ -547,7 +545,7 @@ namespace Nova
 		const GLuint id = m_sceneManager.GetActiveScene()->GetSkyTexture()->id;
 		glBindTexture(GL_TEXTURE_CUBE_MAP, id);
 
-		m_skyboxPass.SetMVP(m_sceneManager.GetActiveScene()->GetActiveCamera().GetViewProject() * t.GetModel());
+		m_skyboxPass.SetMVP(m_sceneManager.GetActiveScene()->GetActiveCamera().GetViewProject() * m_transform.GetModel());
 
 		m_sphere->Draw();
 		glDepthFunc(GL_LESS);

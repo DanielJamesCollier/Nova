@@ -34,8 +34,7 @@ namespace Nova
 		
 		bool Init();
 
-		static void TakeScreenShot();
-	
+		static void TakeScreenShot();	
 
 	private:
 		static unsigned int m_width, m_height;

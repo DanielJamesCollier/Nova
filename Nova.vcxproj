@@ -180,8 +180,13 @@
   <ItemGroup>
     <ClInclude Include="Source\Box.h" />
     <ClInclude Include="Source\CacheTemplate.h" />
+    <ClInclude Include="Source\CAmbientLight.h" />
     <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\CDirectionalLight.h" />
+    <ClInclude Include="Source\CEntityName.h" />
+    <ClInclude Include="Source\CPointLight.h" />
     <ClInclude Include="Source\CRenderable.h" />
+    <ClInclude Include="Source\CSpotLight.h" />
     <ClInclude Include="Source\CTransform.h" />
     <ClInclude Include="Source\DeferredPass.h" />
     <ClInclude Include="Source\DirectionalLightPass.h" />
@@ -231,7 +236,6 @@
     <ClInclude Include="Source\System.h" />
     <ClInclude Include="Source\SystemManager.h" />
     <ClInclude Include="Source\TextureCache.h" />
-    <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\Utils.h" />
     <ClInclude Include="Source\varTypes.h" />
     <ClInclude Include="Source\Vertex.h" />
@@ -278,7 +282,6 @@
     <ClCompile Include="Source\System.cpp" />
     <ClCompile Include="Source\SystemManager.cpp" />
     <ClCompile Include="Source\TextureCache.cpp" />
-    <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\Utils.cpp" />
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>

@@ -37,7 +37,7 @@ namespace Nova
 
 		glEnableVertexArrayAttrib(m_vao, posLocation);
 
-		m_drawCount = indices.size();
+		m_indicesCount = indices.size();
 
 	}
 

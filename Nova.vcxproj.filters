@@ -91,6 +91,9 @@
     <Filter Include="Header Files\ECS\Systems">
       <UniqueIdentifier>{d71acc0e-2943-4d3f-bdb8-79dbe428fff7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ECS\Components\Lights">
+      <UniqueIdentifier>{a0d57c4e-c553-487e-ba7e-ac2ab8516801}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Common\SpotLight.glsl">
@@ -272,9 +275,6 @@
     <ClInclude Include="Source\StencilPass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Transform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -337,6 +337,21 @@
     </ClInclude>
     <ClInclude Include="Source\ECSTestScene.h">
       <Filter>Header Files\Scratch Pad</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CPointLight.h">
+      <Filter>Header Files\ECS\Components\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CDirectionalLight.h">
+      <Filter>Header Files\ECS\Components\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSpotLight.h">
+      <Filter>Header Files\ECS\Components\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CEntityName.h">
+      <Filter>Header Files\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CAmbientLight.h">
+      <Filter>Header Files\ECS\Components\Lights</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -425,9 +440,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\StencilPass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utils.cpp">
