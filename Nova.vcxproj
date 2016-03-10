@@ -182,6 +182,7 @@
     <ClInclude Include="Source\CacheTemplate.h" />
     <ClInclude Include="Source\CAmbientLight.h" />
     <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\CAttenuation.h" />
     <ClInclude Include="Source\CDirectionalLight.h" />
     <ClInclude Include="Source\CEntityName.h" />
     <ClInclude Include="Source\CPointLight.h" />

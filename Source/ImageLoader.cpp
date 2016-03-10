@@ -9,6 +9,7 @@
 
 #include <iostream>
 
+
 namespace Nova
 {
 	GLTexture* ImageLoader::LoadTexture(const std::string& file_path, unsigned int texture_type, bool genMipmap)
@@ -35,6 +36,7 @@ namespace Nova
 		glTexParameteri(texture_type, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(texture_type, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
+		glTextureParameterf(texture_type, GL_TEXTURE_LOD_BIAS, -1);
 		if (genMipmap)
 		{
 			glTexParameterf(texture_type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -46,6 +48,13 @@ namespace Nova
 			glTexParameteri(texture_type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexParameteri(texture_type, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		}
+
+		//TODO check if capable
+		float amount = GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT;
+
+		std::cout << "max: " << amount << std::endl;
+
+		glTexParameterf(texture_type, GL_TEXTURE_MAX_ANISOTROPY_EXT, amount);
 
 		// unbind the texture and free data
 		glBindTexture(texture_type, 0);
@@ -155,7 +164,6 @@ namespace Nova
 		// important because array texture layers have to be of the same dimension
 
 		std::vector<unsigned char*> imgData;
-		imgData.reserve(imagePaths.size());
 
 		// the first image in the image paths vector defines the dimensions for the texture array
 		imgData.push_back(SOIL_load_image(imagePaths[0].c_str(), &width, &height, NULL, 0));
@@ -214,6 +222,13 @@ namespace Nova
 			glTexParameteri(tex->type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexParameteri(tex->type, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		}
+
+
+		//TODO check if capable // anisostropic texture filtering
+		float amount = 0.0f; 
+		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &amount);
+		std::cout << "max: " << amount << std::endl;
+		glTexParameterf(tex->type, GL_TEXTURE_MAX_ANISOTROPY_EXT, amount);
 
 		for (unsigned int i = 0; i < imagePaths.size(); i++)
 		{

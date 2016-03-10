@@ -8,15 +8,20 @@
 #include "GeometryPass.h"
 #include "Camera.h"
 #include "MeshLoader.h"
+#include "CSpotLight.h"
+#include "CPointLight.h"
+#include "CDirectionalLight.h"
 #include <iostream>
 #include <array>
 #include <vector>	
 #include <tuple>
 #include <unordered_map>
 
-#define MAX_ENTITIES 1000
-#define MAX_MESHES 100
-#define MAX_MATERIALS 100
+#define MAX_ENTITIES     1000
+#define MAX_MESHES       100
+#define MAX_MATERIALS    100
+#define MAX_LIGHTS_POINT 500
+#define MAX_LIGHTS_SPOT  500
 
 namespace Nova
 {
@@ -25,7 +30,6 @@ namespace Nova
 
 		struct RenderBatch
 		{
-		public:
 			std::vector<Component::CTransform> transform;
 			unsigned int            material;
 			unsigned int			mesh;
@@ -39,6 +43,8 @@ namespace Nova
 				:
 				m_mesh(MAX_MESHES),
 				m_material(MAX_MATERIALS),
+				m_pointLights(MAX_LIGHTS_POINT),
+				m_spotLights(MAX_LIGHTS_SPOT),
 				m_cTransforms(transformComps),
 				m_cRenderable(renderComps),
 				m_gPass(gPass),
@@ -50,16 +56,16 @@ namespace Nova
 			~RenderSystem()
 			{
 				bool valid;
-				for (unsigned int i = 0, size = m_mesh.GetPoolSize(); i < size; ++i)
+				for (unsigned int i = 0, size = m_mesh.GetActiveObjectCount(); i < size; ++i)
 				{
-					IndexedMesh& mesh = m_mesh.GetObject(i, valid);
+					IndexedMesh& mesh = m_mesh.GetObjectWithPoolID(i, valid);
 
 					if (valid) mesh.DisposeGLResources();
 				}
 
-				for (unsigned int i = 0, size = m_material.GetPoolSize(); i < size; ++i)
+				for (unsigned int i = 0, size = m_material.GetActiveObjectCount(); i < size; ++i)
 				{
-					Material& mat = m_material.GetObject(i, valid);
+					Material& mat = m_material.GetObjectWithPoolID(i, valid);
 
 					if (valid) mat.DisposeGLResources();
 				}
@@ -94,33 +100,29 @@ namespace Nova
 			{
 				BuildBatches();
 				DrawBatches();
-			
-
-				//OldUpdate();
 			}
-
-
+		
 		private:
 
 			void BuildBatches()
 			{
-				static const unsigned int r_poolSize = m_cRenderable.GetPoolSize();
+				unsigned int r_poolSize = m_cRenderable.GetActiveObjectCount();
 				std::unordered_map<unsigned int, unsigned int> m_meshToIndex;
 				unsigned int index = 0;
 
-				bool valid;
+				bool valid = false;
 
 				for (unsigned int i = 0; i < r_poolSize; ++i)
 				{
-					const Component::CTransform& tComp = m_cTransforms.GetObject(i, valid);
-					const Component::CRenderable& rComp = m_cRenderable.GetObject(i, valid);
+					unsigned int staticID = 0;
+					const Component::CRenderable& rComp = m_cRenderable.GetObjectWithPoolID(i, staticID, valid);
+					const Component::CTransform& tComp  = m_cTransforms.GetObjectWithStaticID(staticID, valid);
+					
 
 					if (valid) // if entity has a transform and a renderable comp process it
 					{
 						// maps mesh id's to an index location in the m_batches vector
 						// used to check if a back aready exist for that mesh
-
-					
 
 						auto search = m_meshToIndex.find(rComp.mesh);
 
@@ -157,88 +159,58 @@ namespace Nova
 
 			void DrawBatches()
 			{
-				static const unsigned int r_poolSize = m_batches.size();
+				unsigned int r_poolSize = m_batches.size();
 				//std::cout << "number of batches: " << r_poolSize << std::endl;
 				for (unsigned int i = 0; i < r_poolSize; ++i)
 				{
-
-
 					bool valid;
 
-					IndexedMesh& mesh = m_mesh.GetObject(i, valid);
-					Material& material = m_material.GetObject(m_batches[i].material, valid);
+
+					IndexedMesh& mesh = m_mesh.GetObjectWithStaticID(m_batches[i].mesh, valid);
+					Material& material = m_material.GetObjectWithStaticID(m_batches[i].material, valid);
 
 					material.Bind(0);
 
 					mesh.DrawBegin();
 					{
-						const unsigned int r_numBatchItems = m_batches[i].transform.size();
+						unsigned int r_numBatchItems = m_batches[i].transform.size();
 
 						for (unsigned int j = 0; j < r_numBatchItems; ++j)
 						{
 							//
 							Component::CTransform& trans = m_batches[i].transform[j];
-							glm::mat4 model = trans.GetModel();
-							glm::mat4 mvp = trans.GetMVP(m_camera->GetViewProject());
 
-							m_gPass.SetModel(model);
-							m_gPass.SetMVP(mvp);
+							m_gPass.SetModel(trans.GetModel());
+							m_gPass.SetMVP(trans.GetMVP(m_camera->GetViewProject()));
 
-							mesh.Draw();
+							mesh.DrawGroup();
 						}
 
 					}
 					mesh.DrawEnd();
 				}
 				m_batches.clear();
-			}
+			}			
 
+			// components
+			StaticPool<Component::CTransform>&        m_cTransforms;
+			StaticPool<Component::CRenderable>&       m_cRenderable;
+			StaticPool<Component::Light::CPointLight> m_pointLights;
+			StaticPool<Component::Light::CSpotLight>  m_spotLights;
+			Component::Light::CDirectionalLight       m_directionalLight;
 
-			void OldUpdate()
-			{
-				static const unsigned int r_poolSize = m_cRenderable.GetPoolSize();
-				bool valid;
+			// data pools
+			StaticPool<IndexedMesh>					 m_mesh;
+			StaticPool<Material>					 m_material;
 
-				for (unsigned int i = 0; i < r_poolSize; ++i)
-				{
-					Component::CTransform& tComp = m_cTransforms.GetObject(i, valid);
-					Component::CRenderable& rComp = m_cRenderable.GetObject(i, valid);
-
-					if (valid)
-					{
-						Material&     mat = m_material.GetObject(rComp.material, valid);
-						IndexedMesh& mesh = m_mesh.GetObject(rComp.mesh, valid);
-
-						m_gPass.SetModel(tComp.GetModel());
-						m_gPass.SetMVP(tComp.GetMVP(m_camera->GetViewProject()));
-
-						if (valid)
-						{
-							if (rComp.material != m_currentMat)
-							{
-								mat.Bind(0);
-								m_currentMat = rComp.material;
-							}
-							mesh.Draw();
-						}
-					}
-				}
-			}
+			// batches
+			std::vector<RenderBatch>				 m_batches;
 			
-			StaticPool<Component::CTransform>&       m_cTransforms;
-			StaticPool<Component::CRenderable>&      m_cRenderable;
-			StaticPool<IndexedMesh>       m_mesh;
-			StaticPool<Material>          m_material;
-			std::vector<RenderBatch>      m_batches;
-		
+			// data
 			GeometryPass& m_gPass;
 			Camera*       m_camera;
 			MeshLoader&   m_meshLoader;
-			int           m_currentMat;
-
-
-
-			
+			int           m_currentMat;			
 		};
 	}
 }

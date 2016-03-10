@@ -143,7 +143,7 @@ namespace Nova
 
 		InitFullScreenQuad();
 
-		//m_sceneManager.AddScene(new ScratchPad::SpaceScene());
+		m_sceneManager.AddScene(new ScratchPad::SpaceScene());
 		//m_sceneManager.AddScene(new ScratchPad::MaterialTestScene());
 		m_sceneManager.AddScene(new ScratchPad::ECSTestScene(m_geometryPass));
 
@@ -403,12 +403,12 @@ namespace Nova
 		glStencilOpSeparate(GL_BACK, GL_KEEP, GL_INCR_WRAP, GL_KEEP);
 		glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_DECR_WRAP, GL_KEEP);
 
-		m_transform.Reset();
+		m_transform.Reset(); // expensive
 		
-		m_transform.SetPosition(pLights[i].position);
-		m_transform.SetScale(glm::vec3(Lights::CalcPointLightBSphere(pLights[i])));
+		m_transform.SetPosition(pLights[i].position); // expensive
+		m_transform.SetScale(glm::vec3(Lights::CalcPointLightBSphere(pLights[i]))); // expensive
 
-		glm::mat4 mvp = m_sceneManager.GetActiveScene()->GetActiveCamera().GetViewProject() * m_transform.GetModel();
+		glm::mat4 mvp = m_sceneManager.GetActiveScene()->GetActiveCamera().GetViewProject() * m_transform.GetModel(); // expensive
 		m_stencilPass.SetMVP(mvp);
 	
 		m_sphere->Draw();

@@ -52,23 +52,44 @@ public:
 	}
 
 
-	T& GetObject(unsigned int index, bool& valid)
+	T& GetObjectWithStaticID(unsigned int id, bool& valid)
 	{
-		int componentPoolIndex = m_forwardMap[index];
+		int componentPoolIndex = m_forwardMap[id];
 
-		if (index > m_poolSize)
+		if (id > m_poolSize || componentPoolIndex == -1 || componentPoolIndex > m_partition)
 		{
 			valid = false;
-			return m_pool[m_poolSize];
-		}
-		else if(componentPoolIndex == -1 || componentPoolIndex > m_partition)
-		{
-			valid = false;
-			return m_pool[m_poolSize];
+			return T();
 		}
 
 		valid = true;
 		return m_pool[componentPoolIndex];
+	}
+
+	T& GetObjectWithPoolID(unsigned int id, bool& valid)
+	{
+		if (id > m_partition || id > m_poolSize)
+		{
+			valid = false;
+			return T();
+		}
+
+		valid = true;
+		return m_pool[id];
+	}
+
+	T& GetObjectWithPoolID(unsigned int id,unsigned int& staticID, bool& valid)
+	{
+		if (id > m_partition || id > m_poolSize)
+		{
+			valid    = false;
+			staticID = 0;
+			return T();
+		}
+
+		valid    = true;
+		staticID = m_reverseMap[id];
+		return m_pool[id];
 	}
 	
 	void RemoveObject(unsigned int index)

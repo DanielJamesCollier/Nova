@@ -13,7 +13,7 @@
 #include "Material.h"
 #include <vector>
 
-#define pLightCount 500
+#define pLightCount 100
 #define sLightCount 1
 #define dLightCount 1
 

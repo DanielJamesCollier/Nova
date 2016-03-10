@@ -353,6 +353,9 @@
     <ClInclude Include="Source\CAmbientLight.h">
       <Filter>Header Files\ECS\Components\Lights</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CAttenuation.h">
+      <Filter>Header Files\ECS\Components\Lights</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Camera.cpp">
