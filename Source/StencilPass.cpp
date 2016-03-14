@@ -1,9 +1,9 @@
 #include "StencilPass.h"
 #include "ResourceManager.h"
-
+#include "NovaGLDefines.h"
+#include <assert.h>
 namespace Nova
 {
-
 	StencilPass::StencilPass()
 	{
 	}
@@ -15,6 +15,8 @@ namespace Nova
 
 	bool StencilPass::Init()
 	{
+		assert(m_initialised);
+
 		/*DIRECTION LIGHT SHADER PASS*/
 		m_program = new ShaderProgram("stencilPass.glsl");
 		m_program->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Deferred/StencilPass/StencilPass.fs"));
@@ -25,8 +27,9 @@ namespace Nova
 
 		m_mvp = m_program->GetUniformLocation("MVP");
 
-		if (m_mvp == UNIFORM_NOT_FOUND)
+		if (m_mvp == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND)
 		{
+			m_initialised = false;
 			return false;
 		}
 

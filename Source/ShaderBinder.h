@@ -8,14 +8,12 @@ namespace Nova
 	class ShaderBinder
 	{
 	public:
-		ShaderBinder();
-		~ShaderBinder();
-
-		static void Init();
-		static void Dispose();
+		 ShaderBinder() = delete;
+		~ShaderBinder()
+		{
+		}
 
 		static void BindShaderProgram(ShaderProgram* program);
-		static void BindShaderProgram(const std::string& shaderProgram);
 		static void UnbindShaderProgram();
 		static ShaderProgram* GetCurretBoundProgram();
 

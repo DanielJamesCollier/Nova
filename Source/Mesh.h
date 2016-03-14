@@ -14,28 +14,6 @@ namespace Nova
 		
 	};
 
-	class Mesh
-	{
-	public:
-		 Mesh(Vertex* vertices, GLuint vCount);
-		 Mesh(const Mesh& mesh); // copy constructor
-		 Mesh(const Mesh&& mesh); // move constructor
-		~Mesh();
-
-		void operator=(Mesh& mesh)
-		{
-
-		}
-
-		void Draw();
-
-	private:
-	
-		GLuint m_vao;
-		GLuint m_vbo;
-		GLuint m_drawCount;
-	};
-
 	class IndexedMesh
 	{
 	public:

@@ -36,15 +36,9 @@ namespace Nova
 		void	   CacheTexture(const std::string& name, GLTexture* texture);
 		void	   CacheCubeMap(const std::string& name, const std::string& posX, const std::string& negX, const std::string& posY, const std::string& negY, const std::string& posZ, const std::string& negZ);
 		void	   CacheCubeMap(const std::string& name, GLTexture* texture);
-		GLTexture* GetCubeMap(const std::string& name);
-	
+		GLTexture* GetCubeMap(const std::string& name);	
 		/*--------------------------*/
 
-
-		/*Texture Arrays*/
-		/*--------------------------*/
-		GLTexture* Create2DTextureArray(const std::string& arrayName,const std::vector<std::string>& texturePaths, int maxWidth, int maxHeight, int layerCount);
-		/*--------------------------*/
 
 		void PrintCacheInfo();
 

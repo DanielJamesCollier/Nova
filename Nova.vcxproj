@@ -178,6 +178,7 @@
     <None Include="Shaders\Forward\forward_render.vs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Array2D.h" />
     <ClInclude Include="Source\Box.h" />
     <ClInclude Include="Source\CacheTemplate.h" />
     <ClInclude Include="Source\CAmbientLight.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Source\MeshCache.h" />
     <ClInclude Include="Source\MeshLoader.h" />
     <ClInclude Include="Source\Nova.h" />
+    <ClInclude Include="Source\NovaGLDefines.h" />
     <ClInclude Include="Source\PointLightPass.h" />
     <ClInclude Include="Source\ProfileManager.h" />
     <ClInclude Include="Source\ProfileTimer.h" />
@@ -236,6 +238,7 @@
     <ClInclude Include="Source\StencilPass.h" />
     <ClInclude Include="Source\System.h" />
     <ClInclude Include="Source\SystemManager.h" />
+    <ClInclude Include="Source\TextureBinder.h" />
     <ClInclude Include="Source\TextureCache.h" />
     <ClInclude Include="Source\Utils.h" />
     <ClInclude Include="Source\varTypes.h" />
@@ -243,6 +246,7 @@
     <ClInclude Include="Source\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Array2D.cpp" />
     <ClCompile Include="Source\Box.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\DeferredPass.cpp" />
@@ -282,6 +286,7 @@
     <ClCompile Include="Source\StencilPass.cpp" />
     <ClCompile Include="Source\System.cpp" />
     <ClCompile Include="Source\SystemManager.cpp" />
+    <ClCompile Include="Source\TextureBinder.cpp" />
     <ClCompile Include="Source\TextureCache.cpp" />
     <ClCompile Include="Source\Utils.cpp" />
     <ClCompile Include="Source\Window.cpp" />

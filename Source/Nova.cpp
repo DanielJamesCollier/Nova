@@ -16,6 +16,7 @@
 #include <SDL2\SDL.h>
 #include <math.h>
 #include <vector>
+#include "TextureBinder.h"
 
 namespace Nova
 {
@@ -41,102 +42,89 @@ namespace Nova
 		ResourceManager::Init();
 		InputManager::Init();
 
-		/* FORWARD RENDERERING SHADER*/
-		ShaderProgram* forwardRender = new ShaderProgram("forward_render.glsl");
-		forwardRender->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Forward/forward_render.fs"));
-		forwardRender->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Forward/forward_render.vs"));
-		ResourceManager::CacheShaderProgram(forwardRender);
-		ShaderBinder::BindShaderProgram("forward_render.glsl");
-		forwardRender->SetUniform1i("numPointLights", pLightCount);
-		forwardRender->SetUniform1i("numSpotLights", sLightCount);
-		forwardRender->SetUniform1i("numDirLights", dLightCount);
-		ShaderBinder::UnbindShaderProgram();
+		///* FORWARD RENDERERING SHADER*/
+		//ShaderProgram* forwardRender = new ShaderProgram("forward_render.glsl");
+		//forwardRender->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Forward/forward_render.fs"));
+		//forwardRender->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Forward/forward_render.vs"));
+		//ResourceManager::CacheShaderProgram(forwardRender);
+		//ShaderBinder::BindShaderProgram("forward_render.glsl");
+		//forwardRender->SetUniform1i("numPointLights", pLightCount);
+		//forwardRender->SetUniform1i("numSpotLights", sLightCount);
+		//forwardRender->SetUniform1i("numDirLights", dLightCount);
+		//ShaderBinder::UnbindShaderProgram();
 
 		/* new deferred renderer */
+		Logger& log = Logger::GetInstance();
+		log.InfoBlockBegin("Deferred Renderer Initialisation");
 		{
-			/*geometry pass*/
+			/////////////////////////////
 			if (m_geometryPass.Init())
 			{
-				m_geometryPass.SetDiffuseTextureUnit(0);
-				m_geometryPass.SetNormalTextureUnit(1);
-
-				Logger::GetInstance().InfoBlock("Deferred Renderer", "Info: geometry pass initialised", true);
+				log.InfoBlockMessage("Info: geometry pass initialised\n");
 			}
 			else
 			{
-				Logger::GetInstance().ErrorBlock("Geometry Pass Error", "Error: the geometry pass could not be intitialised", true);
+				log.InfoBlockMessage("Error: geometry pass did not initialise\n");
 			}
 
-			/*Stencil pass*/
+			/////////////////////////////
 			if (m_stencilPass.Init())
 			{
-				Logger::GetInstance().InfoBlock("Deferred Renderer", "Info: stencil pass initialised", true);
+				log.InfoBlockMessage("Info: stencil pass initialised\n");
 			}
 			else
 			{
-				Logger::GetInstance().ErrorBlock("Stencil Pass Error", "Error: the stencil pass could not be intitialised", true);
+				log.InfoBlockMessage("Error: stencil pass did not initialise\n");
 			}
 
-			/*point light pass*/
+		
+			/////////////////////////////
 			if (m_pointLightPass.Init())
 			{
-				m_pointLightPass.SetPositionTextureUnit(m_gBuffer.GB_POSITION);
-				m_pointLightPass.SetDiffuseTextureUnit(m_gBuffer.GB_ALBEDOSPEC);
-				m_pointLightPass.SetNormalTextureUnit(m_gBuffer.GB_NORMAL);
 				m_pointLightPass.SetScreenSize(m_window->GetWidth(), m_window->GetHeight());
-
-				Logger::GetInstance().InfoBlock("Deferred Renderer", "Info: point light pass initialised", true);
+				log.InfoBlockMessage("Info: point light pass initialised\n");
 			}
 			else
 			{
-				Logger::GetInstance().ErrorBlock("Point Light Pass Error", "Error: point light pass could not be initialised", true);
+				log.InfoBlockMessage("Info: point light pass not initialised\n");
 			}
 
-			/*directional light pass*/
+			/////////////////////////////
 			if (m_dirLightPass.Init())
 			{
-				m_dirLightPass.SetPositionTextureUnit(m_gBuffer.GB_POSITION);
-				m_dirLightPass.SetDiffuseTextureUnit(m_gBuffer.GB_ALBEDOSPEC);
-				m_dirLightPass.SetNormalTextureUnit(m_gBuffer.GB_NORMAL);
 				m_dirLightPass.SetScreenSize(m_window->GetWidth(), m_window->GetHeight());
-
-				Logger::GetInstance().InfoBlock("Deferred Renderer", "Info: directional light pass initialised", true);
+				log.InfoBlockMessage("Info: directional light pass initialised\n");
 			}
 			else
 			{
-				Logger::GetInstance().ErrorBlock("Directional Light Pass Error", "Error: directional light pass could not be initialised", true);
+				log.InfoBlockMessage("Info: directional light pass not initialised\n");
 			}
 
-			/* spot light pass*/
+			/////////////////////////////
 			if (m_spotLightPass.Init())
 			{
-				m_spotLightPass.SetPositionTextureUnit(m_gBuffer.GB_POSITION);
-				m_spotLightPass.SetDiffuseTextureUnit(m_gBuffer.GB_ALBEDOSPEC);
-				m_spotLightPass.SetNormalTextureUnit(m_gBuffer.GB_NORMAL);
 				m_spotLightPass.SetScreenSize(m_window->GetWidth(), m_window->GetHeight());
-
-				Logger::GetInstance().InfoBlock("Deferred Renderer", "Info: spot light pass initialised", true);
+				log.InfoBlockMessage("Info: spot light pass initialised\n");
 			}
 			else
 			{
-				Logger::GetInstance().ErrorBlock("Spot Light Pass Error", "Error: spot light pass could not be initialised", true);
+				log.InfoBlockMessage("Info: spot light pass not initialised\n");
 			}
 
-			/* skybox pass */
+			/////////////////////////////
 			if (m_skyboxPass.Init())
 			{
 				m_skyboxPass.SetCubeMapTextureUnit(0);
-				Logger::GetInstance().InfoBlock("Deferred Renderer", "Info: skybox pass initialised", true);
+				log.InfoBlockMessage("Info: skybox pass initialised\n");
 			}
 			else
 			{
-				Logger::GetInstance().ErrorBlock("Spot Light Pass Error", "Error: skybox pass could not be initialised", true);
+				log.InfoBlockMessage("Info: skybox pass not initialised\n");
 			}
-
 		}
+		log.InfoBlockEnd();
 
 		CacheResources();
-
 		SetUpLights();
 
 		m_gBuffer.Init(Window::GetWidth(), Window::GetHeight());
@@ -144,37 +132,27 @@ namespace Nova
 		InitFullScreenQuad();
 
 		m_sceneManager.AddScene(new ScratchPad::SpaceScene());
-		//m_sceneManager.AddScene(new ScratchPad::MaterialTestScene());
+	  //m_sceneManager.AddScene(new ScratchPad::MaterialTestScene());
 		m_sceneManager.AddScene(new ScratchPad::ECSTestScene(m_geometryPass));
 
 		Profiler::ProfileManager::End("Initialisation");
 		Profiler::ProfileManager::m_FPS = 60;
 		Profiler::ProfileManager::Display();
-
-//	m_entityManager.AddSystem(ECS::System(m_entityManager));	
-
 		Run();
 	}
 
 	void Nova::CacheResources()
 	{
 		CacheMeshes();
-		CacheTextures();
 	}
 
 	void Nova::CacheMeshes()
 	{
-		ResourceManager::CacheIndexedMesh("cubetest","Models/shapes/cube.obj");
+		ResourceManager::CacheIndexedMesh("cube", "Models/shapes/Crate1.obj");
 		ResourceManager::CacheIndexedMesh("sphere", "Models/sphere/sphere.obj");
 		ResourceManager::CacheIndexedMesh("pointLightSphereVolume", new Sphere(1, 10, 10));
 
-		m_sphere = ResourceManager::GetIndexedMesh("sphere");
-		//m_sphere = ResourceManager::GetIndexedMesh("pointLightSphereVolume");
-	}
-
-	void Nova::CacheTextures()
-	{
-	
+		m_sphere = ResourceManager::GetIndexedMesh("cube");
 	}
 
 	void Nova::InitFullScreenQuad()
@@ -221,7 +199,6 @@ namespace Nova
 		// calculate fps
 		while (m_running)
 		{
-			
 			Profiler::ProfileManager::Begin("Run");
 			{
 				currentTime = SDL_GetTicks();
@@ -252,12 +229,14 @@ namespace Nova
 
 			}
 			Profiler::ProfileManager::End("Run");
-			
+
 			if (passedTime >= 1000)
 			{
 				Profiler::ProfileManager::m_FPS = frameCount;
 				startTime = currentTime;
 				frameCount = 0;
+				std::cout << "GBuffer - TextureBinds: " << m_gBuffer.textureBindsPerFrame << std::endl;
+				m_gBuffer.textureBindsPerFrame = 0;
 				Profiler::ProfileManager::Display();
 			}
 		}
@@ -300,10 +279,10 @@ namespace Nova
 		Profiler::ProfileManager::Begin("DeferredRender");
 		DSRenderScene();
 		Profiler::ProfileManager::End("DeferredRender");
-	
+
 		Profiler::ProfileManager::Begin("BackBuffer");
 		m_window->SwapBackBuffer();
-		Profiler::ProfileManager::End("BackBuffer");		
+		Profiler::ProfileManager::End("BackBuffer");
 	}
 
 	/* refactored deferred renderer */
@@ -311,40 +290,46 @@ namespace Nova
 	{
 		m_gBuffer.StartFrame();
 
+		/* GEOMETRY PASS */
+		//////////////////////////
 		Profiler::ProfileManager::Begin("GPass");
 		DSGeometryPass();
 		Profiler::ProfileManager::End("GPass");
-	
+		//////////////////////////
+
 		/* POINT LIGHT PASS*/
+		//////////////////////////
 		Profiler::ProfileManager::Begin("PLightPass");
 		glEnable(GL_STENCIL_TEST);
 		for (unsigned int i = 0; i < pLightCount; i++)
 		{
-			DSStencilPass(i);
-			DSPointLightPass(i);
+			DSPointLightStencilPass(i);
 		}
 		glDisable(GL_STENCIL_TEST);
 		Profiler::ProfileManager::End("PLightPass");
 		////////////////////
 
 		/* DIRECTIONAL LIGHT PASS*/
+		//////////////////////////
 		Profiler::ProfileManager::Begin("DLightPass");
 		DSDirectionalLightPass();
 		Profiler::ProfileManager::End("DLightPass");
 		//////////////////////////
 
 		/* SKYBOX PASS */
+		//////////////////////////
 		Profiler::ProfileManager::Begin("SPass");
 		DSSkyboxPass();
 		Profiler::ProfileManager::End("SPass");
 		//////////////////////////
 
 		/* FINAL PASS*/
+		//////////////////////////
 		Profiler::ProfileManager::Begin("FPass");
 		DSFinalPass();
 		Profiler::ProfileManager::End("FPass");
 		//////////////////////////
-		
+
 	}
 
 	void Nova::DSGeometryPass()
@@ -362,8 +347,8 @@ namespace Nova
 
 		m_sceneManager.RenderCurrent(&m_geometryPass);
 
-		 if (m_displayVolumes)
-		 {
+		if (m_displayVolumes)
+		{
 			m_transform.Reset();
 
 			m_sphere->DrawBegin(DrawMode::NOVA_WIREFRAME);
@@ -377,25 +362,25 @@ namespace Nova
 				m_sphere->DrawGroup();
 			}
 			m_sphere->DrawEnd();
-		  }
+		}
 
 
 		glDepthMask(GL_FALSE);
 	}
 
 
-	void Nova::DSStencilPass(unsigned int i)
+	void Nova::DSPointLightStencilPass(unsigned int i)
 	{
 		/*STENCIL PASS*/
 		m_stencilPass.Enable();
-	
+		
 		m_gBuffer.BindForStencilPass();
 		glEnable(GL_DEPTH_TEST);
 
 		glDisable(GL_CULL_FACE);
 
 		glClear(GL_STENCIL_BUFFER_BIT);
-	
+
 		// We need the stencil test to be enabled but we want it
 		// to succeed always. Only the depth test matters.
 		glStencilFunc(GL_ALWAYS, 0, 0);
@@ -404,20 +389,21 @@ namespace Nova
 		glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_DECR_WRAP, GL_KEEP);
 
 		m_transform.Reset(); // expensive
-		
+
 		m_transform.SetPosition(pLights[i].position); // expensive
 		m_transform.SetScale(glm::vec3(Lights::CalcPointLightBSphere(pLights[i]))); // expensive
 
 		glm::mat4 mvp = m_sceneManager.GetActiveScene()->GetActiveCamera().GetViewProject() * m_transform.GetModel(); // expensive
 		m_stencilPass.SetMVP(mvp);
-	
+
 		m_sphere->Draw();
 
 		/*POINT LIGHT PASS*/
-		m_gBuffer.BindForLightPass();
 		
+		m_gBuffer.BindForLightPass();
+
 		m_pointLightPass.Enable();
-		m_pointLightPass.SetMatSpecularPower(200);
+		m_pointLightPass.SetMatSpecularPower(100);
 		m_pointLightPass.SetEyeWorldPos(m_sceneManager.GetActiveScene()->GetActiveCamera().GetPosition());
 
 		glStencilFunc(GL_NOTEQUAL, 0, 0xFF);
@@ -438,16 +424,11 @@ namespace Nova
 		glDisable(GL_BLEND);
 	}
 
-	void Nova::DSPointLightPass(unsigned int i)
-	{
-		
-	}
-
 	void Nova::DSDirectionalLightPass()
 	{
 		m_gBuffer.BindForLightPass();
 		m_dirLightPass.Enable();
-		m_dirLightPass.SetMatSpecularPower(70);
+		m_dirLightPass.SetMatSpecularPower(200);
 		m_dirLightPass.SetEyeWorldPos(m_sceneManager.GetActiveScene()->GetActiveCamera().GetPosition());
 
 		glDisable(GL_DEPTH_TEST);
@@ -481,9 +462,8 @@ namespace Nova
 
 		static const GLuint width = Window::GetWidth();
 		static const GLuint height = Window::GetHeight();
-		
+
 		glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-	
 	}
 
 	void Nova::DSSpotLightPass()
@@ -541,9 +521,8 @@ namespace Nova
 
 		m_skyboxPass.Enable();
 
-		glActiveTexture(GL_TEXTURE0);
-		const GLuint id = m_sceneManager.GetActiveScene()->GetSkyTexture()->id;
-		glBindTexture(GL_TEXTURE_CUBE_MAP, id);
+		GLTexture* skybox = m_sceneManager.GetActiveScene()->GetSkyTexture();
+		TextureBinder::GetInstance().BindTexture(0, skybox);
 
 		m_skyboxPass.SetMVP(m_sceneManager.GetActiveScene()->GetActiveCamera().GetViewProject() * m_transform.GetModel());
 
@@ -553,108 +532,7 @@ namespace Nova
 		glCullFace(OldCullFaceMode);
 		glDepthFunc(OldDepthFuncMode);
 	}
-
-	void Nova::ForwardRender()
-	{
-		///* test directinoal light */
-		//////////////////////////////
-		//DirectionalLight light;
-		//light.base.colour = Utils::Convert_RGB_ToGLSLColorSpace(glm::vec3(255, 255, 200));
-		//light.base.ambientIntensity = 0.01f;
-		//light.base.diffuseIntensity = 1;
-		//light.direction = glm::vec3(0, cos(j), sin(j));
-		//////////////////////////////
-
-		//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		//ShaderProgram* triangleProgram = ResourceManager::GetShaderProgram("forward_render.glsl")->Bind();
-		//{
-		//	// camera
-		//	triangleProgram->SetUniform3f("eyeWorldPos", cam.GetPosition());
-
-		//	// material
-		//	triangleProgram->SetUniform1f("material.matSpecularIntensity", 1);
-		//	triangleProgram->SetUniform1f("material.matSpecularPower", 400);
-
-
-		//	{
-		//		// point lights
-		//		for (unsigned int i = 0; i < 50; i++)
-		//		{
-
-		//			std::string loc = "pLights[" + std::to_string(i) + "]";
-
-		//			triangleProgram->SetUniform3f(loc + ".base.colour", pLights[i].base.colour);
-		//			triangleProgram->SetUniform1f(loc + ".base.ambientIntensity", pLights[i].base.ambientIntensity);
-		//			triangleProgram->SetUniform1f(loc + ".base.diffuseIntensity", pLights[i].base.diffuseIntensity);
-		//			triangleProgram->SetUniform3f(loc + ".position", pLights[i].position);
-		//			triangleProgram->SetUniform1f(loc + ".atten.constant", pLights[i].atten.constant);
-		//			triangleProgram->SetUniform1f(loc + ".atten.linear", pLights[i].atten.linear);
-		//			triangleProgram->SetUniform1f(loc + ".atten.exp", pLights[i].atten.exp);
-		//		}
-
-		//		// spot lights
-		//		for (unsigned int i = 0; i < 50; i++)
-		//		{
-		//			std::string loc = "sLights[" + std::to_string(i) + "]";
-		//			triangleProgram->SetUniform3f(loc + ".direction", sLights[i].direction);
-		//			triangleProgram->SetUniform1f(loc + ".cutoff", sLights[i].cutoff);
-		//			triangleProgram->SetUniform3f(loc + ".base.base.colour", sLights[i].base.base.colour);
-		//			triangleProgram->SetUniform1f(loc + ".base.base.ambientIntensity", sLights[i].base.base.ambientIntensity);
-		//			triangleProgram->SetUniform1f(loc + ".base.base.diffuseIntensity", sLights[i].base.base.diffuseIntensity);
-		//			triangleProgram->SetUniform3f(loc + ".base.position", sLights[i].base.position);
-		//			triangleProgram->SetUniform1f(loc + ".base.atten.constant", sLights[i].base.atten.constant);
-		//			triangleProgram->SetUniform1f(loc + ".base.atten.linear", sLights[i].base.atten.linear);
-		//			triangleProgram->SetUniform1f(loc + ".base.atten.exp", sLights[i].base.atten.exp);
-		//		}
-
-		//		// directional lights
-		//		{
-		//			for (unsigned int i = 0; i < 1; i++)
-		//			{
-		//				std::string loc = "dLights[" + std::to_string(i) + "]";
-		//				triangleProgram->SetUniform3f(loc + ".base.colour", light.base.colour);
-		//				triangleProgram->SetUniform1f(loc + ".base.ambientIntensity", light.base.ambientIntensity);
-		//				triangleProgram->SetUniform1f(loc + ".base.diffuseIntensity", light.base.diffuseIntensity);
-		//				triangleProgram->SetUniform3f(loc + ".direction", light.direction);
-		//			}
-		//		}
-
-		//	}
-
-		//	transform.Reset();
-
-		//	static const GLTexture* startwarstex = ResourceManager::GetTexture("Models/starwars/Arc170_blinn1.png");
-
-		//	glBindTexture(GL_TEXTURE_2D, startwarstex->id);
-		//	for (int i = 0; i < 10; i++)
-		//	{
-		//		for (int j = 0; j < 10; j++)
-		//		{
-		//			transform.GetPos() = glm::vec3(i * 4 + 5, 0, j * 4 + 5);
-		//			transform.GetScale() = glm::vec3(0.001, 0.001, 0.001);
-		//			triangleProgram->SetUniform4m("MVP", cam.GetViewProject() * transform.GetModel());
-		//			triangleProgram->SetUniform4m("Model", transform.GetModel());
-		//			ResourceManager::GetIndexedMesh("Models/starwars/ARC170.3DS")->Draw();
-		//		}
-		//	}
-
-		//	static const GLTexture* moon = ResourceManager::GetTexture("Models/planets/moon/MoonMap2_2500x1250.png");
-
-		//	glBindTexture(GL_TEXTURE_2D, moon->id);
-
-		//	transform.Reset();
-
-		//	transform.GetScale() = glm::vec3(0.1, 0.1, 0.1);
-		//	transform.GetPos() = glm::vec3(25, 10, 25);
-
-		//	triangleProgram->SetUniform4m("MVP", cam.GetViewProject() * transform.GetModel());
-		//	triangleProgram->SetUniform4m("Model", transform.GetModel());
-
-		//	ResourceManager::GetIndexedMesh("Models/planets/moon/moon.obj")->Draw();
-		//}
-	}
 }
+
 
 

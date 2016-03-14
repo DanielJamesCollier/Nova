@@ -4,6 +4,7 @@
 #include "GeometryPass.h"
 #include "MathUtil.h"
 #include "Sphere.h"
+#include "TextureBinder.h"
 
 namespace Nova
 {
@@ -72,11 +73,11 @@ namespace Nova
 			m_transform.Reset();
 			static const IndexedMesh* starwars = ResourceManager::GetIndexedMesh("starwars");
 
-			ResourceManager::GetMaterial("starwars")->Bind(0);
-
+			TextureBinder::GetInstance().BindTexture(5,ResourceManager::GetMaterial("starwars")->GetTexture());
+	
 			starwars->DrawBegin();
 			m_transform.SetScale(glm::vec3(0.001f));
-			for (int i = 0; i < 20; i++)
+			for (int i = 0; i < 30; i++)
 			{
 				for (int j = 0; j < 20; j++)
 				{
@@ -93,7 +94,7 @@ namespace Nova
 			///// space ship /////
 			m_transform.Reset();
 
-			ResourceManager::GetMaterial("spaceship")->Bind(0);
+			TextureBinder::GetInstance().BindTexture(5, ResourceManager::GetMaterial("spaceship")->GetTexture());
 
 			static const IndexedMesh* ship = ResourceManager::GetIndexedMesh("spaceship");
 
@@ -108,7 +109,7 @@ namespace Nova
 
 			/* MOON */
 			///////////////////////////////////
-			ResourceManager::GetMaterial("moon")->Bind(0);
+			TextureBinder::GetInstance().BindTexture(5, ResourceManager::GetMaterial("moon")->GetTexture());
 			static const IndexedMesh* moon = ResourceManager::GetIndexedMesh("moon");
 
 
@@ -136,10 +137,9 @@ namespace Nova
 
 
 		//////////// cube ////////////
-		ResourceManager::GetMaterial("crate")->Bind(0);
+		TextureBinder::GetInstance().BindTexture(5, ResourceManager::GetMaterial("crate")->GetTexture());
+		
 		m_transform.Reset();
-
-
 
 		gPass->SetMVP(m_transform.GetMVP(GetActiveCamera().GetViewProject()));
 		gPass->SetModel(m_transform.GetModel());

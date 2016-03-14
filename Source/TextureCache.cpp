@@ -166,18 +166,6 @@ namespace Nova
 		m_cache.emplace(name, texture);
 	}
 
-	GLTexture* TextureCache::Create2DTextureArray(const std::string& arrayName, const std::vector<std::string>& texturePaths, int maxWidth, int maxHeight, int layerCount)
-	{
-		GLTexture* ArrayTex = new GLTexture;
-
-		ArrayTex->type = GL_TEXTURE_2D_ARRAY;
-
-		glGenTextures(1, &ArrayTex->id);
-		glBindTexture(GL_TEXTURE_2D_ARRAY, ArrayTex->id);
-		glTextureStorage3D(GL_TEXTURE_2D_ARRAY, 0 /*set as zero so opengl can gen mips*/, GL_RGBA8, maxWidth, maxHeight, layerCount);
-		return nullptr;
-	}
-
 	void TextureCache::CacheCubeMap(const std::string& name, const std::string& posX, const std::string& negX, const std::string& posY, const std::string& negY, const std::string& posZ, const std::string& negZ)
 	{
 		GLTexture* cubemap = m_imageLoader.LoadCubeMap(posX, negX, posY, negY, posZ, negZ);

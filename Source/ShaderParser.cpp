@@ -1,7 +1,7 @@
 #include "ShaderParser.h"
 #include "Utils.h"
 #include "Logger.h"
-
+#include "NovaGLDefines.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -10,21 +10,9 @@
 
 namespace Nova
 {
-	ShaderParser::ShaderParser()
-	{
-		// empty	
-	}
-
-
-	ShaderParser::~ShaderParser()
-	{
-		// empty
-	}
-
-
+	
 	void ShaderParser::LoadShaderOBJSource(const std::string& filePath, ShaderOBJSource& shaderSource)
 	{
-
 		// open the shader file
 		std::ifstream file(filePath);
 		std::set<std::string> includes; // used to check if file allready included
@@ -54,11 +42,9 @@ namespace Nova
 			else
 			{
 				shaderSource.type = -1;
-				std::cout << "shader file type not supported - type: " << split[1] << std::endl;
+				Logger::GetInstance().ErrorBlock("ShaderParser Error", "Error: shader type not supported\nType: " + split[1], true);
 				return;
 			}
-
-			
 			
 			std::string line; // current line being proccessed 
 			while (getline(file, line))

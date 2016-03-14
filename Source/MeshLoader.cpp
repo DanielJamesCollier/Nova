@@ -64,10 +64,10 @@ namespace Nova
 				for (unsigned int i = 0; i < mesh->mNumVertices; ++i)
 				{
 
-					aiVector3D &pos = mesh->mVertices[i];
+					aiVector3D &pos  = mesh->mVertices[i];
 					aiVector3D &norm = mesh->mNormals[i];
-					aiVector3D tex = tex = mesh->mTextureCoords[0][i];
-					aiVector3D tan = aiVector3D(0, 0, 0);
+					aiVector3D tex   = tex = mesh->mTextureCoords[0][i];
+					aiVector3D tan   = aiVector3D(0, 0, 0);
 
 
 					if (mesh->HasTangentsAndBitangents())
@@ -77,12 +77,11 @@ namespace Nova
 
 
 					glm::vec3 glm_position = glm::vec3(pos.x, pos.y, pos.z);
-					glm::vec3 glm_tangent = glm::vec3(tan.x, tan.y, tan.z);
+					glm::vec3 glm_tangent  = glm::normalize(glm::vec3(tan.x, tan.y, tan.z));
 					glm::vec2 glm_uvCoords = glm::vec2(tex.x, tex.y);
-					glm::vec3 glm_normals = glm::vec3(norm.x, norm.y, norm.z);
-					glm::vec4 glm_colour = glm::vec4(1.0, 1.0, 1.0, 1.0);
+					glm::vec3 glm_normals  = glm::normalize(glm::vec3(norm.x, norm.y, norm.z));
 
-					vertices.push_back(Vertex(glm_position, glm_colour, glm_uvCoords, glm_normals, glm_tangent));
+					vertices.push_back(Vertex(glm_position, glm_uvCoords, glm_normals, glm_tangent));
 				}
 
 				// get indices
@@ -155,26 +154,22 @@ namespace Nova
 				// get vertices normals and tex coords
 				for (unsigned int i = 0; i < mesh->mNumVertices; ++i)
 				{
-
-					aiVector3D &pos = mesh->mVertices[i];
+					aiVector3D &pos  = mesh->mVertices[i];
 					aiVector3D &norm = mesh->mNormals[i];
-					aiVector3D tex = tex = mesh->mTextureCoords[0][i];
-					aiVector3D tan = aiVector3D(0, 0, 0);
-
+					aiVector3D tex   = tex = mesh->mTextureCoords[0][i];
+					aiVector3D tan   = aiVector3D(0, 0, 0);
 
 					if (mesh->HasTangentsAndBitangents())
 					{
 						tan = mesh->mTangents[i];
 					}
 
-
 					glm::vec3 glm_position = glm::vec3(pos.x, pos.y, pos.z);
-					glm::vec3 glm_tangent = glm::vec3(tan.x, tan.y, tan.z);
+					glm::vec3 glm_tangent  = glm::normalize(glm::vec3(tan.x, tan.y, tan.z));
 					glm::vec2 glm_uvCoords = glm::vec2(tex.x, tex.y);
-					glm::vec3 glm_normals = glm::vec3(norm.x, norm.y, norm.z);
-					glm::vec4 glm_colour = glm::vec4(1.0, 1.0, 1.0, 1.0);
+					glm::vec3 glm_normals  = glm::normalize(glm::vec3(norm.x, norm.y, norm.z));
 
-					vertices.push_back(Vertex(glm_position, glm_colour, glm_uvCoords, glm_normals, glm_tangent));
+					vertices.push_back(Vertex(glm_position, glm_uvCoords, glm_normals, glm_tangent));
 				}
 
 				// get indices

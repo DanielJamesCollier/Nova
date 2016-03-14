@@ -27,7 +27,7 @@ namespace Nova
 		// shaders are detached after linking - so if linking isnt done then they need to be detached here
 		if (!m_linked)
 			DetachShaderOBJs();
-		
+
 		m_shaderOBJs.clear();
 
 		glDeleteProgram(m_programID);
@@ -57,7 +57,7 @@ namespace Nova
 		{
 			Logger::GetInstance().ErrorBlock("Shader Compile Error", "Program: " + m_name + "\nObject : " + obj->GetName() + "\nError: The shader object being added to the program is not compiled", true);
 		}
-		
+
 	}
 
 	void ShaderProgram::AddAttribute(GLuint attribute_location, std::string attribute_name)
@@ -84,7 +84,7 @@ namespace Nova
 				return location;
 			}
 
-			Logger::GetInstance().ErrorBlock("GLSL Uniform not found", "Uniform Name: " + uniform_name + "\nLocation: " + std::to_string(location) + "\nProgram: "+ m_name + "\nError: uniform not found in the shader or uniform cache", true);
+			Logger::GetInstance().ErrorBlock("GLSL Uniform not found", "Uniform Name: " + uniform_name + "\nLocation: " + std::to_string(location) + "\nProgram: " + m_name + "\nError: uniform not found in the shader or uniform cache", true);
 			return location; // returns -1
 		}
 
@@ -117,7 +117,7 @@ namespace Nova
 
 	int ShaderProgram::LinkProgram()
 	{
-		
+
 
 		if (m_linked) return PROGRAM_ALREADY_LINKED;
 		if (m_shaderOBJs.empty()) return PROGRAM_LINK_FAILED;
@@ -130,7 +130,7 @@ namespace Nova
 			DetachShaderOBJs();
 			return PROGRAM_LINK_FAILED;
 		}
-		
+
 		DetachShaderOBJs();
 		m_linked = true;
 		return PROGRAM_LINK_SUCCESS;
@@ -209,7 +209,7 @@ namespace Nova
 
 	void ShaderProgram::SetUniform3f(GLuint loc, const glm::vec3& xyz)
 	{
-		glUniform3f(loc , xyz.x, xyz.y, xyz.z);
+		glUniform3f(loc, xyz.x, xyz.y, xyz.z);
 	}
 
 	void ShaderProgram::SetUniform3f(const std::string& uniform, const glm::vec3& xyz)

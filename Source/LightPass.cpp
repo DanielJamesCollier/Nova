@@ -1,5 +1,6 @@
 #include "LightPass.h"
-
+#include "NovaGLDefines.h"
+#include "Logger.h"
 
 namespace Nova
 {
@@ -14,6 +15,8 @@ namespace Nova
 
 	bool LightPass::Init()
 	{
+		assert(m_initialised);
+
 		// get g buffer texture unit locations
 		m_positionTextureUnit = m_program->GetUniformLocation("gBufferPosition");
 		m_diffuseTextureUnit = m_program->GetUniformLocation("gBufferDiffuse");
@@ -26,14 +29,15 @@ namespace Nova
 		m_eyeWorlPos = m_program->GetUniformLocation("eyeWorldPos");
 
 		// check if uniform are found in the shader;
-		if (m_positionTextureUnit == UNIFORM_NOT_FOUND ||
-			m_diffuseTextureUnit == UNIFORM_NOT_FOUND ||
-			m_normalTextureUnit == UNIFORM_NOT_FOUND ||
-			m_MVP == UNIFORM_NOT_FOUND ||
-			m_screenSize == UNIFORM_NOT_FOUND ||
-			m_specularPower == UNIFORM_NOT_FOUND ||
-			m_eyeWorlPos == UNIFORM_NOT_FOUND)
+		if (m_positionTextureUnit == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_diffuseTextureUnit  == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_normalTextureUnit   == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_MVP                 == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_screenSize          == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_specularPower       == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_eyeWorlPos          == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND)
 		{
+			m_initialised = false;
 			return false;
 		}
 

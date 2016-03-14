@@ -6,3 +6,4 @@ enum class ShaderOBJType
 	NOVA_FRAG,
 	NOVA_SHADER_INVALID,
 };
+

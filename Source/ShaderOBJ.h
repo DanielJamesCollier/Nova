@@ -19,7 +19,7 @@ namespace Nova
 
 		bool Compile();
 
-		
+
 
 		const std::string& GetSource();
 		const std::string& GetName();
@@ -27,8 +27,9 @@ namespace Nova
 
 	private:
 		ShaderOBJSource     m_source;
-		GLint               m_ID       = -1;
+		GLint               m_ID = -1;
 		bool				m_compiled = false;
 		bool				m_disposed = false;
 	};
 }
+

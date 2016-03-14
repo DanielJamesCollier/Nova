@@ -2,11 +2,10 @@
 #include "GLTexture.h"
 #include "IOManager.h"
 #include "Logger.h"
+#include "TextureBinder.h"
 #include <SOIL/SOIL.h>
 #include <STBIMAGE\stb_image.h>
-
 #include <algorithm>
-
 #include <iostream>
 
 
@@ -18,16 +17,14 @@ namespace Nova
 		// if the file doesnt exist return a nullprt
 		if (!IOManager::DoesFileExist(file_path)) return nullptr;
 
-		GLTexture* texture = new Nova::GLTexture();
-		texture->type = texture_type;
+		GLTexture* texture = new GLTexture();
+		texture->type      = texture_type;
 
 		unsigned char* img = SOIL_load_image(file_path.c_str(), &texture->width, &texture->height, NULL, 0);
 
-		// generate texture
+		// generate and bind texture
 		glGenTextures(1, &(texture->id));
-
-		// bind the generated texture
-		glBindTexture(texture_type, texture->id);
+		TextureBinder::GetInstance().BindTexture(0, texture);
 
 		// send the image to the gpu
 		glTexImage2D(texture_type, 0, GL_RGBA, texture->width, texture->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img);
@@ -75,8 +72,9 @@ namespace Nova
 
 		unsigned char* data = stbi_load(filePath.c_str(), &texture->width, &texture->height, &texture->components, 4);
 
+		// generate and bind texture
 		glGenTextures(1, &texture->id);
-		glBindTexture(GL_TEXTURE_2D, texture->id);
+		TextureBinder::GetInstance().BindTexture(0,texture);
 
 		std::cout << "id: " << texture->id << std::endl;
 
@@ -128,10 +126,10 @@ namespace Nova
 		types.push_back(GL_TEXTURE_CUBE_MAP_POSITIVE_Z); types.push_back(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z);
 
 		GLTexture* texture = new Nova::GLTexture();
-		texture->type = GL_TEXTURE_CUBE_MAP;
+		texture->type      = GL_TEXTURE_CUBE_MAP;
 
 		glGenTextures(1, &texture->id);
-		glBindTexture(texture->type, texture->id);
+		TextureBinder::GetInstance().BindTexture(0, texture);
 
 		for (unsigned int i = 0; i < fileNames.size(); i++)
 		{
@@ -147,9 +145,8 @@ namespace Nova
 			free(img);
 
 		}
-		// unbind the texture and free data
+		// unbind the texture
 		glBindTexture(texture->type, 0);
-
 
 		return texture;
 	}
@@ -202,7 +199,7 @@ namespace Nova
 		tex->type = GL_TEXTURE_2D_ARRAY;
 
 		glGenTextures(1, &tex->id);
-		glBindTexture(tex->type, tex->id);
+		TextureBinder::GetInstance().BindTexture(0, tex);
 		glTexStorage3D(tex->type, mipLevels, GL_RGB8, width, height, imgData.size());
 
 		for (unsigned int i = 0; i < imgData.size(); i++)

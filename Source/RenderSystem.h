@@ -11,6 +11,7 @@
 #include "CSpotLight.h"
 #include "CPointLight.h"
 #include "CDirectionalLight.h"
+#include "TextureBinder.h"
 #include <iostream>
 #include <array>
 #include <vector>	
@@ -69,6 +70,8 @@ namespace Nova
 
 					if (valid) mat.DisposeGLResources();
 				}
+
+				ShaderBinder::UnbindShaderProgram();
 			}
 			
 			int AddMesh(const std::string& filePath)
@@ -169,7 +172,7 @@ namespace Nova
 					IndexedMesh& mesh = m_mesh.GetObjectWithStaticID(m_batches[i].mesh, valid);
 					Material& material = m_material.GetObjectWithStaticID(m_batches[i].material, valid);
 
-					material.Bind(0);
+					TextureBinder::GetInstance().BindTexture(5, material.GetTexture());
 
 					mesh.DrawBegin();
 					{

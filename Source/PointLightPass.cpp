@@ -1,6 +1,7 @@
 #include "PointLightPass.h"
 #include "ResourceManager.h"
-#include <iostream>
+#include "Logger.h"
+#include "NovaGLDefines.h"
 
 namespace Nova
 {
@@ -15,6 +16,8 @@ namespace Nova
 
 	bool PointLightPass::Init()
 	{
+		assert(m_initialised);
+
 		m_program = new ShaderProgram("pointLightPass.glsl");
 		m_program->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Deferred/LightingPass/PointLightPass/DeferredPointLightPass.fs"));
 		m_program->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Deferred/LightingPass/Common/DeferredLightingPass.vs"));
@@ -32,14 +35,15 @@ namespace Nova
 		m_pointLightLocation.Atten.Exp = m_program->GetUniformLocation("pLight.atten.exp");
 
 		// check if uniform are found in the shader;
-		if (m_pointLightLocation.Color == UNIFORM_NOT_FOUND ||
-			m_pointLightLocation.AmbientIntensity == UNIFORM_NOT_FOUND ||
-			m_pointLightLocation.Position == UNIFORM_NOT_FOUND ||
-			m_pointLightLocation.DiffuseIntensity == UNIFORM_NOT_FOUND ||
-			m_pointLightLocation.Atten.Constant == UNIFORM_NOT_FOUND ||
-			m_pointLightLocation.Atten.Linear == UNIFORM_NOT_FOUND ||
-			m_pointLightLocation.Atten.Exp == UNIFORM_NOT_FOUND)
+		if (m_pointLightLocation.Color            == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_pointLightLocation.AmbientIntensity == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_pointLightLocation.Position         == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_pointLightLocation.DiffuseIntensity == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_pointLightLocation.Atten.Constant   == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_pointLightLocation.Atten.Linear     == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_pointLightLocation.Atten.Exp        == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND)
 		{
+			m_initialised = false;
 			return false;
 		}
 

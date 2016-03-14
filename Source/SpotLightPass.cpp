@@ -1,6 +1,7 @@
 #include "SpotLightPass.h"
 #include "ResourceManager.h"
-
+#include "NovaGLDefines.h"
+#include "Logger.h"
 namespace Nova
 {
 	SpotLightPass::SpotLightPass()
@@ -13,6 +14,8 @@ namespace Nova
 
 	bool SpotLightPass::Init()
 	{
+		assert(m_initialised);
+
 		m_program = new ShaderProgram("spotLightPass.glsl");
 		m_program->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Deferred/LightingPass/SpotLightPass/SpotLightPass.fs"));
 		m_program->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Deferred/LightingPass/Common/deferredLightingPass.vs"));
@@ -34,19 +37,19 @@ namespace Nova
 		
 
 		// check if uniform are found in the shader;
-		if (m_spotLightLocation.Color == UNIFORM_NOT_FOUND ||
-			m_spotLightLocation.AmbientIntensity == UNIFORM_NOT_FOUND ||
-			m_spotLightLocation.Position == UNIFORM_NOT_FOUND ||
-			m_spotLightLocation.DiffuseIntensity == UNIFORM_NOT_FOUND ||
-			m_spotLightLocation.Direction == UNIFORM_NOT_FOUND ||
-			m_spotLightLocation.Cutoff == UNIFORM_NOT_FOUND ||
-			m_spotLightLocation.Atten.Constant == UNIFORM_NOT_FOUND ||
-			m_spotLightLocation.Atten.Linear == UNIFORM_NOT_FOUND ||
-			m_spotLightLocation.Atten.Exp == UNIFORM_NOT_FOUND)
+		if (m_spotLightLocation.Color             == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_spotLightLocation.AmbientIntensity  == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_spotLightLocation.Position          == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_spotLightLocation.DiffuseIntensity  == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_spotLightLocation.Direction         == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_spotLightLocation.Cutoff            == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_spotLightLocation.Atten.Constant    == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_spotLightLocation.Atten.Linear      == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_spotLightLocation.Atten.Exp         == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND)
 		{
+			m_initialised = false;
 			return false;
 		}
-
 
 		return LightPass::Init();
 	}

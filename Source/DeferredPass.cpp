@@ -1,18 +1,10 @@
 #include "DeferredPass.h"
-
+#include <assert.h>
 namespace Nova
 {
-	DeferredPass::DeferredPass()
-	{
-	}
-
-
-	DeferredPass::~DeferredPass()
-	{
-	}
-
 	void DeferredPass::Enable()
 	{
+		assert(m_program == nullptr);
 		ShaderBinder::BindShaderProgram(m_program);
 	}
 

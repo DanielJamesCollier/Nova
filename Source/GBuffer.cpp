@@ -1,5 +1,6 @@
 #include "GBuffer.h"
 #include "Logger.h"
+#include "TextureBinder.h"
 
 namespace Nova
 {
@@ -22,42 +23,53 @@ namespace Nova
 		glGenFramebuffers(1, &m_fbo);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 
-		// create textures
-		glGenTextures(GBTextures::GB_BUFFER_SIZE, m_gBufferTextures);
-		glGenTextures(1, &m_depth);
+		// generate gBufferTextures
+		for (unsigned int i = 0; i < GBTextures::GB_BUFFER_SIZE; ++i)
+		{
+			glGenTextures(1, &m_gBufferTextures[i].id);
+			m_gBufferTextures[i].type = GL_TEXTURE_2D;
+			m_gBufferTextures[i].width = width;
+			m_gBufferTextures[i].height = height;
+		}
+		// generate final texture
+		glGenTextures(1, &m_finalTexture.id);
+		m_finalTexture.width = width;
+		m_finalTexture.height = height;
+		m_finalTexture.type = GL_TEXTURE_2D;
+
+		//Texture binder refrence
+		TextureBinder& texturebind = TextureBinder::GetInstance();
 
 		// position attachment
-		glBindTexture(GL_TEXTURE_2D, m_gBufferTextures[0]);
+		texturebind.BindTexture(0, &m_gBufferTextures[GBTextures::GB_POSITION]);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, width, height, 0, GL_RGB, GL_FLOAT, NULL);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_gBufferTextures[0], 0);
+		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_gBufferTextures[0].id, 0);
 
 		// albedo & specular intensity rgb = texture colour a = specular intensity
-		glBindTexture(GL_TEXTURE_2D, m_gBufferTextures[1]);
+		texturebind.BindTexture(0, &m_gBufferTextures[GBTextures::GB_ALBEDOSPEC]);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGB, GL_FLOAT, NULL);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, m_gBufferTextures[1], 0);
+		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, m_gBufferTextures[1].id, 0);
 
 		// normal attachment RGB = normal | a is free
-		glBindTexture(GL_TEXTURE_2D, m_gBufferTextures[2]);
+		texturebind.BindTexture(0, &m_gBufferTextures[GBTextures::GB_NORMAL]);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, NULL);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, m_gBufferTextures[2], 0);
+		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, m_gBufferTextures[2].id, 0);
 
 		// depth
-		glGenTextures(1, &m_depth);
-		glBindTexture(GL_TEXTURE_2D, m_depth);
+		texturebind.BindTexture(0, &m_gBufferTextures[GBTextures::GB_DEPTH]);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH24_STENCIL8, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, m_depth, 0);
+		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, m_gBufferTextures[3].id, 0);
 
 		// final
-		glGenTextures(1, &m_finalTexture);
-		glBindTexture(GL_TEXTURE_2D, m_finalTexture);
+		texturebind.BindTexture(0, &m_finalTexture);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGB, GL_FLOAT, NULL);
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, m_finalTexture, 0);
+		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, m_finalTexture.id, 0);
 
 		GLenum drawBuffers[] =
 		{
@@ -81,22 +93,17 @@ namespace Nova
 	{
 		glBindBuffer(GL_FRAMEBUFFER, 0);
 		glDeleteFramebuffers(1, &m_fbo);
-		glDeleteTextures(GBTextures::GB_BUFFER_SIZE, m_gBufferTextures);
-		glDeleteTextures(1, &m_depth);
+
+		for (unsigned int i = 0; i < GBTextures::GB_BUFFER_SIZE; ++i)
+		{
+			glDeleteTextures(1, &m_gBufferTextures[i].id);
+		}
 	}
 
 	void GBuffer::BindForReading()
 	{
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, m_gBufferTextures[GBTextures::GB_POSITION]);
-
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, m_gBufferTextures[GBTextures::GB_ALBEDOSPEC]);
-
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, m_gBufferTextures[GBTextures::GB_NORMAL]);
+		BindTextures();
 	}
 
 	void GBuffer::StartFrame()
@@ -138,14 +145,12 @@ namespace Nova
 
 	void GBuffer::BindTextures()
 	{
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, m_gBufferTextures[GBTextures::GB_POSITION]);
-
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, m_gBufferTextures[GBTextures::GB_ALBEDOSPEC]);
-
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, m_gBufferTextures[GBTextures::GB_NORMAL]);
+		this->textureBindsPerFrame += 3;
+			
+		TextureBinder& texturebind = TextureBinder::GetInstance();
+		texturebind.BindTexture(0, &m_gBufferTextures[GBTextures::GB_POSITION]);
+		texturebind.BindTexture(1, &m_gBufferTextures[GBTextures::GB_ALBEDOSPEC]);
+		texturebind.BindTexture(2, &m_gBufferTextures[GBTextures::GB_NORMAL]);
 	}
 
 	void GBuffer::SetReadBuffer(GBTextures type)

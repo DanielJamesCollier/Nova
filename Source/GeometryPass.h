@@ -12,9 +12,6 @@ namespace Nova
 
 		bool Init();
 
-		
-		void SetDiffuseTextureUnit(unsigned int TextureUnit);
-		void SetNormalTextureUnit(unsigned int TextureUnit);
 		void SetMVP(const glm::mat4& mvp);
 		void SetModel(const glm::mat4& model);
 
@@ -22,8 +19,6 @@ namespace Nova
 	
 		GLuint m_MVP;
 		GLuint m_Model;
-		GLuint m_diffuse;
-		GLuint m_normal;
 	};
 
 }

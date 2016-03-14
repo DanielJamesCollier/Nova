@@ -52,11 +52,11 @@ namespace Nova
 		bool  IsLinked();
 		GLint getNumberOfUniforms(); // TODO
 		GLint getNumberOfAttributes(); // TODO
-		/*--------------------------*/
+									   /*--------------------------*/
 
 
-		/*Setters*/
-		/*--------------------------*/
+									   /*Setters*/
+									   /*--------------------------*/
 		void SetUniform1i(GLuint loc, int x);
 		void SetUniform1i(const std::string& uniform, int x);
 
@@ -99,8 +99,8 @@ namespace Nova
 		enum
 		{
 			PROGRAM_ALREADY_LINKED = -2,
-			PROGRAM_LINK_SUCCESS   =  1,
-			PROGRAM_LINK_FAILED    = -1
+			PROGRAM_LINK_SUCCESS = 1,
+			PROGRAM_LINK_FAILED = -1
 		};
 
 	private:

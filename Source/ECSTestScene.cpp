@@ -67,7 +67,8 @@ namespace Nova
 			model.material = m_renderSystem.AddMaterial(mat);
 			trans.SetScale(glm::vec3(0.0001, 0.0001, 0.0001));
 
-			unsigned int width = 20;
+			unsigned int width = 30;
+
 			for (unsigned int i = 0; i < width; ++i)
 			{
 				for (unsigned int j = 0; j < width; ++j)
@@ -87,7 +88,7 @@ namespace Nova
 			
 			// moon
 			{
-				unsigned int moonID = 402;
+				unsigned int moonID = 1000;
 				Material moon_mat("Models/planets/moon/MoonMap2_2500x1250.png", "Models/planets/moon/MoonMap2_2500x1250_NRM.png", "Models/planets/moon/MoonMap2_2500x1250_NRM.png", 10);
 
 				// set transform component vars

@@ -4,7 +4,7 @@
 
 
 /*
-	- correct line number error handeling - #include breaks this
+- correct line number error handeling - #include breaks this
 */
 
 namespace Nova
@@ -25,13 +25,13 @@ namespace Nova
 		if (m_disposed) return;
 		m_disposed = true;
 		m_compiled = false;
-		
+
 		glDeleteShader(m_ID);
 
-		m_source.filePath  = "";
+		m_source.filePath = "";
 		m_source.lineCount = 0;
-		m_source.type	   = -1;
-		m_source.source    = "";
+		m_source.type = -1;
+		m_source.source = "";
 	}
 
 	bool ShaderOBJ::IsShaderLoaded()
@@ -49,7 +49,7 @@ namespace Nova
 	{
 		if (m_compiled || m_source.type == -1) return false;
 		m_disposed = false;
-	
+
 		m_ID = glCreateShader(m_source.type);
 
 		const GLchar* shaderSourceStrings[1];
@@ -75,7 +75,7 @@ namespace Nova
 	{
 		return m_source.source;
 	}
-	
+
 	const std::string& ShaderOBJ::GetName()
 	{
 		return m_source.filePath;

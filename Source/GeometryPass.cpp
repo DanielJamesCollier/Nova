@@ -1,5 +1,6 @@
 #include "GeometryPass.h"
 #include "ResourceManager.h"
+#include "NovaGLDefines.h"
 
 namespace Nova
 {
@@ -22,30 +23,19 @@ namespace Nova
 		m_program->Bind();
 
 		
-		m_diffuse = m_program->GetUniformLocation("texture0");
-		m_normal  = m_program->GetUniformLocation("normalMap");
-		m_MVP = m_program->GetUniformLocation("MVP");
+		m_MVP   = m_program->GetUniformLocation("MVP");
 		m_Model = m_program->GetUniformLocation("Model");
 
-		// check if uniform are found in the shader;
-		if (m_diffuse == UNIFORM_NOT_FOUND   ||
-			m_normal  == UNIFORM_NOT_FOUND)
+		if (m_Model == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND || 
+			m_MVP   == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND)
 		{
-			return false;
+			m_initialised = false;
+			return m_initialised;
 		}
 
 		return DeferredPass::Init();
 	}
 
-	void GeometryPass::SetDiffuseTextureUnit(unsigned int TextureUnit)
-	{
-		m_program->SetUniform1i(m_diffuse, TextureUnit);
-	}
-
-	void GeometryPass::SetNormalTextureUnit(unsigned int TextureUnit)
-	{
-		m_program->SetUniform1i(m_normal, TextureUnit);
-	}
 
 	void GeometryPass::SetMVP(const glm::mat4& mvp)
 	{

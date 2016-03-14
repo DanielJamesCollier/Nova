@@ -14,7 +14,7 @@ namespace Nova
 		textures.push_back(diffuse);
 		textures.push_back(normal);
 		textures.push_back(specular);
-		m_material = ImageLoader::LoadImagesInto2DTexArray(textures,true);
+		m_texture = ImageLoader::LoadImagesInto2DTexArray(textures,true);
 	}
 
 	Material::~Material()
@@ -24,14 +24,18 @@ namespace Nova
 
 	void Material::DisposeGLResources()
 	{
-		glDeleteTextures(1, &m_material->id);
-		if (m_material != nullptr) delete m_material;
-		m_material = nullptr;
+		glDeleteTextures(1, &m_texture->id);
+		if (m_texture != nullptr) delete m_texture;
+		m_texture = nullptr;
 	}
 
-	void Material::Bind(GLuint unit)
+	GLTexture* Material::GetTexture() const
 	{
-		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindTexture(GL_TEXTURE_2D_ARRAY, m_material->id);
+		return m_texture;
+	}
+
+	float Material::GetSpecularPower() const
+	{
+		return m_specularPower;
 	}
 }

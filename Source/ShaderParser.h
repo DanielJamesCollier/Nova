@@ -14,9 +14,8 @@ namespace Nova
 	class ShaderParser
 	{
 	public:
-		 ShaderParser();
-		~ShaderParser();
-
+		 ShaderParser() = delete;
+	
 		static void LoadShaderOBJSource(const std::string& filePath, ShaderOBJSource& shaderSource);
 
 	private:

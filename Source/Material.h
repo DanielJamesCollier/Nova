@@ -15,17 +15,13 @@ namespace Nova
 
 		void DisposeGLResources();
 
-		void Bind(GLuint unit);
+		GLTexture* GetTexture()  const;
+		float GetSpecularPower() const;
 
-		GLuint GetID()
-		{
-			//assert(m_material == nullptr);
-			return m_material->id;
-		}
 
 	private:
 	
-		GLTexture*   m_material = nullptr;
+		GLTexture*  m_texture;
 		float       m_specularPower;
 
 		friend class RenderSystem;

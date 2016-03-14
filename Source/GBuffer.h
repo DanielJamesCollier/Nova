@@ -1,20 +1,33 @@
 #pragma once
 #include <GLEW\glew.h>
-
+#include "GLTexture.h"
 namespace Nova
 {
 	class GBuffer
 	{
+		
+		// public functions
 	public:
+		GLuint textureBindsPerFrame = 0;
 
+		// private variables
+	private: 
 		enum GBTextures
 		{
 			GB_POSITION,
 			GB_ALBEDOSPEC,
 			GB_NORMAL,
+			GB_DEPTH,
 			GB_BUFFER_SIZE
 		};
-		
+
+		GLuint    m_fbo;
+		GLTexture m_gBufferTextures[GB_BUFFER_SIZE];
+		GLTexture m_finalTexture;
+		GLuint    m_width, m_height;
+
+		// public functions
+	public:
 		GBuffer();
 		~GBuffer();
 
@@ -23,9 +36,7 @@ namespace Nova
 
 		void BindForReading();
 		void BindForGeomPass();
-		void BindTextures();
-
-		// new
+		
 		void StartFrame();
 		void BindForStencilPass();
 		void BindForLightPass();
@@ -35,12 +46,8 @@ namespace Nova
 
 		GLuint GetID();
 
+		// private functions
 	private:
-
-		GLuint m_gBufferTextures[GB_BUFFER_SIZE];
-		GLuint m_fbo;
-		GLuint m_depth;
-		GLuint m_finalTexture;
-		GLuint m_width, m_height;
+		void BindTextures();
 	};
 }

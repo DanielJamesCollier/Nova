@@ -40,28 +40,27 @@ namespace Nova
 
 		void CacheResources();
 		void CacheMeshes();
-		void CacheTextures();
 
 		void ProcessInput();
 		void Update(float delta);
 		void Render();
 
+		/*Deferred Rendering Functions*/
+		/////////////////////
 		void DSRenderScene();
 		void DSGeometryPass();
-		void DSStencilPass(unsigned int i);
-		void DSPointLightPass(unsigned int i);
+		void DSPointLightStencilPass(unsigned int i);
 		void DSDirectionalLightPass();
 		void DSSpotLightPass();
 		void DSSkyboxPass();
 		void DSFinalPass();
-
-		void ForwardRender();
+		////////////////////
 
 		void InitFullScreenQuad();
 
 		// temp functions
 		void SetUpLights();
-		
+
 
 	private:
 
@@ -87,7 +86,7 @@ namespace Nova
 
 		float j = 0; // used for test animation
 
-		//deferred renderer
+					 //deferred renderer
 		GeometryPass		 m_geometryPass;
 		StencilPass			 m_stencilPass;
 		PointLightPass		 m_pointLightPass;

@@ -200,9 +200,6 @@
     <ClInclude Include="Source\IOManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\LightPass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Lights.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -252,9 +249,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\ShaderOBJSource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ShaderOBJType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\ShaderParser.h">
@@ -356,6 +350,21 @@
     <ClInclude Include="Source\CAttenuation.h">
       <Filter>Header Files\ECS\Components\Lights</Filter>
     </ClInclude>
+    <ClInclude Include="Source\LightPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\NovaGLDefines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShaderOBJType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TextureBinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Array2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Camera.cpp">
@@ -383,9 +392,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\IOManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\LightPass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Logger.cpp">
@@ -483,6 +489,15 @@
     </ClCompile>
     <ClCompile Include="Source\ECSTestScene.cpp">
       <Filter>Source Files\Scratch Pad</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LightPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TextureBinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Array2D.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

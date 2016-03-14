@@ -2,15 +2,15 @@
 #include "ShaderProgram.h"
 #include "ShaderBinder.h"
 
-#define UNIFORM_NOT_FOUND -1
 
 namespace Nova
 {
 	class DeferredPass
 	{
 	public:
-		DeferredPass();
-		virtual ~DeferredPass();
+		virtual ~DeferredPass()
+		{
+		}
 
 		virtual bool Init()
 		{
@@ -19,14 +19,11 @@ namespace Nova
 		}
 		
 		void Enable();
-
 		bool IsInitialised();
 
 	protected:
-		ShaderProgram* m_program;
-
-		bool m_initialised = false;
-	
+		ShaderProgram* m_program     = nullptr;
+		bool           m_initialised = false;
 	};
 
 

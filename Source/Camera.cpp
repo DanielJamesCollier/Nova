@@ -10,19 +10,19 @@ namespace Nova
 {
 	Camera::Camera(const glm::vec3& pos, float fov, float aspect, float zNear, float zFar)
 	{
-		m_perspective = glm::perspective(MathUtil::DegreesToRadiansf(fov), aspect, zNear, zFar);
-		m_position = pos;
-		m_forward = glm::vec3(0, 0, 1);
-		m_up = glm::vec3(0, 1, 0);
+		m_projectionInfo.m_fov     = fov;
+		m_projectionInfo.m_aspect  = aspect;
+		m_projectionInfo.m_zNear   = zNear;
+		m_projectionInfo.m_zFar    = zFar;
 
-		m_projectionInfo.m_fov = fov;
-		m_projectionInfo.m_aspect = aspect;
-		m_projectionInfo.m_zNear = zNear;
-		m_projectionInfo.m_zFar = zFar;
+		m_perspective = glm::perspective(MathUtil::DegreesToRadiansf(m_projectionInfo.m_fov), m_projectionInfo.m_aspect, m_projectionInfo.m_zNear, m_projectionInfo.m_zFar);
+		m_position    = pos;
+		m_forward     = glm::vec3(0, 0, 1);
+		m_up          = glm::vec3(0, 1, 0);
 
 		m_fovOrigional = fov;
-		m_maxFov = fov + 5;
-		m_minFov = fov - 5;
+		m_maxFov       = fov + 5;
+		m_minFov       = fov - 5;
 	}
 
 	Camera::~Camera()
@@ -108,10 +108,10 @@ namespace Nova
 			if (m_moving)
 			{
 				// apply fov scaling and rebuild the projection matrix
-				if (m_projectionInfo.m_fov < m_maxFov)
+				/*if (m_projectionInfo.m_fov < m_maxFov)
 					m_projectionInfo.m_fov += m_fovIncrement * delta;
 				else
-					m_projectionInfo.m_fov = m_maxFov;
+					m_projectionInfo.m_fov = m_maxFov;*/
 			}
 			else
 			{
@@ -139,16 +139,16 @@ namespace Nova
 				}
 
 
-				// return fov back to normal if not
-				if (m_projectionInfo.m_fov > m_fovOrigional)
-				{
-					m_projectionInfo.m_fov -= m_fovIncrement * delta;
-				}
-				else
-				{
-					m_projectionInfo.m_fov = m_fovOrigional;
-				}
-				//cout << m_projectionInfo.m_fov << endl;
+				//// return fov back to normal if not
+				//if (m_projectionInfo.m_fov > m_fovOrigional)
+				//{
+				//	m_projectionInfo.m_fov -= m_fovIncrement * delta;
+				//}
+				//else
+				//{
+				//	m_projectionInfo.m_fov = m_fovOrigional;
+				//}
+				////cout << m_projectionInfo.m_fov << endl;
 			}
 			m_moving = false;
 
@@ -254,8 +254,6 @@ namespace Nova
 					}
 				}
 			}
-
-			m_perspective = glm::perspective(MathUtil::DegreesToRadiansf(m_projectionInfo.m_fov), m_projectionInfo.m_aspect, m_projectionInfo.m_zNear, m_projectionInfo.m_zFar);
 
 			float rotX =  m_rotXSpeed * delta;
 			float rotY =  m_rotYSpeed * delta;

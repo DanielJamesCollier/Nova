@@ -1,5 +1,7 @@
 #include "DirectionalLightPass.h"
 #include "ResourceManager.h"
+#include "NovaGLDefines.h"
+#include "Logger.h"
 
 namespace Nova
 {
@@ -7,13 +9,14 @@ namespace Nova
 	{
 	}
 
-
 	DirectionalLightPass::~DirectionalLightPass()
 	{
 	}
 
 	bool DirectionalLightPass::Init()
 	{
+		assert(m_initialised);
+
 		/* DIRECTION LIGHT SHADER PASS*/
 		m_program = new ShaderProgram("directionalLightPass.glsl");
 		m_program->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Deferred/LightingPass/DirectionalLightPass/DeferredDirectionLightPass.fs"));
@@ -29,11 +32,12 @@ namespace Nova
 		m_dirLightLocation.DiffuseIntensity = m_program->GetUniformLocation("dLight.base.diffuseIntensity");
 
 		// check if uniform are found in the shader;
-		if (m_dirLightLocation.Color == UNIFORM_NOT_FOUND ||
-			m_dirLightLocation.AmbientIntensity == UNIFORM_NOT_FOUND ||
-			m_dirLightLocation.Direction == UNIFORM_NOT_FOUND ||
-			m_dirLightLocation.DiffuseIntensity == UNIFORM_NOT_FOUND)
+		if (m_dirLightLocation.Color            == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_dirLightLocation.AmbientIntensity == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_dirLightLocation.Direction        == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND ||
+			m_dirLightLocation.DiffuseIntensity == NOVA_SHADER_PROGRAM_UNIFORM_NOT_FOUND)
 		{
+			m_initialised = false;
 			return false;
 		}
 
@@ -44,9 +48,8 @@ namespace Nova
 	{
 		glUniform3f(m_dirLightLocation.Color, dLight.base.colour.x, dLight.base.colour.y, dLight.base.colour.z);
 		glUniform1f(m_dirLightLocation.AmbientIntensity, dLight.base.ambientIntensity);
-		glm::vec3 direction = dLight.direction;
-		glm::normalize(direction);
-		glUniform3f(m_dirLightLocation.Direction, direction.x, direction.y, direction.z);
+		glm::normalize(dLight.direction);
+		glUniform3f(m_dirLightLocation.Direction, dLight.direction.x, dLight.direction.y, dLight.direction.z);
 		glUniform1f(m_dirLightLocation.DiffuseIntensity, dLight.base.diffuseIntensity);
 	}
 
