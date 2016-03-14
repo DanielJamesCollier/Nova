@@ -1,5 +1,5 @@
 #include "ECSTestScene.h"
-
+#include "Plane.h"
 /*
 BUGS
 
@@ -19,9 +19,7 @@ namespace Nova
 	{
 		ECSTestScene::ECSTestScene(GeometryPass& gPass)
 			:
-			m_renderComps(MAX_ENTITES),
-			m_transformComps(MAX_ENTITES),
-			m_renderSystem(gPass,m_transformComps,m_renderComps)
+			Scene(gPass,MAX_ENTITES,MAX_ENTITES)
 		{
 		
 		}
@@ -35,6 +33,21 @@ namespace Nova
 		{
 			if (GetInitialised()) return;
 			SetInitialised(true);
+			m_renderSystem.SetCamera(&GetActiveCamera());
+
+
+			// resources //
+			/////////////////////////////
+			// meshes
+				unsigned int ID_MoonMesh  = m_renderSystem.AddMesh("Models/planets/moon/moon.obj");
+				unsigned int ID_spaceship = m_renderSystem.AddMesh("Models/starwars/ARC170.3DS");
+				unsigned int ID_plane = m_renderSystem.AddMesh("Models/shapes/monkey.obj");
+			
+			//materials
+				unsigned int ID_moonMat      = m_renderSystem.AddMaterial(Material("Models/planets/moon/MoonMap2_2500x1250.png", "Models/planets/moon/MoonMap2_2500x1250_NRM.png", "Models/planets/moon/MoonMap2_2500x1250_NRM.png", 10));
+				unsigned int ID_spaceshipMat = m_renderSystem.AddMaterial(Material("Models/starwars/Arc170_blinn1.png", "Models/starwars/Arc170_blinn1_NRM.png", "Models/starwars/Arc170_blinn1_SPEC.png", 10));
+			////////////////////////////
+
 
 			////// cubemap //////
 			std::string redsky = "Textures/Skyboxes/redsky/";
@@ -46,70 +59,83 @@ namespace Nova
 				redsky + "bot.png", // bottom of sphere
 				redsky + "front.png",
 				redsky + "back.png");
-			////////////////
 
 			SetSkyboxCubeMap(ResourceManager::GetCubeMap("redsky"));
+			////////////////
 
-			ECS::Component::CRenderable model;
-			ECS::Component::CTransform  trans;
+			
 
-			int starwarsModelLocation;
-		
-			if (starwarsModelLocation = model.mesh = m_renderSystem.AddMesh("Models/starwars/ARC170.3DS") == -1)
+			/* star wars space ship*/
+			/////////////////
 			{
-				std::cout << "the model was not loaded" << std::endl;
-			}
+				ECS::Component::CRenderable model;
+				ECS::Component::CTransform  trans;
 
-			std::cout << "model location: " << starwarsModelLocation << std::endl;
 
-			Material mat("Models/starwars/Arc170_blinn1.png", "Models/starwars/Arc170_blinn1_NRM.png", "Models/starwars/Arc170_blinn1_SPEC.png", 10);
+				model.material = ID_spaceshipMat;
+				model.mesh     = ID_spaceship;
 
-			model.material = m_renderSystem.AddMaterial(mat);
-			trans.SetScale(glm::vec3(0.0001, 0.0001, 0.0001));
 
-			unsigned int width = 30;
+				trans.SetScale(glm::vec3(0.0001, 0.0001, 0.0001));
 
-			for (unsigned int i = 0; i < width; ++i)
-			{
-				for (unsigned int j = 0; j < width; ++j)
+				unsigned int width = 20;
+
+				for (unsigned int i = 0; i < width; ++i)
 				{
+					for (unsigned int j = 0; j < width; ++j)
+					{
 
-			
-					m_renderComps.AddObject(i * width + j, model);
+						trans.SetPosition(glm::vec3(j, rand() % 30, i));
+						trans.SetRotation(glm::vec3(rand() % 20, rand() % 20, rand() % 20));
 
-					trans.SetPosition(glm::vec3(j , 0, i));
-					m_transformComps.AddObject(i * width + j, trans);
+						AddRenderableObjectToScene(i * width + j, trans, model);
+					}
 				}
-					
 			}
 		
-			m_renderSystem.SetCamera(&GetActiveCamera());
+			///////////////////
+		
+	
 
-			
-			// moon
+			/* MOON */
+			///////////////////
 			{
+				ECS::Component::CRenderable model;
+				ECS::Component::CTransform  trans;
+
 				unsigned int moonID = 1000;
-				Material moon_mat("Models/planets/moon/MoonMap2_2500x1250.png", "Models/planets/moon/MoonMap2_2500x1250_NRM.png", "Models/planets/moon/MoonMap2_2500x1250_NRM.png", 10);
 
 				// set transform component vars
-				trans.Reset();
 				trans.SetPosition(glm::vec3(0, 0, -5));
 				trans.SetScale(glm::vec3(0.1, 0.1, 0.1));
 
 				// set model component vars
-				model.mesh = m_renderSystem.AddMesh("Models/planets/moon/moon.obj");
-				model.material = m_renderSystem.AddMaterial(moon_mat);
-
-				std::cout << "mesh index id: " << model.mesh << std::endl;
+				model.mesh     = ID_MoonMesh;
+				model.material = ID_moonMat;
 
 				// add components
-				m_transformComps.AddObject(moonID, trans);
-				m_renderComps.AddObject(moonID, model);
+				AddRenderableObjectToScene(moonID, trans, model);
+			}
+			///////////////////
 
 
+			/*PLANE*/
+			{
+				ECS::Component::CRenderable model;
+				ECS::Component::CTransform  trans;
+
+				model.material = ID_spaceshipMat;
+				model.mesh     = ID_plane;
+
+				AddRenderableObjectToScene(1010, trans, model);
 			}
 			
-			
+		}
+
+		void ECSTestScene::AddRenderableObjectToScene(unsigned int objectId, const ECS::Component::CTransform& transform, const ECS::Component::CRenderable& renderable)
+		{
+			m_transformComps.AddObject(objectId, transform);
+			m_renderComps.AddObject(objectId,renderable);		
 		}
 
 		void ECSTestScene::Update(float delta)

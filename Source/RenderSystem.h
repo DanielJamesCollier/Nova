@@ -18,7 +18,6 @@
 #include <tuple>
 #include <unordered_map>
 
-#define MAX_ENTITIES     1000
 #define MAX_MESHES       100
 #define MAX_MATERIALS    100
 #define MAX_LIGHTS_POINT 500
@@ -72,6 +71,11 @@ namespace Nova
 				}
 
 				ShaderBinder::UnbindShaderProgram();
+			}
+
+			int AddMesh(const IndexedMesh& mesh)
+			{
+				return m_mesh.AddObject(mesh);
 			}
 			
 			int AddMesh(const std::string& filePath)

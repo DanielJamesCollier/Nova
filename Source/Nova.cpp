@@ -8,9 +8,7 @@
 #include "Sphere.h"
 #include "Logger.h"
 #include "MathUtil.h"
-#include "SpaceScene.h"
 #include "ECSTestScene.h"
-#include "MaterialTestScene.h"
 #include "ProfileManager.h"
 #include "Shader.h"
 #include <SDL2\SDL.h>
@@ -35,7 +33,7 @@ namespace Nova
 	void Nova::Start()
 	{
 		if (m_running) return;
-		m_running = true;
+		    m_running = true;
 
 		Profiler::ProfileManager::Begin("Initialisation");
 
@@ -53,7 +51,7 @@ namespace Nova
 		//forwardRender->SetUniform1i("numDirLights", dLightCount);
 		//ShaderBinder::UnbindShaderProgram();
 
-		/* new deferred renderer */
+		/* deferred renderer */
 		Logger& log = Logger::GetInstance();
 		log.InfoBlockBegin("Deferred Renderer Initialisation");
 		{
@@ -130,7 +128,7 @@ namespace Nova
 
 		InitFullScreenQuad();
 
-		m_sceneManager.AddScene(new ScratchPad::SpaceScene());
+		//m_sceneManager.AddScene(new ScratchPad::SpaceScene());
 	  //m_sceneManager.AddScene(new ScratchPad::MaterialTestScene());
 		m_sceneManager.AddScene(new ScratchPad::ECSTestScene(m_geometryPass));
 
@@ -234,8 +232,8 @@ namespace Nova
 				Profiler::ProfileManager::m_FPS = frameCount;
 				startTime = currentTime;
 				frameCount = 0;
-				std::cout << "GBuffer - TextureBinds: " << m_gBuffer.textureBindsPerFrame << std::endl;
-				m_gBuffer.textureBindsPerFrame = 0;
+
+				std::cout << "TextureBinds: " << TextureBinder::GetInstance().GetAndResetBindCount() << std::endl;
 				Profiler::ProfileManager::Display();
 			}
 		}
@@ -521,7 +519,7 @@ namespace Nova
 		m_skyboxPass.Enable();
 
 		GLTexture* skybox = m_sceneManager.GetActiveScene()->GetSkyTexture();
-		TextureBinder::GetInstance().BindTexture(7, skybox); // problems with lauout binding and 
+		TextureBinder::GetInstance().BindTexture(7, skybox);
 
 		m_skyboxPass.SetMVP(m_sceneManager.GetActiveScene()->GetActiveCamera().GetViewProject() * m_transform.GetModel());
 

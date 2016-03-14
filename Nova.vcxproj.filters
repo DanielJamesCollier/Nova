@@ -287,12 +287,6 @@
     <ClInclude Include="Source\Scene.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SpaceScene.h">
-      <Filter>Header Files\Scratch Pad</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MaterialTestScene.h">
-      <Filter>Header Files\Scratch Pad</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Sphere.h">
       <Filter>Header Files\Geometry</Filter>
     </ClInclude>
@@ -364,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="Source\Array2D.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Plane.h">
+      <Filter>Header Files\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -460,12 +457,6 @@
     <ClCompile Include="Source\SceneManager.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SpaceScene.cpp">
-      <Filter>Source Files\Scratch Pad</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\MaterialTestScene.cpp">
-      <Filter>Source Files\Scratch Pad</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Sphere.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
@@ -498,6 +489,9 @@
     </ClCompile>
     <ClCompile Include="Source\Array2D.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Plane.cpp">
+      <Filter>Source Files\Geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

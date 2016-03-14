@@ -17,13 +17,12 @@ namespace Nova
 
 			void Initialise() override;
 
+
 			void Update(float delta) override;
-			void Render(GeometryPass* gPass) override;
+			void Render(GeometryPass* gPass) override;		
 
 		private:
-			StaticPool<ECS::Component::CTransform>  m_transformComps;
-			StaticPool<ECS::Component::CRenderable> m_renderComps;
-			ECS::RenderSystem m_renderSystem;
+			void AddRenderableObjectToScene(unsigned int objectId, const ECS::Component::CTransform& transform, const ECS::Component::CRenderable& renderable);
 		};
 	}
 }

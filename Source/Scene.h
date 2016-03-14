@@ -4,6 +4,10 @@
 #include "GLTexture.h"
 #include "ResourceManager.h"
 #include "Logger.h"
+#include "CTransform.h"
+#include "StaticPool.h"
+#include "CRenderable.h"
+#include "RenderSystem.h"
 #include <GLM\glm.hpp>
 #include <vector>
 
@@ -14,18 +18,83 @@ namespace Nova
 
 	class Scene
 	{
-	public:
-		Scene()
+
+	/*variables*/
+	//-------------------------------------------------------//
+	private:
+	
+		std::vector<Camera> m_cams;
+		unsigned int        m_activeCam;
+		GLTexture*          m_skytexture;
+		bool                m_initialised = false;
+
+
+	protected:
+		StaticPool<ECS::Component::CTransform>  m_transformComps;
+		StaticPool<ECS::Component::CRenderable> m_renderComps;
+		ECS::RenderSystem                       m_renderSystem;
+	//-------------------------------------------------------//
+
+	/*functions*/
+	//-------------------------------------------------------//
+	private:
+
+		inline void SetActiveCamera(unsigned int i) { m_activeCam = i; }
+
+	protected:
+
+		inline void SetInitialised(bool value) { m_initialised = value; }
+		inline bool GetInitialised() const 	{ return m_initialised;	}
+
+		inline void SetSkyboxCubeMap(GLTexture* skybox)
 		{
-			m_cams.push_back(Camera(glm::vec3(0, 0, 0), 70.0f, Window::GetAspectRatio(), 0.001f, 1000.0f));
-			m_skytexture = ResourceManager::GetCubeMap("defaultSkyBox");
+			if (skybox->type != GL_TEXTURE_CUBE_MAP)
+			{
+				Logger::GetInstance().ErrorBlock("Scene Error", "the skybox could not be set at the texture was not a cubemap", true);
+				return;
+			}
+			m_skytexture = skybox;
 		}
+
+	public:
+		Scene
+			(
+			GeometryPass& gpass,
+			GLuint        maxTransforms,
+			GLuint        maxRenderComps
+			)
+			:
+			m_transformComps(maxTransforms),
+			m_renderComps(maxRenderComps),
+			m_renderSystem(gpass, m_transformComps, m_renderComps)
+		{
+			m_cams.push_back(Camera(glm::vec3(),60,Window::GetAspectRatio(),0.0001f,10000.0f));
+			m_activeCam = 0;
+
+			////// cubemap //////
+			std::string redsky = "Textures/Skyboxes/redsky/";
+
+			ResourceManager::CacheCubeMap("redsky",
+				redsky + "r.png",
+				redsky + "l.png",
+				redsky + "up.png", // top of sphere
+				redsky + "bot.png", // bottom of sphere
+				redsky + "front.png",
+				redsky + "back.png");
+
+			SetSkyboxCubeMap(ResourceManager::GetCubeMap("redsky"));
+		}
+
 		~Scene()
 		{
 
 		}
 
 		virtual void Initialise() = 0;
+
+		void ub(){
+
+		}
 
 		void AddCamera(const Camera& cam)
 		{
@@ -62,41 +131,7 @@ namespace Nova
 
 		virtual void Update(float delta)		 = 0;
 		virtual void Render(GeometryPass* gPass) = 0;
-
-	protected:
-
-		void SetInitialised(bool value)
-		{
-			m_initialised = value;
-		}
-
-		bool GetInitialised()
-		{
-			return m_initialised;
-		}
-
-		void SetSkyboxCubeMap(GLTexture* skybox)
-		{
-			if (skybox->type != GL_TEXTURE_CUBE_MAP)
-			{
-				Logger::GetInstance().ErrorBlock("Scene Error", "the skybox could not be set at the texture was not a cubemap", true);
-				return;
-			}
-			m_skytexture = skybox;
-		}
-
-	private:
-		std::vector<Camera> m_cams;
-		unsigned int m_activeCam = 0;
-		GLTexture* m_skytexture;
-
-		bool m_initialised = false;
-
-		void SetActiveCamera(unsigned int i)
-		{
-			m_activeCam = i;
-		}
-
+		//-------------------------------------------------------//
 	};
 
 }

@@ -156,12 +156,17 @@ namespace Nova
 				{
 					aiVector3D &pos  = mesh->mVertices[i];
 					aiVector3D &norm = mesh->mNormals[i];
-					aiVector3D tex   = tex = mesh->mTextureCoords[0][i];
+					aiVector3D tex   = aiVector3D(0, 0, 0);
 					aiVector3D tan   = aiVector3D(0, 0, 0);
 
 					if (mesh->HasTangentsAndBitangents())
 					{
 						tan = mesh->mTangents[i];
+					}
+
+					if (mesh->HasTextureCoords(0))
+					{
+						tex = tex = mesh->mTextureCoords[0][i];
 					}
 
 					glm::vec3 glm_position = glm::vec3(pos.x, pos.y, pos.z);

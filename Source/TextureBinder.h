@@ -10,9 +10,8 @@ namespace Nova
 		GLuint                               m_activeUnit;
 		GLint                                m_maxTextureUnits;
 		GLint								 m_maxTextureTargets;
-		std::vector<std::vector<GLTexture*>> m_boundTextures;
-
-		GLuint m_bindCount;
+		GLuint                               m_bindCount;
+		std::vector<std::vector<GLTexture*>> m_boundTextures;	
 
 	public:
 

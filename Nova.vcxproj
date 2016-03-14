@@ -206,13 +206,13 @@
     <ClInclude Include="Source\Logger.h" />
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\MaterialCache.h" />
-    <ClInclude Include="Source\MaterialTestScene.h" />
     <ClInclude Include="Source\MathUtil.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshCache.h" />
     <ClInclude Include="Source\MeshLoader.h" />
     <ClInclude Include="Source\Nova.h" />
     <ClInclude Include="Source\NovaGLDefines.h" />
+    <ClInclude Include="Source\Plane.h" />
     <ClInclude Include="Source\PointLightPass.h" />
     <ClInclude Include="Source\ProfileManager.h" />
     <ClInclude Include="Source\ProfileTimer.h" />
@@ -231,7 +231,6 @@
     <ClInclude Include="Source\ShaderProgram.h" />
     <ClInclude Include="Source\ShaderProgramCache.h" />
     <ClInclude Include="Source\SkyBoxPass.h" />
-    <ClInclude Include="Source\SpaceScene.h" />
     <ClInclude Include="Source\Sphere.h" />
     <ClInclude Include="Source\SpotLightPass.h" />
     <ClInclude Include="Source\StaticPool.h" />
@@ -263,11 +262,11 @@
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Material.cpp" />
     <ClCompile Include="Source\MaterialCache.cpp" />
-    <ClCompile Include="Source\MaterialTestScene.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshCache.cpp" />
     <ClCompile Include="Source\MeshLoader.cpp" />
     <ClCompile Include="Source\Nova.cpp" />
+    <ClCompile Include="Source\Plane.cpp" />
     <ClCompile Include="Source\PointLightPass.cpp" />
     <ClCompile Include="Source\ProfileManager.cpp" />
     <ClCompile Include="Source\ProfileTimer.cpp" />
@@ -280,7 +279,6 @@
     <ClCompile Include="Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\ShaderProgramCache.cpp" />
     <ClCompile Include="Source\SkyBoxPass.cpp" />
-    <ClCompile Include="Source\SpaceScene.cpp" />
     <ClCompile Include="Source\Sphere.cpp" />
     <ClCompile Include="Source\SpotLightPass.cpp" />
     <ClCompile Include="Source\StencilPass.cpp" />

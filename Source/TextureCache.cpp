@@ -168,6 +168,16 @@ namespace Nova
 
 	void TextureCache::CacheCubeMap(const std::string& name, const std::string& posX, const std::string& negX, const std::string& posY, const std::string& negY, const std::string& posZ, const std::string& negZ)
 	{
+		// check if cubemap allready cached
+		auto search = m_cubemapCache.find(name);
+
+		if (search != m_cubemapCache.end())
+		{
+			Logger::GetInstance().InfoBlock("TextureCache", "Info: the cube map trying to be cache is allready in the cache", true);
+			return;
+		}
+
+
 		GLTexture* cubemap = m_imageLoader.LoadCubeMap(posX, negX, posY, negY, posZ, negZ);
 
 		if (cubemap == nullptr)

@@ -18,7 +18,7 @@ namespace Nova
 	{
 	public:
 		 IndexedMesh(){}
-		 IndexedMesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
+		 IndexedMesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices);
 		~IndexedMesh();
 
 		void DisposeGLResources() const;
@@ -33,6 +33,8 @@ namespace Nova
 
 
 	protected:
+
+		void CreateIndexedMesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices);
 
 		GLuint m_vao;
 		GLuint m_buffers[2]; // vbo and index buffer

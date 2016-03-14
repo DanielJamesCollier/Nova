@@ -5,13 +5,6 @@ namespace Nova
 {
 	class GBuffer
 	{
-		
-		// public functions
-	public:
-		GLuint textureBindsPerFrame = 0;
-
-		// private variables
-	private: 
 		enum GBTextures
 		{
 			GB_POSITION,

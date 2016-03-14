@@ -144,9 +144,7 @@ namespace Nova
 	}
 
 	void GBuffer::BindTextures()
-	{
-		this->textureBindsPerFrame += 3;
-			
+	{			
 		TextureBinder& texturebind = TextureBinder::GetInstance();
 		texturebind.BindTexture(0, &m_gBufferTextures[GBTextures::GB_POSITION]);
 		texturebind.BindTexture(1, &m_gBufferTextures[GBTextures::GB_ALBEDOSPEC]);

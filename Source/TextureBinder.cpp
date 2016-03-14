@@ -41,46 +41,26 @@ namespace Nova
 	{
 		assert(unit > m_maxTextureUnits || texture == nullptr);
 
-	/*	Temp(unit, texture);
-		return;*/
-
 		GLuint targetIndex = ConvertTextureTargetToIndex(texture->type);
 
-		
-
-		if (m_boundTextures.at(targetIndex).at(unit) == nullptr) // if there isnt a bound texture in this slot
+		if (m_boundTextures.at(targetIndex).at(unit) == nullptr)
 		{
-			m_boundTextures.at(targetIndex).at(unit) = texture;
-			
-			if (m_activeUnit != unit)
-			{
-				m_activeUnit = unit;
-				glActiveTexture(unit);
-			}
-			
-			std::cout << "texture bound" << std::endl;
+			m_boundTextures.at(targetIndex).at(unit) == texture;
+
 			m_bindCount++;
+			glActiveTexture(GL_TEXTURE0 + unit);
 			glBindTexture(texture->type, texture->id);
+			return;
 		}
-		else // if slot is not null check if its the same
-		{
-			if (texture->id != m_boundTextures.at(targetIndex).at(unit)->id) // of the texture at [target][unit] id is not tehs same as the one tring to be bound, bind it, if the same do nothing
-			{
-				if (m_activeUnit != unit)
-				{
-					m_activeUnit = unit;
-					glActiveTexture(unit);
-				}
 
-				std::cout << "texture bound" << std::endl;
-				m_bindCount++;
-				glBindTexture(texture->type, texture->id);
-			}
-			else
-			{
-				std::cout << "texture the same" << std::endl;
-			}
-			
+		if (m_boundTextures.at(targetIndex).at(unit)->id != texture->id)
+		{
+			m_boundTextures.at(targetIndex).at(unit) == texture;
+
+			m_bindCount++;
+			glActiveTexture(GL_TEXTURE0 + unit);
+			glBindTexture(texture->type, texture->id);
+			return;
 		}
 	}
 

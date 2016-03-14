@@ -5,9 +5,19 @@
 namespace Nova
 {
 
-	IndexedMesh::IndexedMesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
+	IndexedMesh::IndexedMesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices)
 		: 
 		m_indicesCount(indices.size())
+	{
+		CreateIndexedMesh(vertices, indices);
+	}
+
+	IndexedMesh::~IndexedMesh()
+	{
+		std::cout << "mesh destructed" << std::endl;
+	}
+
+	void IndexedMesh::CreateIndexedMesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices)
 	{
 		//OpenGL 4.5 / ARB_direct_state_access
 
@@ -21,8 +31,8 @@ namespace Nova
 
 		GLuint bindingIndex = 0;
 
-		GLuint posLocation  = 0;
-		GLuint texLocation  = 1;
+		GLuint posLocation = 0;
+		GLuint texLocation = 1;
 		GLuint normLocation = 2;
 		GLuint tangLocation = 3;
 
@@ -39,8 +49,8 @@ namespace Nova
 		glVertexArrayVertexBuffer(m_vao, bindingIndex, m_buffers[0], 0, sizeof(vertices[0]));
 		glVertexArrayElementBuffer(m_vao, m_buffers[1]); // element aray buffer for indices
 
-		// Link
-		// THIS ONE CONNECTS ATTRIB LOCATIONS TO THE BINDING INDEX
+														 // Link
+														 // THIS ONE CONNECTS ATTRIB LOCATIONS TO THE BINDING INDEX
 		glVertexArrayAttribBinding(m_vao, posLocation, bindingIndex);
 		glVertexArrayAttribBinding(m_vao, texLocation, bindingIndex);
 		glVertexArrayAttribBinding(m_vao, normLocation, bindingIndex);
@@ -51,12 +61,6 @@ namespace Nova
 		glEnableVertexArrayAttrib(m_vao, texLocation);
 		glEnableVertexArrayAttrib(m_vao, normLocation);
 		glEnableVertexArrayAttrib(m_vao, tangLocation);
-	}
-
-
-	IndexedMesh::~IndexedMesh()
-	{
-		std::cout << "mesh destructed" << std::endl;
 	}
 
 	void IndexedMesh::DisposeGLResources() const
