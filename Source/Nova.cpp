@@ -114,7 +114,6 @@ namespace Nova
 			/////////////////////////////
 			if (m_skyboxPass.Init())
 			{
-				m_skyboxPass.SetCubeMapTextureUnit(0);
 				log.InfoBlockMessage("Info: skybox pass initialised\n");
 			}
 			else
@@ -522,7 +521,7 @@ namespace Nova
 		m_skyboxPass.Enable();
 
 		GLTexture* skybox = m_sceneManager.GetActiveScene()->GetSkyTexture();
-		TextureBinder::GetInstance().BindTexture(0, skybox);
+		TextureBinder::GetInstance().BindTexture(7, skybox); // problems with lauout binding and 
 
 		m_skyboxPass.SetMVP(m_sceneManager.GetActiveScene()->GetActiveCamera().GetViewProject() * m_transform.GetModel());
 

@@ -41,8 +41,8 @@ namespace Nova
 	{
 		assert(unit > m_maxTextureUnits || texture == nullptr);
 
-		Temp(unit, texture);
-		return;
+	/*	Temp(unit, texture);
+		return;*/
 
 		GLuint targetIndex = ConvertTextureTargetToIndex(texture->type);
 
