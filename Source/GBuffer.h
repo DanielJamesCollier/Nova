@@ -18,6 +18,7 @@ namespace Nova
 		GLTexture m_gBufferTextures[GB_BUFFER_SIZE];
 		GLTexture m_finalTexture;
 		GLuint    m_width, m_height;
+		bool      m_dispised;
 
 		// public functions
 	public:

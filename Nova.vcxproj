@@ -259,7 +259,6 @@
     <ClCompile Include="Source\IOManager.cpp" />
     <ClCompile Include="Source\LightPass.cpp" />
     <ClCompile Include="Source\Logger.cpp" />
-    <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Material.cpp" />
     <ClCompile Include="Source\MaterialCache.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />

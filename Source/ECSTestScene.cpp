@@ -41,11 +41,12 @@ namespace Nova
 			// meshes
 				unsigned int ID_MoonMesh  = m_renderSystem.AddMesh("Models/planets/moon/moon.obj");
 				unsigned int ID_spaceship = m_renderSystem.AddMesh("Models/starwars/ARC170.3DS");
-				unsigned int ID_plane = m_renderSystem.AddMesh("Models/shapes/monkey.obj");
+				unsigned int ID_checkerPlaneMesh = m_renderSystem.AddMesh("Models/shapes/checkerPlane.obj");
 			
 			//materials
 				unsigned int ID_moonMat      = m_renderSystem.AddMaterial(Material("Models/planets/moon/MoonMap2_2500x1250.png", "Models/planets/moon/MoonMap2_2500x1250_NRM.png", "Models/planets/moon/MoonMap2_2500x1250_NRM.png", 10));
 				unsigned int ID_spaceshipMat = m_renderSystem.AddMaterial(Material("Models/starwars/Arc170_blinn1.png", "Models/starwars/Arc170_blinn1_NRM.png", "Models/starwars/Arc170_blinn1_SPEC.png", 10));
+				unsigned int ID_checkerPlaneMat = m_renderSystem.AddMaterial(Material("Models/shapes/checker.png", "Models/shapes/checker_NRM.png", "Models/shapes/checker_SPEC.png",10));
 			////////////////////////////
 
 
@@ -124,8 +125,11 @@ namespace Nova
 				ECS::Component::CRenderable model;
 				ECS::Component::CTransform  trans;
 
-				model.material = ID_spaceshipMat;
-				model.mesh     = ID_plane;
+				model.material = ID_checkerPlaneMat;
+				model.mesh     = ID_checkerPlaneMesh;
+
+				trans.SetPosition(glm::vec3(-30,0,0));
+				trans.SetScale(glm::vec3(30, 30, 30));
 
 				AddRenderableObjectToScene(1010, trans, model);
 			}

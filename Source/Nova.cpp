@@ -16,18 +16,36 @@
 #include <vector>
 #include "TextureBinder.h"
 
+
+int main(int argc, char* argv[])
+{
+	
+	Nova::Nova application(Nova::Window("Nova Engine v0.1", 700, 400));
+		
+	return 0;
+}
+
 namespace Nova
 {
-	Nova::Nova(Window* window)
+	Nova::Nova(Window window)
+		:
+		m_window(window)	
 	{
-		m_window = window;
+		if (m_window.Init())
+		{
+			Start();
+		}
 	}
 
 	Nova::~Nova()
 	{
+		Logger::GetInstance().InfoBlock("Nove Engine Shutdow", "shutdown", true);
 		ResourceManager::Dispose();
-		delete m_window;
 		glDeleteVertexArrays(1, &m_vaoQuad);
+
+		// pause the application to check for memory destuction order
+		//std::string pause;
+		//std::cin >> pause;
 	}
 
 	void Nova::Start()
@@ -79,7 +97,7 @@ namespace Nova
 			/////////////////////////////
 			if (m_pointLightPass.Init())
 			{
-				m_pointLightPass.SetScreenSize(m_window->GetWidth(), m_window->GetHeight());
+				m_pointLightPass.SetScreenSize(m_window.GetWidth(), m_window.GetHeight());
 				log.InfoBlockMessage("Info: point light pass initialised\n");
 			}
 			else
@@ -90,7 +108,7 @@ namespace Nova
 			/////////////////////////////
 			if (m_dirLightPass.Init())
 			{
-				m_dirLightPass.SetScreenSize(m_window->GetWidth(), m_window->GetHeight());
+				m_dirLightPass.SetScreenSize(m_window.GetWidth(), m_window.GetHeight());
 				log.InfoBlockMessage("Info: directional light pass initialised\n");
 			}
 			else
@@ -101,7 +119,7 @@ namespace Nova
 			/////////////////////////////
 			if (m_spotLightPass.Init())
 			{
-				m_spotLightPass.SetScreenSize(m_window->GetWidth(), m_window->GetHeight());
+				m_spotLightPass.SetScreenSize(m_window.GetWidth(), m_window.GetHeight());
 				log.InfoBlockMessage("Info: spot light pass initialised\n");
 			}
 			else
@@ -234,6 +252,7 @@ namespace Nova
 				frameCount = 0;
 
 				std::cout << "TextureBinds: " << TextureBinder::GetInstance().GetAndResetBindCount() << std::endl;
+				std::cout << "ShaderBinds:  " << ShaderBinder::GetAndResetBindCount() << std::endl;
 				Profiler::ProfileManager::Display();
 			}
 		}
@@ -271,14 +290,13 @@ namespace Nova
 
 	void Nova::Render()
 	{
-		j += 0.001f;
-
+	
 		Profiler::ProfileManager::Begin("DeferredRender");
 		DSRenderScene();
 		Profiler::ProfileManager::End("DeferredRender");
 
 		Profiler::ProfileManager::Begin("BackBuffer");
-		m_window->SwapBackBuffer();
+		m_window.SwapBackBuffer();
 		Profiler::ProfileManager::End("BackBuffer");
 	}
 
@@ -423,6 +441,10 @@ namespace Nova
 
 	void Nova::DSDirectionalLightPass()
 	{
+		// used for tweening
+		static float j = 0;
+		j+= 0.001f;
+
 		m_gBuffer.BindForLightPass();
 		m_dirLightPass.Enable();
 		m_dirLightPass.SetMatSpecularPower(200);

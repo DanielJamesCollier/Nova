@@ -4,6 +4,7 @@
 #IncludeGuard "Shaders/Common/SpotLightDeferred.glsl"
 #IncludeGuard "Shaders/Deferred/LightingPass/Common/GBuffer.glsl"
 #IncludeGuard "Shaders/Deferred/LightingPass/Common/CalcTexCoord.glsl"
+#IncludeGuard "Shaders/Deferred/LightingPass/Common/ReconstructNormalZ.glsl"
 
 // shader ins and outputs
 out vec4 finalPixel;
@@ -14,7 +15,7 @@ void main()
 	vec2 texCoord   = CalcTexCoord();
 	vec3 position   = texture(gBufferPosition, texCoord).rgb;
 	vec4 albedoSpec = texture(gBufferDiffuse,  texCoord).rgba;
-	vec3 normal     = texture(gBufferNormal,   texCoord).rgb;
+	vec3 normal     = ReconstructNormalZ(texture(gBufferNormal,   texCoord).rg);
 
 	normal = normalize(normal);
 

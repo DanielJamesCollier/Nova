@@ -35,6 +35,8 @@ namespace Nova
 		// set the size of the array
 		m_boundTextures.resize(m_maxTextureTargets);
 		for (auto& x : m_boundTextures) x.resize(m_maxTextureUnits);
+
+		glActiveTexture(GL_TEXTURE0);
 	}
 
 	void TextureBinder::BindTexture(GLuint unit, GLTexture* texture)
@@ -48,7 +50,13 @@ namespace Nova
 			m_boundTextures.at(targetIndex).at(unit) == texture;
 
 			m_bindCount++;
-			glActiveTexture(GL_TEXTURE0 + unit);
+
+			if (m_activeUnit != unit)
+			{
+				glActiveTexture(GL_TEXTURE0 + unit);
+				m_activeUnit = unit;
+			}
+			
 			glBindTexture(texture->type, texture->id);
 			return;
 		}
@@ -58,18 +66,17 @@ namespace Nova
 			m_boundTextures.at(targetIndex).at(unit) == texture;
 
 			m_bindCount++;
-			glActiveTexture(GL_TEXTURE0 + unit);
+
+			if (m_activeUnit != unit)
+			{
+				glActiveTexture(GL_TEXTURE0 + unit);
+				m_activeUnit = unit;
+			}
+
 			glBindTexture(texture->type, texture->id);
 			return;
 		}
 	}
-
-	void TextureBinder::Temp(GLuint unit, GLTexture* texture)
-	{
-		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindTexture(texture->type,texture->id);
-	}
-
 
 	GLuint TextureBinder::GetActiveTextureUnit() const
 	{

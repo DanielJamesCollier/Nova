@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <GLEW/glew.h>
 
 namespace Nova
 {
@@ -7,6 +8,10 @@ namespace Nova
 
 	class ShaderBinder
 	{
+
+		static ShaderProgram* m_boundShaderProgram;
+		static GLuint         m_bindCount;
+
 	public:
 		 ShaderBinder() = delete;
 		~ShaderBinder()
@@ -16,9 +21,9 @@ namespace Nova
 		static void BindShaderProgram(ShaderProgram* program);
 		static void UnbindShaderProgram();
 		static ShaderProgram* GetCurretBoundProgram();
+		static GLuint GetAndResetBindCount();
 
-	private:
-		static ShaderProgram* m_boundShaderProgram;
+
 	};
 
 	/*

@@ -10,6 +10,8 @@ namespace Nova
 		m_indicesCount(indices.size())
 	{
 		CreateIndexedMesh(vertices, indices);
+
+		std::cout << "mesh created" << std::endl;
 	}
 
 	IndexedMesh::~IndexedMesh()

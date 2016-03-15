@@ -1,16 +1,19 @@
 #include "GBuffer.h"
 #include "Logger.h"
 #include "TextureBinder.h"
+#include <iostream>
 
 namespace Nova
 {
 	GBuffer::GBuffer()
+		: m_dispised(false)
 	{
 	}
 
 
 	GBuffer::~GBuffer()
 	{
+		std::cout << "GBuffer: descructor" << std::endl;
 		Dispose();
 	}
 
@@ -91,13 +94,20 @@ namespace Nova
 
 	void GBuffer::Dispose()
 	{
+		if (m_dispised) return;
+
+		std::cout << "GBuffer: dipose" << std::endl;
+
 		glBindBuffer(GL_FRAMEBUFFER, 0);
 		glDeleteFramebuffers(1, &m_fbo);
 
 		for (unsigned int i = 0; i < GBTextures::GB_BUFFER_SIZE; ++i)
 		{
 			glDeleteTextures(1, &m_gBufferTextures[i].id);
+			std::cout << "textures delete" << std::endl;
 		}
+
+		glDeleteTextures(1, &m_finalTexture.id);
 	}
 
 	void GBuffer::BindForReading()

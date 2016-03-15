@@ -14,7 +14,7 @@ namespace Nova
 
 	bool SkyBoxPass::Init()
 	{
-		m_program = new ShaderProgram("skybox.prog");
+		m_program = new ShaderProgram("skybox.glsl");
 		m_program->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Deferred/GeometryPass/SkyboxPass.fs"));
 		m_program->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Deferred/GeometryPass/SkyboxPass.vs"));
 		m_program->LinkProgram();

@@ -30,6 +30,8 @@ namespace Nova
 
 		m_shaderOBJs.clear();
 
+		std::cout << "program deleted: " << m_name << std::endl;
+
 		glDeleteProgram(m_programID);
 	}
 

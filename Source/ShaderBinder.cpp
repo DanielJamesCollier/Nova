@@ -11,6 +11,7 @@ namespace Nova
 {
 
 	ShaderProgram* ShaderBinder::m_boundShaderProgram = nullptr;
+	GLuint ShaderBinder::m_bindCount = 0;
 
 	void ShaderBinder::BindShaderProgram(ShaderProgram* program)
 	{
@@ -20,11 +21,13 @@ namespace Nova
 		{
 			m_boundShaderProgram = program;
 			glUseProgram(program->GetID());
+			m_bindCount++;
 		} 
 		else if (program->GetID() != m_boundShaderProgram->GetID())
 		{
 			m_boundShaderProgram = program;
 			glUseProgram(program->GetID());
+			m_bindCount++;
 		}
 	}
 
@@ -38,6 +41,13 @@ namespace Nova
 	ShaderProgram* ShaderBinder::GetCurretBoundProgram()
 	{
 		return m_boundShaderProgram;
+	}
+
+	GLuint ShaderBinder::GetAndResetBindCount()
+	{
+		GLuint bindCount = m_bindCount;
+		m_bindCount = 0;
+		return bindCount;
 	}
 
 }

@@ -68,7 +68,7 @@ namespace Nova
 			m_renderComps(maxRenderComps),
 			m_renderSystem(gpass, m_transformComps, m_renderComps)
 		{
-			m_cams.push_back(Camera(glm::vec3(),60,Window::GetAspectRatio(),0.0001f,10000.0f));
+			m_cams.push_back(Camera(glm::vec3(),60,Window::GetAspectRatio(),0.01f,1000.0f));
 			m_activeCam = 0;
 
 			////// cubemap //////

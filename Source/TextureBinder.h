@@ -34,7 +34,5 @@ namespace Nova
 		GLuint GetActiveTextureUnit() const;
 		GLuint ConvertIndexToTextureType(GLuint index) const;
 		GLuint ConvertTextureTargetToIndex(GLuint target) const;
-
-		void Temp(GLuint unit, GLTexture* texture);
 	};
 }
