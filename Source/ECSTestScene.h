@@ -12,14 +12,14 @@ namespace Nova
 		class ECSTestScene : public Scene
 		{
 		public:
-			 ECSTestScene(GeometryPass& gPass);
+			 ECSTestScene();
 			~ECSTestScene();
 
 			void Initialise() override;
 
 
 			void Update(float delta) override;
-			void Render(GeometryPass* gPass) override;		
+			void Render() override;		
 
 		private:
 			void AddRenderableObjectToScene(unsigned int objectId, const ECS::Component::CTransform& transform, const ECS::Component::CRenderable& renderable);

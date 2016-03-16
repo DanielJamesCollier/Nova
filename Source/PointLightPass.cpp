@@ -16,8 +16,6 @@ namespace Nova
 
 	bool PointLightPass::Init()
 	{
-		assert(m_initialised);
-
 		m_program = new ShaderProgram("pointLightPass.glsl");
 		m_program->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Deferred/LightingPass/PointLightPass/DeferredPointLightPass.fs"));
 		m_program->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Deferred/LightingPass/Common/DeferredLightingPass.vs"));

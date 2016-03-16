@@ -15,8 +15,6 @@ namespace Nova
 
 	void ShaderBinder::BindShaderProgram(ShaderProgram* program)
 	{
-		assert(program == nullptr);
-
 		if (m_boundShaderProgram == nullptr)
 		{
 			m_boundShaderProgram = program;

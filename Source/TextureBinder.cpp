@@ -41,9 +41,12 @@ namespace Nova
 
 	void TextureBinder::BindTexture(GLuint unit, GLTexture* texture)
 	{
-		assert(unit > m_maxTextureUnits || texture == nullptr);
-
 		GLuint targetIndex = ConvertTextureTargetToIndex(texture->type);
+
+	/*	if (targetIndex == 11)
+		{
+			Logger::GetInstance().ErrorBlock("texture has invalid target", "Error", true);
+		}*/
 
 		if (m_boundTextures.at(targetIndex).at(unit) == nullptr)
 		{
@@ -111,8 +114,7 @@ namespace Nova
 			return GL_TEXTURE_2D_MULTISAMPLE_ARRAY;
 		default:
 			Logger::GetInstance().ErrorBlock("TextureBinderError", "Error: invalid index", true);
-			assert();
-			return GL_INVALID_OPERATION; // to change
+			return 11; // to change
 		}
 	}
 
@@ -145,7 +147,7 @@ namespace Nova
 		default:
 			fault:
 				Logger::GetInstance().ErrorBlock("TextureBinderError", "Error: invalid target", true);
-				assert();
+				
 			return GL_INVALID_OPERATION; // to change
 		}
 	}

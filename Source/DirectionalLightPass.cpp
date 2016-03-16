@@ -15,8 +15,6 @@ namespace Nova
 
 	bool DirectionalLightPass::Init()
 	{
-		assert(m_initialised);
-
 		/* DIRECTION LIGHT SHADER PASS*/
 		m_program = new ShaderProgram("directionalLightPass.glsl");
 		m_program->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Deferred/LightingPass/DirectionalLightPass/DeferredDirectionLightPass.fs"));

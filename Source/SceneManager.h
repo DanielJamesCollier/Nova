@@ -4,7 +4,6 @@
 namespace Nova
 {
 	class Scene;
-	class GeometryPass;
 
 	class SceneManager
 	{
@@ -19,7 +18,7 @@ namespace Nova
 		void ProcessInput();
 		void UpdateCurrent(float delta);
 		void UpdateAll(float delta);
-		void RenderCurrent(GeometryPass* gPass);
+		void RenderCurrent();
 
 		
 

@@ -6,7 +6,7 @@
 namespace Nova
 {
 	GBuffer::GBuffer()
-		: m_dispised(false)
+		: m_disposed(false)
 	{
 	}
 
@@ -94,7 +94,8 @@ namespace Nova
 
 	void GBuffer::Dispose()
 	{
-		if (m_dispised) return;
+		if (m_disposed) return;
+		m_disposed = true;
 
 		std::cout << "GBuffer: dipose" << std::endl;
 
@@ -104,7 +105,7 @@ namespace Nova
 		for (unsigned int i = 0; i < GBTextures::GB_BUFFER_SIZE; ++i)
 		{
 			glDeleteTextures(1, &m_gBufferTextures[i].id);
-			std::cout << "textures delete" << std::endl;
+			std::cout << "GBuffer:: textures deleted" << std::endl;
 		}
 
 		glDeleteTextures(1, &m_finalTexture.id);

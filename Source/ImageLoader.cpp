@@ -155,6 +155,7 @@ namespace Nova
 	{
 		int width;
 		int height;
+		int channels;
 
 
 		// load in the first image and store the - width, height & component for comparison with later images
@@ -163,7 +164,7 @@ namespace Nova
 		std::vector<unsigned char*> imgData;
 
 		// the first image in the image paths vector defines the dimensions for the texture array
-		imgData.push_back(SOIL_load_image(imagePaths[0].c_str(), &width, &height, NULL, 0));
+		imgData.push_back(SOIL_load_image(imagePaths[0].c_str(), &width, &height, &channels, 0));
 		if (imgData[0] == nullptr)
 		{
 			Logger::GetInstance().ErrorBlock("Image Loader Error", "File: " + imagePaths[0] + "\nError: the file was not loaded.", true);
@@ -176,7 +177,7 @@ namespace Nova
 		// the first loaded image to make sure they all have the same dimensions and component count
 		for (unsigned int i = 1; i < imagePaths.size(); i++)
 		{
-			imgData.push_back(SOIL_load_image(imagePaths[i].c_str(), &compWidth, &compHeight, NULL, 0));
+			imgData.push_back(SOIL_load_image(imagePaths[i].c_str(), &compWidth, &compHeight, &channels, 0));
 
 			// of one of the images isnt the same size as the original then remove resources and exit function
 			if (compWidth != width || compHeight != height || imgData.back() == nullptr)
@@ -197,36 +198,42 @@ namespace Nova
 
 		GLTexture* tex = new GLTexture;
 		tex->type = GL_TEXTURE_2D_ARRAY;
+		tex->width = compWidth;
+		tex->height = compHeight;
+		tex->components = channels;
 
 		glGenTextures(1, &tex->id);
 		TextureBinder::GetInstance().BindTexture(0, tex);
 		glTexStorage3D(tex->type, mipLevels, GL_RGB8, width, height, imgData.size());
 
-		for (unsigned int i = 0; i < imgData.size(); i++)
-			glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, i, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, imgData[i]);
+		for (unsigned int i = 0; i < imgData.size(); ++i)
+			glTexSubImage3D(tex->type, 0, 0, 0, i, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, imgData.at(i));
 
-		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-		if (genMipMaps)
+		// texture parameters
 		{
-			glTexParameterf(tex->type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexParameterf(tex->type, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			glGenerateMipmap(tex->type);
+			glTexParameteri(tex->type, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(tex->type, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+			if (genMipMaps)
+			{
+				glTexParameterf(tex->type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				glTexParameterf(tex->type, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+				glGenerateMipmap(tex->type);
+			}
+			else
+			{
+				glTexParameteri(tex->type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				glTexParameteri(tex->type, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			}
+
+			//TODO check if capable // anisostropic texture filtering
+			float amount = 0.0f;
+			glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &amount);
+			std::cout << "anisotropic limit: " << amount << std::endl;
+			glTexParameterf(tex->type, GL_TEXTURE_MAX_ANISOTROPY_EXT, amount);
 		}
-		else
-		{
-			glTexParameteri(tex->type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexParameteri(tex->type, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		}
-
-
-		//TODO check if capable // anisostropic texture filtering
-		float amount = 0.0f; 
-		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &amount);
-		std::cout << "max: " << amount << std::endl;
-		glTexParameterf(tex->type, GL_TEXTURE_MAX_ANISOTROPY_EXT, amount);
-
+		/////////////
+		
 		for (unsigned int i = 0; i < imagePaths.size(); i++)
 		{
 			SOIL_free_image_data(imgData[i]);

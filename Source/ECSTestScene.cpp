@@ -17,9 +17,9 @@ namespace Nova
 	#define MAX_ENTITES 2500
 	namespace ScratchPad
 	{
-		ECSTestScene::ECSTestScene(GeometryPass& gPass)
+		ECSTestScene::ECSTestScene()
 			:
-			Scene(gPass,MAX_ENTITES,MAX_ENTITES)
+			Scene(MAX_ENTITES,MAX_ENTITES)
 		{
 		
 		}
@@ -85,7 +85,6 @@ namespace Nova
 				{
 					for (unsigned int j = 0; j < width; ++j)
 					{
-
 						trans.SetPosition(glm::vec3(j, rand() % 30, i));
 						trans.SetRotation(glm::vec3(rand() % 20, rand() % 20, rand() % 20));
 
@@ -147,7 +146,7 @@ namespace Nova
 			UpdateActiveCamera(delta);
 		}
 
-		void ECSTestScene::Render(GeometryPass* gPass)
+		void ECSTestScene::Render()
 		{
 			m_renderSystem.Update();
 		}

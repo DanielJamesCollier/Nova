@@ -54,19 +54,15 @@ namespace Nova
 				return;
 			}
 			m_skytexture = skybox;
+			m_renderSystem.SetSkyboxTexture(skybox);
 		}
 
 	public:
-		Scene
-			(
-			GeometryPass& gpass,
-			GLuint        maxTransforms,
-			GLuint        maxRenderComps
-			)
+		Scene(GLuint maxTransforms, GLuint maxRenderComps)
 			:
 			m_transformComps(maxTransforms),
 			m_renderComps(maxRenderComps),
-			m_renderSystem(gpass, m_transformComps, m_renderComps)
+			m_renderSystem(m_transformComps, m_renderComps)
 		{
 			m_cams.push_back(Camera(glm::vec3(),60,Window::GetAspectRatio(),0.01f,1000.0f));
 			m_activeCam = 0;
@@ -130,7 +126,7 @@ namespace Nova
 		}
 
 		virtual void Update(float delta)		 = 0;
-		virtual void Render(GeometryPass* gPass) = 0;
+		virtual void Render() = 0;
 		//-------------------------------------------------------//
 	};
 

@@ -64,9 +64,9 @@ namespace Nova
 		}
 	}
 
-	void SceneManager::RenderCurrent(GeometryPass* gPass)
+	void SceneManager::RenderCurrent()
 	{
-		m_scenes[m_current]->Render(gPass);
+		m_scenes[m_current]->Render();
 	}
 
 	Scene* SceneManager::GetActiveScene() const

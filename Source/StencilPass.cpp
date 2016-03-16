@@ -15,8 +15,6 @@ namespace Nova
 
 	bool StencilPass::Init()
 	{
-		assert(m_initialised);
-
 		/*DIRECTION LIGHT SHADER PASS*/
 		m_program = new ShaderProgram("stencilPass.glsl");
 		m_program->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Deferred/StencilPass/StencilPass.fs"));

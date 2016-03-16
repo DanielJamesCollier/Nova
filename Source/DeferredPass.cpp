@@ -4,7 +4,6 @@ namespace Nova
 {
 	void DeferredPass::Enable()
 	{
-		assert(m_program == nullptr);
 		ShaderBinder::BindShaderProgram(m_program);
 	}
 

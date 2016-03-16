@@ -15,8 +15,6 @@ namespace Nova
 
 	bool LightPass::Init()
 	{
-		assert(m_initialised);
-
 		// get g buffer texture unit locations
 		m_positionTextureUnit = m_program->GetUniformLocation("gBufferPosition");
 		m_diffuseTextureUnit = m_program->GetUniformLocation("gBufferDiffuse");

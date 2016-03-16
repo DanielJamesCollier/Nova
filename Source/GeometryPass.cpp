@@ -19,8 +19,11 @@ namespace Nova
 		m_program->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Deferred/GeometryPass/deferred_geometry_pass.fs"));
 		m_program->AddShaderObject(ResourceManager::GetShaderOBJ("Shaders/Deferred/GeometryPass/deferred_geometry_pass.vs"));
 		m_program->LinkProgram();
+
 		ResourceManager::CacheShaderProgram(m_program);
-		m_program->Bind();
+		std::cout << "working" << std::endl;
+		if (m_program == nullptr) std::cout << "wtf" << std::endl;
+		ShaderBinder::BindShaderProgram(m_program);
 
 		
 		m_MVP   = m_program->GetUniformLocation("MVP");

@@ -269,6 +269,7 @@
     <ClCompile Include="Source\PointLightPass.cpp" />
     <ClCompile Include="Source\ProfileManager.cpp" />
     <ClCompile Include="Source\ProfileTimer.cpp" />
+    <ClCompile Include="Source\RenderSystem.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\ShaderBinder.cpp" />
